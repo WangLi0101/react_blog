@@ -18,7 +18,7 @@ export default [
       },
       {
         path: "/system/user",
-        Component: lazy(() => import("@/views/system/user/index")),
+        Component: lazy(() => import("@/views/system/roles/index")),
         handle: {
           title: "用户管理",
         },

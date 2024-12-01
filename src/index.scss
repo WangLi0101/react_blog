@@ -1,10 +1,5 @@
-@use "styles/variables" as v;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-// 使用变量
-.btn-primary {
-  @apply px-4 py-2 rounded;
-  background-color: v.$primary;
-}
+// 其他 SCSS 样式...

@@ -1,20 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
-      colors: {
-        primary: '#3b82f6', // 与您的 SCSS 变量保持一致
-        secondary: '#64748b',
+      boxShadow: {
+        'outline-emerald': '0 0 0 2px rgba(16, 185, 129, 0.2)',
       },
     },
   },
   plugins: [],
-  // 确保 antd 的样式不被 Tailwind 的样式覆盖
-  corePlugins: {
-    preflight: false,
-  },
 } 

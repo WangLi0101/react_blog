@@ -50,7 +50,7 @@ export default async <T>(
     } else {
       res = await response.json();
     }
-    if (res.code !== 200 && !option?.isBlob) {
+    if (res.code !== 0 && !option?.isBlob) {
       handleCode(res);
     }
     return res;

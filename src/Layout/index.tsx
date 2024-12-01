@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Layout, theme } from "antd";
 import CustomHeader from "./components/CustomHeader";
 import CustomSider from "./components/CustomSider";
 import CustomBreadcrumb from "./components/CustomBreadcrumb";
 import { Outlet } from "react-router";
-
+import { Auth } from "@/components/Auth";
+import Loading from "./components/Loading";
 const { Content } = Layout;
 
 // 固定高度常量
@@ -55,7 +56,11 @@ const LayoutPage: React.FC = () => {
               overflow: "auto", // 添加滚动条
             }}
           >
-            <Outlet />
+            <Auth>
+              <Suspense fallback={<Loading />}>
+                <Outlet />
+              </Suspense>
+            </Auth>
           </div>
         </Content>
       </Layout>

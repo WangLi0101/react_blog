@@ -1,7 +1,10 @@
 import { useMatches } from "react-router";
-
-export const useRouteMeta = () => {
+interface Meta {
+  title: string;
+  icon?: string;
+}
+export const useRouteMeta = (): Meta => {
   const matches = useMatches();
-  const currentMeta = matches[matches.length - 1].handle;
+  const currentMeta = matches[matches.length - 1].handle as Meta;
   return currentMeta;
 };

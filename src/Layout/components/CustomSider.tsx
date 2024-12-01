@@ -4,6 +4,7 @@ import type { MenuProps } from "antd";
 import { useMenuStore } from "@/store/menu";
 import { Icon } from "@iconify/react";
 import { RouteObject, useLocation, useNavigate } from "react-router";
+import { findParentAndSelf } from "@/router/utils/flatten";
 const { Sider } = Layout;
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -55,19 +56,14 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
 
   useEffect(() => {
     const path = location.pathname;
-    const pathArrs = path.split("/").filter(Boolean);
-    const openPaths = pathArrs.reduce(
-      (prev: string[], _curr: string, index: number) => {
-        const path = `/${pathArrs.slice(0, index + 1).join("/")}`;
-        return [...prev, path];
-      },
-      []
-    );
-    // 设置展开的菜单项为除了最后一个路径外的所有父级路径
-    setOpenKeys(openPaths.slice(0, -1));
+    const parentMenu = findParentAndSelf(path, menuList)?.parents;
+    if (parentMenu) {
+      const openPaths = parentMenu.map((item) => item.path!);
+      setOpenKeys(openPaths);
+    }
     // 设置选中的菜单项为完整的当前路径
     setSelectedKeys([path]);
-  }, [location.pathname]);
+  }, [location.pathname, menuList]);
 
   const onSelect = ({ key }: { key: string }) => {
     navigate(key);
