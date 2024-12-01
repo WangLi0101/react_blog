@@ -19,6 +19,10 @@ export default [
     handle: {
       title: "注册",
     },
-    Component: Register,
+    element: (
+      <Auth>
+        <Register />
+      </Auth>
+    ),
   },
 ] as RouteObject[];

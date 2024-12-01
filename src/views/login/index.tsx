@@ -3,21 +3,18 @@ import { useNavigate } from "react-router";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { LoginParams } from "@/api/system/system";
 import { useUserStore } from "@/store/user";
-import { useMenuStore } from "@/store/menu";
+import { useTopMenu } from "@/hooks/useTopMenu";
 
 export const Login = () => {
   const navigate = useNavigate();
   const userStore = useUserStore();
-  const menuStore = useMenuStore();
+  const topMenuPath = useTopMenu();
   const onFinish = async (values: LoginParams) => {
     const res = await userStore.login(values);
     if (res) {
       message.success("登录成功");
-      const path = menuStore.flattenMenuList.filter(
-        (item) => item.path !== "/login" && item.Component
-      )[0].path;
-      if (!path) return;
-      navigate(path);
+      if (!topMenuPath) return;
+      navigate(topMenuPath);
     }
   };
 

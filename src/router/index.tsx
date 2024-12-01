@@ -1,9 +1,10 @@
-import { createBrowserRouter, RouteObject } from "react-router";
+import { createHashRouter, RouteObject } from "react-router";
 import Layout from "@/Layout";
 import { flattenRoutes } from "./utils/flatten";
 import { useMenuStore } from "@/store/menu";
 import registerRoutes from "./registration";
-
+import NotFound from "@/views/error/404";
+import { Navigate } from "react-router";
 // 加载modules下所有的文件
 const getStaticRoutes = () => {
   const arr = [];
@@ -22,7 +23,9 @@ const getStaticRoutes = () => {
     flatArr.push(...flattenRoutesArr);
 
     // 过滤掉没有Component的元素
-    const filterRoutes = flattenRoutesArr.filter((el) => el.Component);
+    const filterRoutes = flattenRoutesArr.filter(
+      (el) => el.Component || el.element
+    );
     arr.push(...filterRoutes);
   }
 
@@ -32,7 +35,7 @@ const getStaticRoutes = () => {
   return arr;
 };
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     Component: Layout,
@@ -40,6 +43,16 @@ const router = createBrowserRouter([
   },
 
   ...registerRoutes,
+
+  // 404
+  {
+    path: "/404",
+    Component: NotFound,
+  },
+  {
+    path: "*",
+    element: <Navigate to="/404" replace />,
+  },
 ]);
 
 export default router;

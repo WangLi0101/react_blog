@@ -51,6 +51,7 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
 
   useEffect(() => {
     const menuItems = convertToMenuItems(menuList);
+
     setItems(menuItems);
   }, [convertToMenuItems, menuList]);
 
@@ -61,12 +62,17 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
       const openPaths = parentMenu.map((item) => item.path!);
       setOpenKeys(openPaths);
     }
+
     // 设置选中的菜单项为完整的当前路径
     setSelectedKeys([path]);
   }, [location.pathname, menuList]);
 
   const onSelect = ({ key }: { key: string }) => {
     navigate(key);
+  };
+
+  const onOpenChange = (keys: string[]) => {
+    setOpenKeys(keys);
   };
 
   return (
@@ -79,6 +85,7 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
         openKeys={openKeys}
         selectedKeys={selectedKeys}
         onSelect={onSelect}
+        onOpenChange={onOpenChange}
       />
     </Sider>
   );
