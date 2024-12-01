@@ -1,9 +1,13 @@
 import "./App.css";
-import { RouterProvider } from "react-router";
-import router from "./router";
+import { HashRouter } from "react-router";
+import { Router } from "./router";
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <HashRouter>
+      <Router />
+    </HashRouter>
+  );
 }
 
 export default App;

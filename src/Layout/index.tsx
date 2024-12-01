@@ -3,10 +3,9 @@ import { Layout, theme } from "antd";
 import CustomHeader from "./components/CustomHeader";
 import CustomSider from "./components/CustomSider";
 import CustomBreadcrumb from "./components/CustomBreadcrumb";
-import { Outlet, useLocation, useNavigate } from "react-router";
-import { Auth } from "@/components/Auth";
+import { Outlet } from "react-router";
 import Loading from "./components/Loading";
-import { useTopMenu } from "@/hooks/useTopMenu";
+
 const { Content } = Layout;
 
 // 固定高度常量
@@ -16,9 +15,6 @@ const FOOTER_HEIGHT = 0; // footer 高度
 const CONTENT_PADDING = 48; // 内容区域上下padding总和
 
 const LayoutPage: React.FC = () => {
-  const topMenuPath = useTopMenu();
-  const navigate = useNavigate();
-  const pathname = useLocation().pathname;
   const [collapsed, setCollapsed] = useState(false);
   const [contentHeight, setContentHeight] = useState(0);
   const {
@@ -43,10 +39,6 @@ const LayoutPage: React.FC = () => {
     return () => window.removeEventListener("resize", calculateHeight);
   }, []);
 
-  if (pathname === "/") {
-    if (!topMenuPath) return;
-    navigate(topMenuPath);
-  }
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <CustomSider collapsed={collapsed} onCollapse={setCollapsed} />
@@ -63,11 +55,9 @@ const LayoutPage: React.FC = () => {
               overflow: "auto", // 添加滚动条
             }}
           >
-            <Auth>
-              <Suspense fallback={<Loading />}>
-                <Outlet />
-              </Suspense>
-            </Auth>
+            <Suspense fallback={<Loading />}>
+              <Outlet />
+            </Suspense>
           </div>
         </Content>
       </Layout>

@@ -1,10 +1,14 @@
-import { createHashRouter, RouteObject } from "react-router";
+import { RouteObject, useLocation, useNavigate, useRoutes } from "react-router";
 import Layout from "@/Layout";
 import { flattenRoutes } from "./utils/flatten";
 import { useMenuStore } from "@/store/menu";
 import registerRoutes from "./registration";
 import NotFound from "@/views/error/404";
 import { Navigate } from "react-router";
+import { useEffect } from "react";
+import { useUserStore } from "@/store/user";
+import { getToken } from "@/utils/auth";
+import { useTopMenu } from "@/hooks/useTopMenu";
 // 加载modules下所有的文件
 const getStaticRoutes = () => {
   const arr = [];
@@ -35,7 +39,7 @@ const getStaticRoutes = () => {
   return arr;
 };
 
-const router = createHashRouter([
+const routes = [
   {
     path: "/",
     Component: Layout,
@@ -53,6 +57,38 @@ const router = createHashRouter([
     path: "*",
     element: <Navigate to="/404" replace />,
   },
-]);
+];
 
-export default router;
+const whiteList = ["/login", "/register"];
+export function Router() {
+  const userStore = useUserStore();
+  const navigate = useNavigate();
+  const topMenuPath = useTopMenu();
+  const token = getToken();
+  const pathname = useLocation().pathname;
+  const element = useRoutes(routes);
+  const userInfo = userStore.userInfo;
+
+  useEffect(() => {
+    if (token && !userInfo) {
+      userStore.getUserInfo();
+    }
+
+    // 如果token存在且在白名单中，则导航到上一个页面
+    if (token && whiteList.includes(pathname)) {
+      navigate(-1);
+    }
+
+    // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
+    if (pathname === "/" && topMenuPath) {
+      navigate(topMenuPath);
+    }
+  }, [token, pathname, userStore, navigate, topMenuPath, userInfo]);
+
+  // 没有token且不在白名单中，重定向到登录页
+  if (!token && !whiteList.includes(pathname)) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return element;
+}
