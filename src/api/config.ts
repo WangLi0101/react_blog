@@ -3,8 +3,8 @@ export type service = {
   MANGMENT: string;
 };
 // dev环境
-// const dev_url = "/api";
-const dev_url = "http://localhost:3000";
+// const dev_url = "http://localhost:3000";
+const dev_url = "http://47.120.58.223:3000";
 const dev_oss_url = "https://supernova-exam-test.oss-cn-beijing.aliyuncs.com";
 const dev_service: service = {
   MOCK: ``,
@@ -12,7 +12,7 @@ const dev_service: service = {
 };
 
 // 生产环境
-const prod_url = "https://supernova-api.iguokao.com";
+const prod_url = "http://47.120.58.223:3000";
 const prod_oss_url = "https://supernova-file.iguokao.com";
 const prod_server: service = {
   MOCK: `/mock`,
