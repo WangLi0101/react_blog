@@ -112,7 +112,6 @@ export const Register = () => {
                 className="h-12 rounded-lg border border-gray-200"
               />
             </Form.Item>
-
             <Form.Item>
               <Button
                 type="primary"

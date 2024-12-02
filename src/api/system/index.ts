@@ -3,7 +3,7 @@ import type {
   CreateUserParams,
   LoginParams,
   PageParams,
-  PageResult,
+  PageUser,
   Role,
   UserInfo,
 } from "./system";
@@ -61,8 +61,42 @@ export function deleteRoleApi(id: number) {
 
 // 分页获取用户
 export function getUsersPageApi(data: PageParams) {
-  return fetch<PageResult<UserInfo>>("/user/page", "MANGMENT", {
+  return fetch<PageUser>("/user/page", "MANGMENT", {
     method: "post",
+    body: JSON.stringify(data),
+  });
+}
+
+// 添加用户
+export function addUserApi(data: CreateUserParams) {
+  return fetch<UserInfo>("/user", "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
+  });
+}
+
+// 编辑用户
+export function editUserApi(
+  id: number,
+  data: Omit<CreateUserParams, "username" | "password" | "id">
+) {
+  return fetch<UserInfo>(`/user/${id}`, "MANGMENT", {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+// 删除用户
+export function deleteUserApi(id: number) {
+  return fetch(`/user/${id}`, "MANGMENT", {
+    method: "delete",
+  });
+}
+
+// 分配角色
+export function assignRoleApi(data: { userId: number; roleIds: number[] }) {
+  return fetch(`/role/assignRole`, "MANGMENT", {
+    method: "Post",
     body: JSON.stringify(data),
   });
 }

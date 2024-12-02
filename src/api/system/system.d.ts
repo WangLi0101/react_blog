@@ -9,7 +9,7 @@ export interface CreateUserParams {
 
   gender: number;
 
-  avatar: string;
+  avatar?: string;
 
   email: string;
 }
@@ -34,6 +34,7 @@ export interface Profile {
 }
 
 export interface UserInfo {
+  id: number;
   username: string;
   profile: Profile;
   roles: Role[];
@@ -41,5 +42,8 @@ export interface UserInfo {
 
 export interface PageParams {
   page: number;
-  size: number;
+  pageSize: number;
+  username: string;
 }
+
+export type PageUser = PageResult<UserInfo>;
