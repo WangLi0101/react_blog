@@ -1,5 +1,5 @@
 import fetch from "@/utils/http";
-import type { CreateUserParams, LoginParams, UserInfo } from "./system";
+import type { CreateUserParams, LoginParams, Role, UserInfo } from "./system";
 export function createUser(data: CreateUserParams) {
   return fetch("/user", "MANGMENT", {
     method: "post",
@@ -19,5 +19,35 @@ export function login(data: LoginParams) {
 export function getUserInfo() {
   return fetch<UserInfo>("/user/my/info", "MANGMENT", {
     method: "get",
+  });
+}
+
+// 获取角色
+export function getRolesApi() {
+  return fetch<Role[]>("/role", "MANGMENT", {
+    method: "get",
+  });
+}
+
+// 创建角色
+export function createRoleApi(data: Omit<Role, "id">) {
+  return fetch<Role>("/role", "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
+  });
+}
+
+// 编辑角色
+export function editRoleApi(id: number, data: Omit<Role, "id">) {
+  return fetch<Role>(`/role/${id}`, "MANGMENT", {
+    method: "put",
+    body: JSON.stringify(data),
+  });
+}
+
+// 删除角色
+export function deleteRoleApi(id: number) {
+  return fetch(`/role/${id}`, "MANGMENT", {
+    method: "delete",
   });
 }

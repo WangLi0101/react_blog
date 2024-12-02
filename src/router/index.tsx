@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useUserStore } from "@/store/user";
 import { getToken } from "@/utils/auth";
 import { useTopMenu } from "@/hooks/useTopMenu";
+import { emitter } from "@/utils/mitt";
+import { useMeta } from "@/hooks/useMeta";
 // 加载modules下所有的文件
 const getStaticRoutes = () => {
   const arr = [];
@@ -68,8 +70,11 @@ export function Router() {
   const pathname = useLocation().pathname;
   const element = useRoutes(routes);
   const userInfo = userStore.userInfo;
-
+  const meta = useMeta();
   useEffect(() => {
+    // 设置title
+    const title = meta.title || "Auth";
+    document.title = title;
     if (token && !userInfo) {
       userStore.getUserInfo();
     }
@@ -84,6 +89,12 @@ export function Router() {
       navigate(topMenuPath);
     }
   }, [token, pathname, userStore, navigate, topMenuPath, userInfo]);
+
+  useEffect(() => {
+    emitter.on("goLogin", () => {
+      navigate("/login");
+    });
+  }, [navigate]);
 
   // 没有token且不在白名单中，重定向到登录页
   if (!token && !whiteList.includes(pathname)) {

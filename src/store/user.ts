@@ -1,8 +1,9 @@
 import { getUserInfo, login } from "@/api/system";
 import { LoginParams, Role, UserInfo } from "@/api/system/system";
-import { setToken } from "@/utils/auth";
+import { removeToken, setToken } from "@/utils/auth";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
+import { emitter } from "@/utils/mitt";
 type State = {
   userInfo: UserInfo | null;
   roles: Role[];
@@ -10,6 +11,7 @@ type State = {
 type Actions = {
   login: (data: LoginParams) => Promise<string>;
   getUserInfo: () => Promise<void>;
+  logout: () => void;
 };
 export const useUserStore = create<State & Actions>()(
   devtools((set) => ({
@@ -34,6 +36,12 @@ export const useUserStore = create<State & Actions>()(
       if (res.code === 0) {
         set({ userInfo: res.data, roles: res.data.roles });
       }
+    },
+
+    logout: () => {
+      removeToken();
+      emitter.emit("goLogin");
+      set({ userInfo: null, roles: [] });
     },
   }))
 );

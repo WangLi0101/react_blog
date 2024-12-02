@@ -1,10 +1,14 @@
-import { useMatches } from "react-router";
+import { useMenuStore } from "@/store/menu";
+import { useLocation } from "react-router";
+
 interface Meta {
   title: string;
   icon?: string;
 }
-export const useRouteMeta = (): Meta => {
-  const matches = useMatches();
-  const currentMeta = matches[matches.length - 1].handle as Meta;
-  return currentMeta;
+
+export const useMeta = (): Meta => {
+  const menuStore = useMenuStore();
+  const pathName = useLocation().pathname;
+  const res = menuStore.flattenMenuList.find((el) => el.path === pathName);
+  return res ? res.handle : {};
 };

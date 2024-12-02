@@ -18,6 +18,7 @@ export interface LoginParams {
 export interface Role {
   id: number;
   name: string;
+  key: string;
 }
 
 export interface Profile {

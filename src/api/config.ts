@@ -3,8 +3,8 @@ export type service = {
   MANGMENT: string;
 };
 // dev环境
-// const dev_url = "http://localhost:3000";
-const dev_url = "http://47.120.58.223:3000";
+const dev_url = "http://localhost:3000";
+// const dev_url = "http://47.120.58.223:3000";
 const dev_oss_url = "https://supernova-exam-test.oss-cn-beijing.aliyuncs.com";
 const dev_service: service = {
   MOCK: ``,
