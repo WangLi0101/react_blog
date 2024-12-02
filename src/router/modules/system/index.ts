@@ -11,7 +11,7 @@ export default [
     children: [
       {
         path: "/system/roles",
-        Component: lazy(() => import("@/views/system/roles/index")),
+        Component: lazy(() => import("@/views/system/user/index")),
         handle: {
           title: "角色管理",
         },

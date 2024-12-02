@@ -1,3 +1,7 @@
+export interface PageResult<T> {
+  list: T[];
+  total: number;
+}
 export interface CreateUserParams {
   username: string;
 
@@ -33,4 +37,9 @@ export interface UserInfo {
   username: string;
   profile: Profile;
   roles: Role[];
+}
+
+export interface PageParams {
+  page: number;
+  size: number;
 }

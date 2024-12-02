@@ -15,6 +15,16 @@ export const RolesDialog: React.FC<Props> = React.memo(
   ({ dialogVisible, setDialogVisible, currentRole, isEdit, getList }) => {
     const formRef = useRef<FormInstance>(null);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      if (isEdit && dialogVisible && currentRole) {
+        formRef.current?.setFieldsValue(currentRole);
+      }
+      if (!dialogVisible) {
+        formRef.current?.resetFields();
+      }
+    }, [isEdit, dialogVisible, currentRole]);
+
     const addRole = async (values: FieldType) => {
       const res = await createRoleApi(values);
       return res;
@@ -42,14 +52,6 @@ export const RolesDialog: React.FC<Props> = React.memo(
       formRef.current?.resetFields();
       setDialogVisible(false);
     };
-    useEffect(() => {
-      if (isEdit && dialogVisible && currentRole) {
-        formRef.current?.setFieldsValue(currentRole);
-      }
-      if (!dialogVisible) {
-        formRef.current?.resetFields();
-      }
-    }, [isEdit, dialogVisible, currentRole]);
 
     return (
       <Modal

@@ -88,7 +88,7 @@ export function Router() {
     if (pathname === "/" && topMenuPath) {
       navigate(topMenuPath);
     }
-  }, [token, pathname, userStore, navigate, topMenuPath, userInfo]);
+  }, [token, pathname, userStore, navigate, topMenuPath, userInfo, meta.title]);
 
   useEffect(() => {
     emitter.on("goLogin", () => {
