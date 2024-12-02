@@ -2,7 +2,7 @@ import { getRolesApi } from "@/api/system";
 import { Role } from "@/api/system/system";
 import { Form, FormInstance, Select } from "antd";
 import React, { useEffect, useState } from "react";
-interface AssingRoleFormType {
+export interface AssingRoleFormType {
   roleIds: number[];
 }
 interface Props {
