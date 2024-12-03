@@ -1,12 +1,22 @@
 import {
   addUserApi,
   assignRoleApi,
+  deleteUserApi,
   editUserApi,
   getUsersPageApi,
 } from "@/api/system";
 import { PageParams, UserInfo } from "@/api/system/system";
 import { Gender } from "@/api/system/system.enum";
-import { Pagination, Table, Input, Button, Modal, Form, message } from "antd";
+import {
+  Pagination,
+  Table,
+  Input,
+  Button,
+  Modal,
+  Form,
+  message,
+  Dropdown,
+} from "antd";
 import { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
 import { useImmer } from "use-immer";
@@ -15,6 +25,7 @@ import {
   AssignRoleForm,
   AssingRoleFormType,
 } from "./components/AssignRoleForm";
+import { DownOutlined } from "@ant-design/icons";
 interface ModelConfig {
   visible: boolean;
   title: string;
@@ -58,6 +69,19 @@ const User: React.FC = () => {
     getUserList();
   }, [search]);
 
+  useEffect(() => {
+    if (modelConfig.visible && currentUser) {
+      if (modelConfig.componentType === "USER_FORM") {
+        formRef.setFieldsValue(currentUser.profile);
+      }
+      if (modelConfig.componentType === "ASSIGN_ROLE_FORM") {
+        formRef.setFieldsValue({
+          roleIds: currentUser.roles.map((role) => role.id),
+        });
+      }
+    }
+  }, [modelConfig.visible, currentUser, modelConfig.componentType, formRef]);
+
   const columns: ColumnsType<UserInfo> = [
     {
       title: "#",
@@ -91,18 +115,30 @@ const User: React.FC = () => {
     },
     {
       title: "操作",
-      width: 100,
+      width: 130,
       align: "center",
       render: (_, record: UserInfo) => {
+        const items = [
+          {
+            label: "分配角色",
+            key: "edit",
+            onClick: () => assignRoleHandler(record),
+          },
+        ];
         return (
           <>
             <Button type="link" onClick={() => editUserHandler(record)}>
               编辑
             </Button>
-            <Button type="link">删除</Button>
-            <Button type="link" onClick={() => assignRoleHandler(record)}>
-              分配角色
+            <Button type="link" onClick={() => delUser(record)}>
+              删除
             </Button>
+            <Dropdown menu={{ items }}>
+              <Button type="link">
+                更多
+                <DownOutlined />
+              </Button>
+            </Dropdown>
           </>
         );
       },
@@ -150,11 +186,6 @@ const User: React.FC = () => {
       draft.title = "分配角色";
       draft.componentType = "ASSIGN_ROLE_FORM";
     });
-    setTimeout(() => {
-      formRef.setFieldsValue({
-        roleIds: record.roles.map((role) => role.id),
-      });
-    }, 0);
   };
 
   const afterOpenChange = (open: boolean) => {
@@ -165,7 +196,8 @@ const User: React.FC = () => {
 
   const addUser = async (values: UserFormType) => {
     setConfirmLoading(true);
-    const res = await addUserApi(values);
+    const { confirmPassword: _, ...rest } = values;
+    const res = await addUserApi(rest);
     setConfirmLoading(false);
     if (res.code === 0) {
       message.success("添加成功");
@@ -178,7 +210,13 @@ const User: React.FC = () => {
 
   const editUser = async (values: UserFormType) => {
     setConfirmLoading(true);
-    const res = await editUserApi(currentUser!.id, values);
+    const {
+      confirmPassword: _confirmPassword,
+      username: _username,
+      password: _password,
+      ...rest
+    } = values;
+    const res = await editUserApi(currentUser!.id, rest);
     setConfirmLoading(false);
     if (res.code === 0) {
       message.success("编辑成功");
@@ -205,17 +243,36 @@ const User: React.FC = () => {
     }
   };
 
-  // 提交
-  const submit = () => {
-    formRef.validateFields().then((values) => {
-      switch (modelConfig.componentType) {
-        case "USER_FORM":
-          return currentUser ? editUser(values) : addUser(values);
-        case "ASSIGN_ROLE_FORM":
-          return assignRole(values);
-      }
+  const delUser = (record: UserInfo) => {
+    Modal.confirm({
+      title: "提示",
+      content: "确定要删除该用户吗？",
+      onOk: async () => {
+        const res = await deleteUserApi(record.id);
+        if (res.code === 0) {
+          message.success("删除成功");
+          getUserList();
+        }
+      },
     });
   };
+
+  // 提交
+  const submit = () => {
+    formRef
+      .validateFields()
+      .then((values: UserFormType | AssingRoleFormType) => {
+        switch (modelConfig.componentType) {
+          case "USER_FORM":
+            return currentUser
+              ? editUser(values as UserFormType)
+              : addUser(values as UserFormType);
+          case "ASSIGN_ROLE_FORM":
+            return assignRole(values as AssingRoleFormType);
+        }
+      });
+  };
+
   return (
     <div className="user">
       <div className="operator flex justify-between mb-5">

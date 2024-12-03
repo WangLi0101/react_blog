@@ -1,3 +1,5 @@
+import { Gender } from "./system.enum";
+export type Exact<T, Shape> = T & Record<Exclude<keyof T, keyof Shape>, never>;
 export interface PageResult<T> {
   list: T[];
   total: number;
@@ -7,7 +9,7 @@ export interface CreateUserParams {
 
   password: string;
 
-  gender: number;
+  gender: Gender;
 
   avatar?: string;
 

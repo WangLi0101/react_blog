@@ -11,14 +11,14 @@ export default [
     children: [
       {
         path: "/system/roles",
-        Component: lazy(() => import("@/views/system/user/index")),
+        Component: lazy(() => import("@/views/system/roles/index")),
         handle: {
           title: "角色管理",
         },
       },
       {
         path: "/system/user",
-        Component: lazy(() => import("@/views/system/roles/index")),
+        Component: lazy(() => import("@/views/system/user/index")),
         handle: {
           title: "用户管理",
         },
