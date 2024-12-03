@@ -2,7 +2,7 @@ import { assignMenuApi, getMenuApi, getRoleMenuApi } from "@/api/system";
 import { MenuItem } from "@/api/system/system";
 import { buildTree, TreeNode } from "@/utils/tree";
 import { message, Modal, Tree, TreeProps } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 interface Props {
   dialogVisible: boolean;
   setDialogVisible: (visible: boolean) => void;
@@ -14,6 +14,7 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
     const [loading, setLoading] = useState(false);
     const [menuList, setMenuList] = useState<TreeNode<MenuItem>[]>([]);
     const [checkedKeys, setCheckedKeys] = useState<number[]>([]);
+    const submitKeys = useRef<number[]>([]);
     const getMenuList = async () => {
       setLoading(true);
       const res = await getMenuApi();
@@ -28,8 +29,7 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
       if (!roleId) return;
       const res = await getRoleMenuApi(roleId);
       if (res.code === 0) {
-        const tree = buildTree(res.data);
-        setCheckedKeys(tree.map((item) => item.id));
+        setCheckedKeys(res.data.filter((el) => el.parentId).map((el) => el.id));
       }
     };
 
@@ -38,17 +38,26 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
     }, []);
 
     useEffect(() => {
-      getMyMenuList();
-    }, [roleId]);
+      if (dialogVisible) {
+        getMyMenuList();
+      }
+    }, [dialogVisible]);
 
     const onCheck: TreeProps<TreeNode<MenuItem>>["onCheck"] = (
       checkedKeys,
-      _info
+      info
     ) => {
-      const keys = Array.isArray(checkedKeys)
-        ? checkedKeys
-        : checkedKeys.checked;
-      setCheckedKeys(keys.map(Number));
+      if (!Array.isArray(checkedKeys)) return;
+
+      setCheckedKeys(checkedKeys.map(Number));
+      const set = new Set<number>();
+      info.checkedNodes.forEach((el) => {
+        set.add(el.id);
+        if (el.parentId) {
+          set.add(el.parentId);
+        }
+      });
+      submitKeys.current = [...set];
     };
 
     const handleOk = async () => {
@@ -56,7 +65,7 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
       setLoading(true);
       const res = await assignMenuApi({
         roleId,
-        menuIds: checkedKeys,
+        menuIds: submitKeys.current,
       });
       setLoading(false);
       if (res.code === 0) {
@@ -84,7 +93,6 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
             defaultExpandAll={true}
             checkedKeys={checkedKeys}
             onCheck={onCheck}
-            checkStrictly={true}
           />
         </div>
       </Modal>
