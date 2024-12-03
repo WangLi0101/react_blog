@@ -13,7 +13,6 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
   ({ dialogVisible, setDialogVisible, roleId }) => {
     const [loading, setLoading] = useState(false);
     const [menuList, setMenuList] = useState<TreeNode<MenuItem>[]>([]);
-    const [roleMenuList, setRoleMenuList] = useState<number[]>([]);
     const [checkedKeys, setCheckedKeys] = useState<number[]>([]);
     const getMenuList = async () => {
       setLoading(true);
@@ -30,7 +29,7 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
       const res = await getRoleMenuApi(roleId);
       if (res.code === 0) {
         const tree = buildTree(res.data);
-        setRoleMenuList(tree.map((item) => item.id));
+        setCheckedKeys(tree.map((item) => item.id));
       }
     };
 
@@ -77,7 +76,6 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
             checkable
             treeData={menuList}
             defaultExpandAll={true}
-            defaultCheckedKeys={roleMenuList}
             checkedKeys={checkedKeys}
             onCheck={onCheck}
           />
