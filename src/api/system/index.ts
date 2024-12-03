@@ -100,3 +100,19 @@ export function assignRoleApi(data: { userId: number; roleIds: number[] }) {
     body: JSON.stringify(data),
   });
 }
+
+// 重置密码
+export function resetPasswordApi(data: { id: number; password: string }) {
+  return fetch(`/user/updatePassword`, "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
+  });
+}
+
+// 重制密码（个人）
+export function resetPasswordPersonalApi(data: { password: string }) {
+  return fetch(`/user/update/my/password`, "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
+  });
+}

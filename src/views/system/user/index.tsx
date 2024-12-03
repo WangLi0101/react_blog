@@ -4,6 +4,7 @@ import {
   deleteUserApi,
   editUserApi,
   getUsersPageApi,
+  resetPasswordApi,
 } from "@/api/system";
 import { PageParams, UserInfo } from "@/api/system/system";
 import { Gender } from "@/api/system/system.enum";
@@ -18,7 +19,7 @@ import {
   Dropdown,
 } from "antd";
 import { ColumnsType } from "antd/es/table";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import { UserForm, UserFormType } from "./components/UserForm";
 import {
@@ -26,6 +27,7 @@ import {
   AssingRoleFormType,
 } from "./components/AssignRoleForm";
 import { DownOutlined } from "@ant-design/icons";
+import ResetPasswordDialog from "./components/ResetPasswordDialog";
 interface ModelConfig {
   visible: boolean;
   title: string;
@@ -48,8 +50,9 @@ const User: React.FC = () => {
   });
   const [currentUser, setCurrentUser] = useState<UserInfo | undefined>();
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [resetPasswordVisible, setResetPasswordVisible] = useState(false);
   // 获取用户列表
-  const getUserList = async () => {
+  const getUserList = useCallback(async () => {
     setLoading(true);
     const res = await getUsersPageApi(search);
     setLoading(false);
@@ -57,7 +60,7 @@ const User: React.FC = () => {
       setUserList(res.data.list);
       setTotal(res.data.total);
     }
-  };
+  }, [search]);
 
   const pageChange = (page: number, pageSize: number) => {
     setSearch((prev) => {
@@ -67,7 +70,7 @@ const User: React.FC = () => {
 
   useEffect(() => {
     getUserList();
-  }, [search]);
+  }, [getUserList, search]);
 
   useEffect(() => {
     if (modelConfig.visible && currentUser) {
@@ -123,6 +126,11 @@ const User: React.FC = () => {
             label: "分配角色",
             key: "edit",
             onClick: () => assignRoleHandler(record),
+          },
+          {
+            label: "重置密码",
+            key: "reset",
+            onClick: () => resetPasswordHandler(record),
           },
         ];
         return (
@@ -257,6 +265,26 @@ const User: React.FC = () => {
     });
   };
 
+  const resetPasswordHandler = (record: UserInfo) => {
+    setCurrentUser(record);
+    setResetPasswordVisible(true);
+  };
+
+  const resetPassword = useCallback(
+    async (values: { password: string }) => {
+      if (!currentUser) return;
+      const res = await resetPasswordApi({
+        id: currentUser?.id,
+        password: values.password,
+      });
+      if (res.code === 0) {
+        message.success("重置密码成功");
+        setResetPasswordVisible(false);
+        getUserList();
+      }
+    },
+    [currentUser, getUserList]
+  );
   // 提交
   const submit = () => {
     formRef
@@ -322,6 +350,11 @@ const User: React.FC = () => {
       >
         <div className="dialog-content">{getForm()}</div>
       </Modal>
+      <ResetPasswordDialog
+        visible={resetPasswordVisible}
+        setVisible={setResetPasswordVisible}
+        onSubmit={resetPassword}
+      />
     </div>
   );
 };
