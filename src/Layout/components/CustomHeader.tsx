@@ -43,16 +43,16 @@ const CustomHeader: React.FC = () => {
       icon: <UserOutlined />,
     },
     {
-      key: "2",
-      label: "退出登录",
-      icon: <LogoutOutlined />,
-      onClick: handleLogout,
-    },
-    {
       key: "3",
       label: "重制密码",
       icon: <LockOutlined />,
       onClick: resetPassword,
+    },
+    {
+      key: "2",
+      label: "退出登录",
+      icon: <LogoutOutlined />,
+      onClick: handleLogout,
     },
   ];
 
