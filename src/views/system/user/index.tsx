@@ -118,7 +118,8 @@ const User: React.FC = () => {
     },
     {
       title: "操作",
-      width: 130,
+      width: 180,
+
       align: "center",
       render: (_, record: UserInfo) => {
         const items = [
@@ -322,6 +323,7 @@ const User: React.FC = () => {
         dataSource={userList}
         loading={loading}
         pagination={false}
+        tableLayout="auto"
         rowKey="id"
         className="h-[calc(100vh-320px)]"
       />

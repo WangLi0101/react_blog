@@ -2,6 +2,7 @@ import fetch from "@/utils/http";
 import type {
   CreateUserParams,
   LoginParams,
+  MenuItem,
   PageParams,
   PageUser,
   Role,
@@ -114,5 +115,38 @@ export function resetPasswordPersonalApi(data: { password: string }) {
   return fetch(`/user/update/my/password`, "MANGMENT", {
     method: "post",
     body: JSON.stringify(data),
+  });
+}
+
+// 获取菜单
+export function getMenuApi() {
+  return fetch<MenuItem[]>("/menu", "MANGMENT", {
+    method: "get",
+  });
+}
+
+// 创建菜单
+export function createMenuApi(data: Omit<MenuItem, "id">) {
+  return fetch<MenuItem>("/menu", "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
+  });
+}
+
+// 编辑菜单
+export function editMenuApi(
+  id: number,
+  data: Omit<MenuItem, "id" | "parentId">
+) {
+  return fetch<MenuItem>(`/menu/${id}`, "MANGMENT", {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  });
+}
+
+// 删除菜单
+export function deleteMenuApi(id: number) {
+  return fetch(`/menu/${id}`, "MANGMENT", {
+    method: "delete",
   });
 }

@@ -49,3 +49,12 @@ export interface PageParams {
 }
 
 export type PageUser = PageResult<UserInfo>;
+
+export interface MenuItem {
+  id: number;
+  path: string;
+  title: string;
+  icon: string;
+  isHidden: boolean;
+  parentId: number | null;
+}

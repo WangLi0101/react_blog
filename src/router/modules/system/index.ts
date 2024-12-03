@@ -23,6 +23,13 @@ export default [
           title: "用户管理",
         },
       },
+      {
+        path: "/system/menu",
+        Component: lazy(() => import("@/views/system/menu/index")),
+        handle: {
+          title: "菜单管理",
+        },
+      },
     ],
   },
 ] as RouteObject[];

@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 // 其他 SCSS 样式...
-.dialog-content {
-  padding-top: 20px;
+.ant-modal-body {
+  margin-top: 20px !important;
 }

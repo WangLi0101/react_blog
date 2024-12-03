@@ -45,6 +45,13 @@ const Roles: React.FC = () => {
               >
                 删除
               </Button>
+              <Button
+                color="primary"
+                variant="text"
+                onClick={() => editRole(record)}
+              >
+                分配菜单
+              </Button>
             </div>
           </>
         );
