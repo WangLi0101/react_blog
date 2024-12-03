@@ -150,3 +150,18 @@ export function deleteMenuApi(id: number) {
     method: "delete",
   });
 }
+
+// 分配菜单
+export function assignMenuApi(data: { roleId: number; menuIds: number[] }) {
+  return fetch(`/role/assignMenu`, "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
+  });
+}
+
+// 获取角色菜单
+export function getRoleMenuApi(roleId: number) {
+  return fetch<MenuItem[]>(`/role/getMenu/${roleId}`, "MANGMENT", {
+    method: "get",
+  });
+}

@@ -1,26 +1,65 @@
-import { Input, Modal, Form, FormInstance, message } from "antd";
-import React, { useRef, useState } from "react";
+import { assignMenuApi, getMenuApi, getRoleMenuApi } from "@/api/system";
+import { MenuItem } from "@/api/system/system";
+import { buildTree, TreeNode } from "@/utils/tree";
+import { message, Modal, Tree, TreeProps } from "antd";
+import React, { useEffect, useState } from "react";
 interface Props {
   dialogVisible: boolean;
   setDialogVisible: (visible: boolean) => void;
-  roleId: number;
+  roleId: number | undefined;
 }
-type FieldType = {
-  menuIds: number[];
-};
 
-export const RolesDialog: React.FC<Props> = React.memo(
+export const AssignMenuDialog: React.FC<Props> = React.memo(
   ({ dialogVisible, setDialogVisible, roleId }) => {
-    const [formRef] = Form.useForm<FieldType>();
     const [loading, setLoading] = useState(false);
+    const [menuList, setMenuList] = useState<TreeNode<MenuItem>[]>([]);
+    const [roleMenuList, setRoleMenuList] = useState<number[]>([]);
+    const [checkedKeys, setCheckedKeys] = useState<number[]>([]);
+    const getMenuList = async () => {
+      setLoading(true);
+      const res = await getMenuApi();
+      setLoading(false);
+      if (res.code === 0) {
+        const tree = buildTree(res.data);
+        setMenuList(tree);
+      }
+    };
 
-    const handleOk = () => {
-      formRef.validateFields().then(async (values) => {
-        console.log(values);
+    const getMyMenuList = async () => {
+      if (!roleId) return;
+      const res = await getRoleMenuApi(roleId);
+      if (res.code === 0) {
+        const tree = buildTree(res.data);
+        setRoleMenuList(tree.map((item) => item.id));
+      }
+    };
+
+    useEffect(() => {
+      getMenuList();
+    }, []);
+
+    useEffect(() => {
+      getMyMenuList();
+    }, [roleId]);
+
+    const onCheck: TreeProps<TreeNode<MenuItem>>["onCheck"] = (checkedKeys) => {
+      setCheckedKeys(checkedKeys as number[]);
+    };
+
+    const handleOk = async () => {
+      if (!roleId) return;
+      setLoading(true);
+      const res = await assignMenuApi({
+        roleId,
+        menuIds: checkedKeys,
       });
+      setLoading(false);
+      if (res.code === 0) {
+        message.success("分配成功");
+        setDialogVisible(false);
+      }
     };
     const handleCancel = () => {
-      formRef.resetFields();
       setDialogVisible(false);
     };
 
@@ -32,7 +71,17 @@ export const RolesDialog: React.FC<Props> = React.memo(
         onCancel={handleCancel}
         confirmLoading={loading}
       >
-        <div className="content">11</div>
+        <div className="content">
+          <Tree<TreeNode<MenuItem>>
+            fieldNames={{ title: "title", key: "id", children: "children" }}
+            checkable
+            treeData={menuList}
+            defaultExpandAll={true}
+            defaultCheckedKeys={roleMenuList}
+            checkedKeys={checkedKeys}
+            onCheck={onCheck}
+          />
+        </div>
       </Modal>
     );
   }

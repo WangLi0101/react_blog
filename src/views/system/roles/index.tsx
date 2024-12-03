@@ -4,13 +4,14 @@ import { Button, message, Modal, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { RolesDialog } from "./components/RolesDialog";
 import { ColumnsType } from "antd/es/table";
-
+import { AssignMenuDialog } from "./components/AssignMenuDialog";
 const Roles: React.FC = () => {
   const [rolesList, setRolesList] = useState<Role[]>([]);
   const [loading, setLoading] = useState(false);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [currentRole, setCurrentRole] = useState<Role | null>(null);
   const [isEdit, setIsEdit] = useState(false);
+  const [assignMenuDialogVisible, setAssignMenuDialogVisible] = useState(false);
   const columns: ColumnsType<Role> = [
     {
       title: "key",
@@ -48,7 +49,7 @@ const Roles: React.FC = () => {
               <Button
                 color="primary"
                 variant="text"
-                onClick={() => editRole(record)}
+                onClick={() => editMenu(record)}
               >
                 分配菜单
               </Button>
@@ -76,6 +77,12 @@ const Roles: React.FC = () => {
     setCurrentRole(record);
     setDialogVisible(true);
   };
+
+  const editMenu = (record: Role) => {
+    setCurrentRole(record);
+    setAssignMenuDialogVisible(true);
+  };
+
   const delRole = (record: Role) => {
     console.log(record);
     Modal.confirm({
@@ -112,6 +119,11 @@ const Roles: React.FC = () => {
         isEdit={isEdit}
         currentRole={currentRole}
         getList={getRolesList}
+      />
+      <AssignMenuDialog
+        dialogVisible={assignMenuDialogVisible}
+        setDialogVisible={setAssignMenuDialogVisible}
+        roleId={currentRole?.id}
       />
     </div>
   );
