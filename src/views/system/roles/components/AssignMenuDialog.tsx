@@ -41,8 +41,14 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
       getMyMenuList();
     }, [roleId]);
 
-    const onCheck: TreeProps<TreeNode<MenuItem>>["onCheck"] = (checkedKeys) => {
-      setCheckedKeys(checkedKeys as number[]);
+    const onCheck: TreeProps<TreeNode<MenuItem>>["onCheck"] = (
+      checkedKeys,
+      _info
+    ) => {
+      const keys = Array.isArray(checkedKeys)
+        ? checkedKeys
+        : checkedKeys.checked;
+      setCheckedKeys(keys.map(Number));
     };
 
     const handleOk = async () => {
@@ -78,6 +84,7 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
             defaultExpandAll={true}
             checkedKeys={checkedKeys}
             onCheck={onCheck}
+            checkStrictly={true}
           />
         </div>
       </Modal>
