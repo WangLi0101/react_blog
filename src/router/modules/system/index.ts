@@ -10,7 +10,7 @@ export default [
     },
     children: [
       {
-        path: "/system/roles",
+        path: "/system/role",
         Component: lazy(() => import("@/views/system/roles/index")),
         handle: {
           title: "角色管理",

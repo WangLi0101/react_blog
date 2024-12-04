@@ -37,6 +37,10 @@ export const MenuPage: React.FC = () => {
       dataIndex: "path",
     },
     {
+      title: "排序",
+      dataIndex: "sort",
+    },
+    {
       title: "图标",
       dataIndex: "icon",
       render: (_: string, record: MenuItem) => (

@@ -65,7 +65,7 @@ const CustomHeader: React.FC = () => {
         <Dropdown menu={{ items: dropdownItems }} placement="bottomRight">
           <Space className="cursor-pointer">
             <Avatar icon={<UserOutlined />} className="bg-blue-400" />
-            <span className="text-gray-700">{userInfo?.username}</span>
+            <span className="text-gray-700">{userInfo?.profile?.name}</span>
           </Space>
         </Dropdown>
       </Header>

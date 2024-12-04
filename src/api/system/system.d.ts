@@ -9,6 +9,8 @@ export interface CreateUserParams {
 
   password: string;
 
+  name: string;
+
   gender: Gender;
 
   avatar?: string;
@@ -28,6 +30,8 @@ export interface Role {
 }
 
 export interface Profile {
+  name: string;
+
   gender: number;
 
   avatar: string;

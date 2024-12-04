@@ -1,7 +1,5 @@
-import { RouteObject } from "react-router";
-
-export function flattenRoutes(routes: RouteObject[]): RouteObject[] {
-  return routes.reduce<RouteObject[]>((flat, route) => {
+export function flattenRoutes<T extends { children?: T[] }>(routes: T[]): T[] {
+  return routes.reduce<T[]>((flat, route) => {
     const flattenedRoute = { ...route };
     delete flattenedRoute.children;
     return route.children
@@ -10,12 +8,12 @@ export function flattenRoutes(routes: RouteObject[]): RouteObject[] {
   }, []);
 }
 
-export function findParentAndSelf(
+export function findParentAndSelf<T extends { path: string; children?: T[] }>(
   path: string,
-  routes: RouteObject[]
+  routes: T[]
 ): {
-  parents: RouteObject[];
-  self: RouteObject;
+  parents: T[];
+  self: T;
 } | null {
   let result = null;
 

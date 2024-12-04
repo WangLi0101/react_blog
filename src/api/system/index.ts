@@ -8,6 +8,7 @@ import type {
   Role,
   UserInfo,
 } from "./system";
+import { TreeNode } from "@/utils/tree";
 export function createUser(data: CreateUserParams) {
   return fetch("/user", "MANGMENT", {
     method: "post",
@@ -161,7 +162,14 @@ export function assignMenuApi(data: { roleId: number; menuIds: number[] }) {
 
 // 获取角色菜单
 export function getRoleMenuApi(roleId: number) {
-  return fetch<MenuItem[]>(`/role/getMenu/${roleId}`, "MANGMENT", {
+  return fetch<MenuItem[]>(`/role/menu/${roleId}`, "MANGMENT", {
+    method: "get",
+  });
+}
+
+// 获取我的菜单
+export function getMyMenuApi() {
+  return fetch<TreeNode<MenuItem>[]>("/role/my/menu", "MANGMENT", {
     method: "get",
   });
 }

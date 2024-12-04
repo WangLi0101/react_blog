@@ -5,6 +5,7 @@ import { Gender } from "@/api/system/system.enum";
 export interface UserFormType {
   username: string;
   password: string;
+  name: string;
   email: string;
   gender: Gender;
   confirmPassword: string;
@@ -33,7 +34,13 @@ export const UserForm: React.FC<Props> = ({ formRef, isEdit }) => {
             <Input />
           </Form.Item>
         )}
-
+        <Form.Item<UserFormType>
+          label="姓名"
+          name="name"
+          rules={[{ required: true, message: "Please input your name!" }]}
+        >
+          <Input />
+        </Form.Item>
         <Form.Item<UserFormType>
           label="邮箱"
           name="email"

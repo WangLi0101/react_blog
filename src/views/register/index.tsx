@@ -54,6 +54,20 @@ export const Register = () => {
             </Form.Item>
 
             <Form.Item
+              name="username"
+              rules={[
+                { required: true, message: "姓名!" },
+                { min: 3, message: "用户名至少3个字符!" },
+              ]}
+            >
+              <Input
+                prefix={<UserOutlined className="text-gray-400" />}
+                placeholder="姓名"
+                className="h-12 rounded-lg border border-gray-200"
+              />
+            </Form.Item>
+
+            <Form.Item
               name="email"
               rules={[
                 { required: true, message: "请输入邮箱!" },

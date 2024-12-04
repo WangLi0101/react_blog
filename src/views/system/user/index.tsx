@@ -101,6 +101,14 @@ const User: React.FC = () => {
       width: 150,
     },
     {
+      title: "姓名",
+      dataIndex: "name",
+      width: 150,
+      render: (_, record: UserInfo) => {
+        return record.profile?.name;
+      },
+    },
+    {
       title: "性别",
       dataIndex: "gender",
       width: 100,

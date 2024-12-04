@@ -3,24 +3,26 @@ import { Layout, Menu } from "antd";
 import type { MenuProps } from "antd";
 import { useMenuStore } from "@/store/menu";
 import { Icon } from "@iconify/react";
-import { RouteObject, useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { findParentAndSelf } from "@/router/utils/flatten";
+import { TreeNode } from "@/utils/tree";
+import { MenuItem as MyMenuItem } from "@/api/system/system";
 const { Sider } = Layout;
 
-type MenuItem = Required<MenuProps>["items"][number];
+type AntMenuItem = Required<MenuProps>["items"][number];
 
 const getItem = (
   label: React.ReactNode,
   key: React.Key,
   icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem => {
+  children?: AntMenuItem[]
+): AntMenuItem => {
   return {
     key,
     icon,
     children,
     label,
-  } as MenuItem;
+  } as AntMenuItem;
 };
 interface CustomSiderProps {
   collapsed: boolean;
@@ -28,16 +30,17 @@ interface CustomSiderProps {
 }
 
 const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
-  const menuList = useMenuStore((state) => state.menuList);
+  const menuList = useMenuStore((state) => state.myMenuList);
   const location = useLocation();
   const navigate = useNavigate();
-  const [items, setItems] = useState<MenuItem[]>([]);
+  const [items, setItems] = useState<AntMenuItem[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const convertToMenuItems = useCallback(
-    (menuArray: RouteObject[]): MenuItem[] => {
+    (menuArray: TreeNode<MyMenuItem>[]): AntMenuItem[] => {
       return menuArray.map((item) => {
-        const { title, icon } = item.handle;
+        const { title, icon, isHidden } = item;
+        if (isHidden) return null;
         return getItem(
           title,
           item.path!,

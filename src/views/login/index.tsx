@@ -3,14 +3,17 @@ import { Link, useNavigate } from "react-router";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { LoginParams } from "@/api/system/system";
 import { useUserStore } from "@/store/user";
+import { useMenuStore } from "@/store/menu";
 
 export const Login = () => {
   const navigate = useNavigate();
   const userStore = useUserStore();
+  const menuStore = useMenuStore();
   const [form] = Form.useForm();
 
   const onFinish = async (values: LoginParams) => {
     const res = await userStore.login(values);
+    menuStore.getMyMenu();
     if (res) {
       message.success("登录成功");
       navigate("/");

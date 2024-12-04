@@ -11,6 +11,7 @@ import { getToken } from "@/utils/auth";
 import { useTopMenu } from "@/hooks/useTopMenu";
 import { emitter } from "@/utils/mitt";
 import { useMeta } from "@/hooks/useMeta";
+import Forbidden from "@/views/error/403";
 // 加载modules下所有的文件
 const getStaticRoutes = () => {
   const arr = [];
@@ -50,6 +51,12 @@ const routes = [
 
   ...registerRoutes,
 
+  // 403
+  {
+    path: "/403",
+    Component: Forbidden,
+  },
+
   // 404
   {
     path: "/404",
@@ -71,24 +78,43 @@ export function Router() {
   const element = useRoutes(routes);
   const userInfo = userStore.userInfo;
   const meta = useMeta();
+  const menuStore = useMenuStore();
+
   useEffect(() => {
     // 设置title
     const title = meta.title || "Auth";
     document.title = title;
-    if (token && !userInfo) {
-      userStore.getUserInfo();
-    }
-
-    // 如果token存在且在白名单中，则导航到上一个页面
-    if (token && whiteList.includes(pathname)) {
-      navigate(-1);
-    }
-
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
     if (pathname === "/" && topMenuPath) {
       navigate(topMenuPath);
     }
-  }, [token, pathname, userStore, navigate, topMenuPath, userInfo, meta.title]);
+    if (token) {
+      if (!userInfo) {
+        userStore.getUserInfo();
+      }
+      // 如果token存在且在白名单中，则导航到上一个页面
+      if (whiteList.includes(pathname)) {
+        navigate(-1);
+      }
+    }
+
+    // 无权限去403
+    if (
+      !whiteList.includes(pathname) &&
+      !menuStore.myMenuFlattenList.find((el) => el.path === pathname)
+    ) {
+      navigate("/403");
+    }
+  }, [
+    token,
+    pathname,
+    userStore,
+    navigate,
+    topMenuPath,
+    userInfo,
+    meta.title,
+    menuStore,
+  ]);
 
   useEffect(() => {
     emitter.on("goLogin", () => {
