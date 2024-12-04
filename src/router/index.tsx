@@ -88,6 +88,8 @@ export function Router() {
   const element = useRoutes(routes);
 
   useEffect(() => {
+    console.log(pathname);
+
     // 设置title
     const title = meta?.title || "Auth";
     document.title = title;

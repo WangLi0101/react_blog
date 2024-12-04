@@ -8,7 +8,6 @@ import type {
   Role,
   UserInfo,
 } from "./system";
-import { TreeNode } from "@/utils/tree";
 export function createUser(data: CreateUserParams) {
   return fetch("/user", "MANGMENT", {
     method: "post",
@@ -169,7 +168,7 @@ export function getRoleMenuApi(roleId: number) {
 
 // 获取我的菜单
 export function getMyMenuApi() {
-  return fetch<TreeNode<MenuItem>[]>("/role/my/menu", "MANGMENT", {
+  return fetch<MenuItem[]>("/role/my/menu", "MANGMENT", {
     method: "get",
   });
 }

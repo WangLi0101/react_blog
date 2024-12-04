@@ -27,30 +27,6 @@ const Forbidden = () => {
 
         <div className="space-y-4 relative z-10">
           <button
-            onClick={() => navigate(-1)}
-            className="group w-full px-6 py-3 text-sm font-medium text-gray-700 bg-white/90 rounded-lg
-            transition-all duration-300 hover:shadow-md transform hover:scale-[1.02] active:scale-[0.98]
-            border border-[#00A9FF]/20 hover:border-[#00A9FF]/30 hover:bg-[#00A9FF]/5"
-          >
-            <span className="inline-flex items-center">
-              <svg
-                className="w-4 h-4 mr-2 transform transition-transform group-hover:-translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              返回上一页
-            </span>
-          </button>
-
-          <button
             onClick={() => navigate("/")}
             className="group w-full px-6 py-3 text-sm font-medium text-white bg-[#00A9FF] rounded-lg
             transition-all duration-300 hover:shadow-lg ring-offset-2 ring-[#00A9FF] focus:ring-2 outline-none

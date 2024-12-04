@@ -1,8 +1,6 @@
 import { getMyMenuApi } from "@/api/system";
 import { MenuItem } from "@/api/system/system";
-import { flattenRoutes } from "@/router/utils/flatten";
-import { TreeNode } from "@/utils/tree";
-import { RouteObject } from "react-router";
+import { buildTree, TreeNode } from "@/utils/tree";
 import { create } from "zustand";
 import { devtools, persist, createJSONStorage } from "zustand/middleware";
 type State = {
@@ -27,9 +25,9 @@ export const useMenuStore = create<State & Actions>()(
       getMyMenu: async () => {
         const res = await getMyMenuApi();
         if (res.code === 0) {
-          set({ myMenuList: res.data });
-          const flattenList = flattenRoutes(res.data);
-          set({ myMenuFlattenList: flattenList });
+          set({ myMenuFlattenList: res.data });
+          const tree = buildTree(res.data);
+          set({ myMenuList: tree });
         }
       },
     })),
