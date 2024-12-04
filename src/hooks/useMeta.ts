@@ -1,14 +1,10 @@
+import { MenuItem } from "@/api/system/system";
 import { useMenuStore } from "@/store/menu";
 import { useLocation } from "react-router";
 
-interface Meta {
-  title: string;
-  icon?: string;
-}
-
-export const useMeta = (): Meta => {
+export const useMeta = (): MenuItem | undefined => {
   const menuStore = useMenuStore();
   const pathName = useLocation().pathname;
-  const res = menuStore.flattenMenuList.find((el) => el.path === pathName);
-  return res ? res.handle : {};
+  const res = menuStore.myMenuFlattenList.find((el) => el.path === pathName);
+  return res;
 };

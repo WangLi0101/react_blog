@@ -5,7 +5,7 @@ import { useLocation } from "react-router";
 import { findParentAndSelf } from "@/router/utils/flatten";
 
 const CustomBreadcrumb: React.FC = () => {
-  const menuList = useMenuStore((state) => state.menuList);
+  const menuList = useMenuStore((state) => state.myMenuList);
   const [parentMenu, setParentMenu] = useState<{ title: string }[]>([]);
   const location = useLocation();
 
@@ -17,7 +17,7 @@ const CustomBreadcrumb: React.FC = () => {
   useEffect(() => {
     const res = getAllParentMenu();
     const items = res.map((item) => ({
-      title: item?.handle.title,
+      title: item?.title || "",
     }));
     setParentMenu(items);
   }, [getAllParentMenu, location]);

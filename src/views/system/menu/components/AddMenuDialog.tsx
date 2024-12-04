@@ -16,6 +16,7 @@ interface FormType {
   icon: string;
   sort: number;
   isHidden: boolean;
+  component: string;
 }
 export const AddMenuDialog: React.FC<Props> = ({
   visible,
@@ -93,6 +94,13 @@ export const AddMenuDialog: React.FC<Props> = ({
               label="名称"
               name="title"
               rules={[{ required: true, message: "请输入名称" }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="组件"
+              name="component"
+              rules={[{ required: true, message: "请输入组件" }]}
             >
               <Input />
             </Form.Item>

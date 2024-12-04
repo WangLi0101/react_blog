@@ -61,4 +61,5 @@ export interface MenuItem {
   icon: string;
   isHidden: boolean;
   parentId: number | null;
+  component: string;
 }

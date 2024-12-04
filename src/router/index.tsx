@@ -1,52 +1,23 @@
 import { RouteObject, useLocation, useNavigate, useRoutes } from "react-router";
 import Layout from "@/Layout";
-import { flattenRoutes } from "./utils/flatten";
 import { useMenuStore } from "@/store/menu";
 import registerRoutes from "./registration";
 import NotFound from "@/views/error/404";
 import { Navigate } from "react-router";
-import { useEffect } from "react";
+import { ComponentType, lazy, useEffect } from "react";
 import { useUserStore } from "@/store/user";
 import { getToken } from "@/utils/auth";
 import { useTopMenu } from "@/hooks/useTopMenu";
 import { emitter } from "@/utils/mitt";
 import { useMeta } from "@/hooks/useMeta";
 import Forbidden from "@/views/error/403";
-// 加载modules下所有的文件
-const getStaticRoutes = () => {
-  const arr = [];
-  const treeMenu = [];
-  const flatArr: RouteObject[] = [];
-  const modules = import.meta.glob("./modules/*/*.{ts,tsx}", {
-    eager: true,
-  });
+import { MenuItem } from "@/api/system/system";
 
-  for (const key in modules) {
-    const moduleRoutes = (modules[key] as { default: RouteObject[] }).default;
-    treeMenu.push(...moduleRoutes);
-
-    // 扁平化对象
-    const flattenRoutesArr = flattenRoutes(moduleRoutes);
-    flatArr.push(...flattenRoutesArr);
-
-    // 过滤掉没有Component的元素
-    const filterRoutes = flattenRoutesArr.filter(
-      (el) => el.Component || el.element
-    );
-    arr.push(...filterRoutes);
-  }
-
-  // 存储菜单
-  useMenuStore.getState().setMenuList(treeMenu);
-  useMenuStore.getState().setFlattenMenuList(flatArr);
-  return arr;
-};
-
-const routes = [
+const routes: RouteObject[] = [
   {
     path: "/",
     Component: Layout,
-    children: getStaticRoutes() as RouteObject[],
+    children: [],
   },
 
   ...registerRoutes,
@@ -68,34 +39,69 @@ const routes = [
   },
 ];
 
-const whiteList = ["/login", "/register"];
+/**
+ * 动态路由
+ */
+const routerModules = import.meta.glob("@/views/**/*.tsx");
+
+const addRoutes = (callBackRoutes: MenuItem[]) => {
+  const rootRoute = routes.find((el) => el.path === "/");
+  if (!rootRoute) return;
+
+  const hasComponent = callBackRoutes.filter((el) => el.component);
+
+  hasComponent.forEach((el) => {
+    const isNotAdd = !rootRoute.children?.find(
+      (route) => route.path === el.path
+    );
+    if (isNotAdd) {
+      const Component = lazy(
+        routerModules[`/src/views${el.component}.tsx`] as () => Promise<{
+          default: ComponentType;
+        }>
+      );
+      rootRoute.children?.push({
+        path: el.path,
+        handle: {
+          title: el.title,
+          icon: el.icon,
+        },
+        Component,
+      });
+    }
+  });
+};
+
+const whiteList = ["/", "/login", "/register"];
 export function Router() {
   const userStore = useUserStore();
   const navigate = useNavigate();
   const topMenuPath = useTopMenu();
   const token = getToken();
   const pathname = useLocation().pathname;
-  const element = useRoutes(routes);
   const userInfo = userStore.userInfo;
   const meta = useMeta();
   const menuStore = useMenuStore();
 
+  addRoutes(menuStore.myMenuFlattenList);
+
+  const element = useRoutes(routes);
+
   useEffect(() => {
     // 设置title
-    const title = meta.title || "Auth";
+    const title = meta?.title || "Auth";
     document.title = title;
+    // 如果token存在且在白名单中，则导航到上一个页面
+    if (token && whiteList.includes(pathname) && pathname !== "/") {
+      navigate(-1);
+    }
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
     if (pathname === "/" && topMenuPath) {
       navigate(topMenuPath);
     }
-    if (token) {
-      if (!userInfo) {
-        userStore.getUserInfo();
-      }
-      // 如果token存在且在白名单中，则导航到上一个页面
-      if (whiteList.includes(pathname)) {
-        navigate(-1);
-      }
+
+    if (token && !userInfo) {
+      userStore.getUserInfo();
     }
 
     // 无权限去403
@@ -105,16 +111,7 @@ export function Router() {
     ) {
       navigate("/403");
     }
-  }, [
-    token,
-    pathname,
-    userStore,
-    navigate,
-    topMenuPath,
-    userInfo,
-    meta.title,
-    menuStore,
-  ]);
+  }, [pathname]);
 
   useEffect(() => {
     emitter.on("goLogin", () => {

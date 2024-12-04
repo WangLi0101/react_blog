@@ -13,9 +13,9 @@ export const Login = () => {
 
   const onFinish = async (values: LoginParams) => {
     const res = await userStore.login(values);
-    menuStore.getMyMenu();
+    await menuStore.getMyMenu();
     if (res) {
-      message.success("登录成功");
+      //  message.success("登录成功");
       navigate("/");
     }
   };
