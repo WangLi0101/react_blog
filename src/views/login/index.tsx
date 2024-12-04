@@ -1,21 +1,34 @@
 import { Button, ConfigProvider, Form, Input, message } from "antd";
 import { Link, useNavigate } from "react-router";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { LoginParams } from "@/api/system/system";
+import { Code, LoginParams } from "@/api/system/system";
 import { useUserStore } from "@/store/user";
 import { useMenuStore } from "@/store/menu";
+import { getCaptchaApi } from "@/api/system";
+import { useEffect, useState } from "react";
 
 export const Login = () => {
   const navigate = useNavigate();
   const userStore = useUserStore();
   const menuStore = useMenuStore();
   const [form] = Form.useForm();
-
+  const [codeRes, setCodeRes] = useState<Code>();
+  const getCode = async () => {
+    const res = await getCaptchaApi();
+    if (res.code === 0) {
+      setCodeRes(res.data);
+    }
+  };
+  useEffect(() => {
+    getCode();
+  }, []);
   const onFinish = async (values: LoginParams) => {
-    const res = await userStore.login(values);
+    console.log(values);
+    if (!codeRes) return;
+    const res = await userStore.login({ ...values, codeId: codeRes.codeId });
     await menuStore.getMyMenu();
     if (res) {
-      // message.success("登录成功");
+      message.success("登录成功");
       navigate("/");
     }
   };
@@ -66,6 +79,24 @@ export const Login = () => {
               />
             </Form.Item>
 
+            <Form.Item
+              name="code"
+              rules={[{ required: true, message: "请输入验证码!" }]}
+            >
+              <div className="flex items-center gap-2">
+                <Input
+                  prefix={<UserOutlined className="text-gray-400" />}
+                  placeholder="验证码"
+                  className="h-10 rounded-lg border border-gray-200 "
+                />
+                <div
+                  dangerouslySetInnerHTML={{ __html: codeRes?.code || "" }}
+                  className="captcha-container cursor-pointer"
+                  onClick={getCode}
+                />
+              </div>
+            </Form.Item>
+
             <Form.Item>
               <Button
                 type="primary"
@@ -77,7 +108,6 @@ export const Login = () => {
                 Login
               </Button>
             </Form.Item>
-
             <div className="text-center mt-6">
               <Link to="/register" className="text-gray-500 hover:text-[#000]">
                 Don't have an account?

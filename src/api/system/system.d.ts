@@ -21,6 +21,8 @@ export interface CreateUserParams {
 export interface LoginParams {
   username: string;
   password: string;
+  code: string;
+  codeId: string;
 }
 
 export interface Role {
@@ -62,4 +64,9 @@ export interface MenuItem {
   isHidden: boolean;
   parentId: number | null;
   component: string;
+}
+
+export interface Code {
+  code: string;
+  codeId: string;
 }

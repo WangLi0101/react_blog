@@ -1,5 +1,6 @@
 import fetch from "@/utils/http";
 import type {
+  Code,
   CreateUserParams,
   LoginParams,
   MenuItem,
@@ -169,6 +170,13 @@ export function getRoleMenuApi(roleId: number) {
 // 获取我的菜单
 export function getMyMenuApi() {
   return fetch<MenuItem[]>("/role/my/menu", "MANGMENT", {
+    method: "get",
+  });
+}
+
+// 获取验证码
+export function getCaptchaApi() {
+  return fetch<Code>("/user/code", "MANGMENT", {
     method: "get",
   });
 }
