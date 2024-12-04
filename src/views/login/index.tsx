@@ -15,7 +15,7 @@ export const Login = () => {
     const res = await userStore.login(values);
     await menuStore.getMyMenu();
     if (res) {
-      //  message.success("登录成功");
+      message.success("登录成功");
       navigate("/");
     }
   };
