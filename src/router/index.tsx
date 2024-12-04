@@ -111,16 +111,7 @@ export function Router() {
     ) {
       navigate("/403");
     }
-  }, [
-    menuStore.myMenuFlattenList,
-    meta?.title,
-    navigate,
-    pathname,
-    token,
-    topMenuPath,
-    userInfo,
-    userStore,
-  ]);
+  }, [pathname]);
 
   useEffect(() => {
     emitter.on("goLogin", () => {
