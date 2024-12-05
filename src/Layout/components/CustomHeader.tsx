@@ -5,7 +5,8 @@ import { UserOutlined, LogoutOutlined, LockOutlined } from "@ant-design/icons";
 import { useUserStore } from "@/store/user";
 import ResetPasswordDialog from "@/views/system/user/components/ResetPasswordDialog";
 import { resetPasswordPersonalApi } from "@/api/system";
-
+import { Icon } from "@iconify/react";
+import { emitter } from "@/utils/mitt";
 const { Header } = Layout;
 
 const CustomHeader: React.FC = () => {
@@ -68,7 +69,16 @@ const CustomHeader: React.FC = () => {
             <span className="text-gray-700">{userInfo?.profile?.name}</span>
           </Space>
         </Dropdown>
+        <Icon
+          className="ml-2 cursor-pointer"
+          icon="hugeicons:settings-01"
+          style={{ fontSize: "16px" }}
+          onClick={() => {
+            emitter.emit("setOpen", true);
+          }}
+        />
       </Header>
+
       <ResetPasswordDialog
         visible={resetPasswordVisible}
         setVisible={setResetPasswordVisible}

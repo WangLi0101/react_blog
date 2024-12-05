@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
+    "@heroicons/react": "^2.2.0",
     "@pureadmin/utils": "^2.5.0",
     "antd": "^5.22.2",
     "mitt": "^3.0.1",

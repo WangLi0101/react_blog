@@ -14,11 +14,7 @@ export default defineConfig({
     },
   },
   css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "@/styles/variables" as *;`,
-      },
-    },
+    preprocessorOptions: {},
     postcss: {
       plugins: [tailwindcss, autoprefixer],
     },

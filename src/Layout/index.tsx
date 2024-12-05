@@ -5,7 +5,7 @@ import CustomSider from "./components/CustomSider";
 import CustomBreadcrumb from "./components/CustomBreadcrumb";
 import { Outlet } from "react-router";
 import Loading from "./components/Loading";
-
+import { CustomDrawer } from "./components/CustomDrawer";
 const { Content } = Layout;
 
 // 固定高度常量
@@ -61,6 +61,7 @@ const LayoutPage: React.FC = () => {
           </div>
         </Content>
       </Layout>
+      <CustomDrawer />
     </Layout>
   );
 };
