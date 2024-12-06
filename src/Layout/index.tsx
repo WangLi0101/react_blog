@@ -6,6 +6,9 @@ import CustomBreadcrumb from "./components/CustomBreadcrumb";
 import { Outlet } from "react-router";
 import Loading from "./components/Loading";
 import { CustomDrawer } from "./components/CustomDrawer";
+import { PageTransition } from "@/components/PageTransition";
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router";
 const { Content } = Layout;
 
 // 固定高度常量
@@ -20,6 +23,8 @@ const LayoutPage: React.FC = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const location = useLocation();
+
   useEffect(() => {
     const calculateHeight = () => {
       const windowHeight = window.innerHeight;
@@ -52,12 +57,16 @@ const LayoutPage: React.FC = () => {
               height: contentHeight,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
-              overflow: "auto", // 添加滚动条
+              overflow: "hidden", // 改为 hidden 防止动画时出现滚动条
             }}
           >
-            <Suspense fallback={<Loading />}>
-              <Outlet />
-            </Suspense>
+            <AnimatePresence initial={false}>
+              <Suspense fallback={<Loading />}>
+                <PageTransition key={location.pathname}>
+                  <Outlet />
+                </PageTransition>
+              </Suspense>
+            </AnimatePresence>
           </div>
         </Content>
       </Layout>

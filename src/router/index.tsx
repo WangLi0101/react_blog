@@ -93,7 +93,7 @@ export function Router() {
     document.title = title;
     // 如果token存在且在白名单中，则导航到上一个页面
     if (token && whiteList.includes(pathname) && pathname !== "/") {
-      navigate(-1);
+      navigate(topMenuPath);
     }
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
     if (pathname === "/" && topMenuPath) {

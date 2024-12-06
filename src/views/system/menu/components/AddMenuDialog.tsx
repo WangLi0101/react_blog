@@ -100,7 +100,7 @@ export const AddMenuDialog: React.FC<Props> = ({
             <Form.Item
               label="组件"
               name="component"
-              rules={[{ required: true, message: "请输入组件" }]}
+              rules={[{ required: !!parentId, message: "请输入组件" }]}
             >
               <Input />
             </Form.Item>
