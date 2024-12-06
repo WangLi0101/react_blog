@@ -45,14 +45,14 @@ export const CustomDrawer: React.FC = () => {
       <div className="item mt-10">
         <h2 className="mb-4 text-[16px]">主题色</h2>
         <div className="list flex flex-wrap gap-4">
-          {themeList.map((item) => (
+          {Object.keys(themeList).map((item) => (
             <div
-              onClick={() => themeStore.setColorTheme(item)}
-              key={item.colorPrimary}
+              onClick={() => themeStore.setColorTheme(themeList[item])}
+              key={item}
               className="w-[20px] h-[20px] rounded-[4px] cursor-pointer flex justify-center items-center"
-              style={{ backgroundColor: item.colorPrimary }}
+              style={{ backgroundColor: item }}
             >
-              {themeStore.colorTheme.colorPrimary === item.colorPrimary && (
+              {themeStore.colorTheme.colorPrimary === item && (
                 <Icon icon="ic:round-check" color="#fff" />
               )}
             </div>

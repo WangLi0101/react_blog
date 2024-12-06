@@ -1,4 +1,3 @@
-import "./App.css";
 import { HashRouter } from "react-router";
 import { Router } from "./router";
 import { ConfigProvider, message, theme } from "antd";
