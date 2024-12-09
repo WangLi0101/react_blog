@@ -45,7 +45,11 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
           title,
           item.path!,
           <Icon icon={icon} style={{ fontSize: "24px" }} />,
-          item.children ? convertToMenuItems(item.children) : undefined
+          item.children
+            ? convertToMenuItems(item.children).filter(Boolean).length
+              ? convertToMenuItems(item.children).filter(Boolean)
+              : undefined
+            : undefined
         );
       });
     },
@@ -54,6 +58,7 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
 
   useEffect(() => {
     const menuItems = convertToMenuItems(menuList);
+    console.log(menuItems);
 
     setItems(menuItems);
   }, [convertToMenuItems, menuList]);

@@ -80,6 +80,8 @@ export const MenuPage: React.FC = () => {
   const add = (item?: MenuItem) => {
     if (item) {
       setParentId(item.id);
+    } else {
+      setParentId(null);
     }
     setMenuItem(null);
     setAddMenuDialogVisible(true);

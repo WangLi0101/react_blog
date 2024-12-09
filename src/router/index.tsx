@@ -7,7 +7,6 @@ import { Navigate } from "react-router";
 import { ComponentType, lazy, useEffect } from "react";
 import { useUserStore } from "@/store/user";
 import { getToken } from "@/utils/auth";
-import { useTopMenu } from "@/hooks/useTopMenu";
 import { emitter } from "@/utils/mitt";
 import { useMeta } from "@/hooks/useMeta";
 import Forbidden from "@/views/error/403";
@@ -72,11 +71,10 @@ const addRoutes = (callBackRoutes: MenuItem[]) => {
   });
 };
 
-const whiteList = ["/", "/login", "/register"];
+const whiteList = ["/", "/login", "/register", "/home"];
 export function Router() {
   const userStore = useUserStore();
   const navigate = useNavigate();
-  const topMenuPath = useTopMenu();
   const token = getToken();
   const pathname = useLocation().pathname;
   const userInfo = userStore.userInfo;
@@ -91,13 +89,10 @@ export function Router() {
     // 设置title
     const title = meta?.title || "Auth";
     document.title = title;
-    // 如果token存在且在白名单中，则导航到上一个页面
-    if (token && whiteList.includes(pathname) && pathname !== "/") {
-      navigate(topMenuPath);
-    }
+
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
-    if (pathname === "/" && topMenuPath) {
-      navigate(topMenuPath);
+    if (pathname === "/") {
+      navigate("/home");
     }
 
     if (token && !userInfo) {

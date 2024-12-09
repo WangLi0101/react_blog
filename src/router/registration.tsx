@@ -2,7 +2,22 @@ import { Register } from "@/views/register";
 import { RouteObject } from "react-router";
 
 import { Login } from "@/views/login";
+import Home from "@/views/blog/home";
+import BlogIndex from "@/views/blog";
 export default [
+  {
+    path: "/",
+    handle: {
+      title: "home",
+    },
+    element: <BlogIndex />,
+    children: [
+      {
+        path: "/home",
+        element: <Home />,
+      },
+    ],
+  },
   {
     path: "/login",
     handle: {

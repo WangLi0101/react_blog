@@ -5,8 +5,11 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: "#4B6BFB",
+      },
       boxShadow: {
-        'outline-emerald': '0 0 0 2px rgba(16, 185, 129, 0.2)',
+        "outline-emerald": "0 0 0 2px rgba(16, 185, 129, 0.2)",
       },
       keyframes: {
         'fade-in-up': {

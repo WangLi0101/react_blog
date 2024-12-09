@@ -6,3 +6,10 @@
 .ant-modal-body {
   margin-top: 20px !important;
 }
+
+@import "./fonts.scss";
+
+// 使用字体
+body {
+  font-family: "Barlow", sans-serif;
+}
