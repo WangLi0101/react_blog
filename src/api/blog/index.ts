@@ -1,5 +1,6 @@
 import fetch from "@/utils/http";
-import { Tag } from "./blog";
+import { Blog, Tag } from "./blog";
+import { PageResult } from "../system/system";
 
 // 获取tags
 export function getTagsApi() {
@@ -28,5 +29,17 @@ export function editTagApi(id: number, data: Omit<Tag, "id">) {
 export function deleteTagApi(id: number) {
   return fetch<Tag>(`/tags/${id}`, "MANGMENT", {
     method: "DELETE",
+  });
+}
+
+// 获取博客
+export function getBlogsApi(data: {
+  page: number;
+  pageSize: number;
+  title: string;
+}) {
+  return fetch<PageResult<Blog>>("/blog/list", "MANGMENT", {
+    method: "post",
+    body: JSON.stringify(data),
   });
 }

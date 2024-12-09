@@ -58,8 +58,6 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
 
   useEffect(() => {
     const menuItems = convertToMenuItems(menuList);
-    console.log(menuItems);
-
     setItems(menuItems);
   }, [convertToMenuItems, menuList]);
 
