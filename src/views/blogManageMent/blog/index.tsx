@@ -37,7 +37,7 @@ const BlogPage: React.FC = () => {
           新增
         </Button>
       </div>
-      <div>
+      <div className="mb-5">
         <Table
           columns={columns}
           dataSource={blogs}
@@ -50,6 +50,7 @@ const BlogPage: React.FC = () => {
           total={total}
           current={query.page}
           pageSize={query.pageSize}
+          showSizeChanger
           onChange={(page, pageSize) => setQuery({ ...query, page, pageSize })}
         />
       </div>
