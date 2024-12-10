@@ -28,6 +28,7 @@ export default tseslint.config(
         "varsIgnorePattern": "^_",
         "caughtErrorsIgnorePattern": "^_"
       }],
+      '@typescript-eslint/prefer-ts-expect-error': 'off',
     },
   },
 )

@@ -31,7 +31,7 @@ export const Detail: React.FC = () => {
   }, []);
   return (
     blog && (
-      <div className="mx-auto flex blog_detail overflow-x-hidden">
+      <div className="mx-auto flex blog_detail">
         <div className="left w-[70%]">
           <div className="tags flex items-center gap-3 mb-7">
             {blog.tags.map((tag) => (
@@ -94,9 +94,16 @@ export const Detail: React.FC = () => {
         </div>
         <div className="right ml-9 flex-1">
           <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            transition={{
+              type: "spring",
+              stiffness: 100,
+              damping: 25,
+              mass: 0.8,
+              duration: 0.3,
+            }}
           >
             <Anchor>
               <MarkdownNavbar
