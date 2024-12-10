@@ -4,6 +4,7 @@ import type {
   CreateUserParams,
   LoginParams,
   MenuItem,
+  OssSign,
   PageParams,
   PageUser,
   Role,
@@ -177,6 +178,12 @@ export function getMyMenuApi() {
 // 获取验证码
 export function getCaptchaApi() {
   return fetch<Code>("/user/code", "MANGMENT", {
+    method: "get",
+  });
+}
+// 获取oss签名
+export function getOssSignApi() {
+  return fetch<OssSign>("/system/oss/sign", "MANGMENT", {
     method: "get",
   });
 }

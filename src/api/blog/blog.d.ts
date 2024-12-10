@@ -14,11 +14,7 @@ export interface Blog {
 }
 
 export type BlogContent = Omit<Blog, "id" | "createdAt" | "updatedAt">;
-export interface OssSign {
-  accessId: string;
-  policy: string;
-  signature: string;
-  dir: string;
-  host: string;
-  expire: number;
+
+export interface BlogResponse extends Blog {
+  tags: Tag[];
 }

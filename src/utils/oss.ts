@@ -1,5 +1,5 @@
-import { getOssSignApi } from "@/api/blog";
-import { OssSign } from "@/api/blog/blog";
+import { getOssSignApi } from "@/api/system";
+import { OssSign } from "@/api/system/system";
 
 /**
  * 判断是否过期

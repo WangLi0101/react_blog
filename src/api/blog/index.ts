@@ -1,5 +1,5 @@
 import fetch from "@/utils/http";
-import { Blog, BlogContent, OssSign, Tag } from "./blog";
+import { Blog, BlogContent, BlogResponse, Tag } from "./blog";
 import { PageResult } from "../system/system";
 
 // 获取tags
@@ -38,7 +38,7 @@ export function getBlogsApi(data: {
   pageSize: number;
   title: string;
 }) {
-  return fetch<PageResult<Blog>>("/blog/list", "MANGMENT", {
+  return fetch<PageResult<BlogResponse>>("/blog/list", "MANGMENT", {
     method: "post",
     body: JSON.stringify(data),
   });
@@ -69,14 +69,7 @@ export function deleteBlogApi(id: number) {
 
 // 获取博客详情
 export function getBlogDetailApi(id: number) {
-  return fetch<Blog>(`/blog/${id}`, "MANGMENT", {
-    method: "get",
-  });
-}
-
-// 获取oss签名
-export function getOssSignApi() {
-  return fetch<OssSign>("/blog/oss/sign", "MANGMENT", {
+  return fetch<BlogResponse>(`/blog/${id}`, "MANGMENT", {
     method: "get",
   });
 }
