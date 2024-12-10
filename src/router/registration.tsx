@@ -4,6 +4,7 @@ import { RouteObject } from "react-router";
 import { Login } from "@/views/login";
 import Home from "@/views/blog/home";
 import BlogIndex from "@/views/blog";
+import Detail from "@/views/blog/detail";
 export default [
   {
     path: "/",
@@ -15,6 +16,10 @@ export default [
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/blog/detail",
+        element: <Detail />,
       },
     ],
   },

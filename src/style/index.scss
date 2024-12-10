@@ -4,12 +4,36 @@
 @tailwind components;
 @tailwind utilities;
 
+[data-theme="light"] {
+  --bg: #ffffff;
+  --bg-primary: #4b6bfb;
+  --bg-secondary: #f5f5f5;
+  --text-primary: #000000;
+  --text-secondary: #666666;
+}
+
+// 暗色主题变量
+[data-theme="dark"] {
+  --bg: #181a2a;
+  --bg-primary: #4b6bfb;
+  --bg-secondary: #242535;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+}
+
 // 其他 SCSS 样式...
 .ant-modal-body {
   margin-top: 20px !important;
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
 // 使用字体
 body {
-  font-family: "Barlow", sans-serif;
+  font-family: "WorkSans", sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
 }

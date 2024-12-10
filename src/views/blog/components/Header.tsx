@@ -4,8 +4,13 @@ import logo from "@/assets/images/logo.png";
 import clsx from "clsx";
 import { Switch } from "antd";
 import { Moon, Sun } from "lucide-react";
+import { useThemeStore } from "@/store/theme";
 export const Header: React.FC = () => {
   const location = useLocation();
+  const themeStore = useThemeStore();
+  const change = (flag: boolean) => {
+    themeStore.setMode(flag ? "dark" : "light");
+  };
   return (
     <div>
       <div className="logo h-[36px] py-[35px] flex items-center justify-between">
@@ -19,19 +24,36 @@ export const Header: React.FC = () => {
             <NavLink
               to="/home"
               className={clsx("font-bold", {
-                "text-primary": location.pathname === "/home",
+                "text-theme-primary": location.pathname === "/home",
                 "font-weight-bold": location.pathname === "/home",
               })}
             >
               首页
             </NavLink>
-            <NavLink to="/blog">Blog</NavLink>
-            <NavLink to="/tga">TAG</NavLink>
-            <NavLink to="/about">ABOUT</NavLink>
+            <NavLink
+              to="/blog"
+              className="text-theme-secondary hover:text-theme-primary"
+            >
+              Blog
+            </NavLink>
+            <NavLink
+              to="/tga"
+              className="text-theme-secondary hover:text-theme-primary"
+            >
+              TAG
+            </NavLink>
+            <NavLink
+              to="/about"
+              className="text-theme-secondary hover:text-theme-primary"
+            >
+              ABOUT
+            </NavLink>
           </div>
         </div>
         <div className="right">
           <Switch
+            value={themeStore.mode === "dark"}
+            onChange={change}
             checkedChildren={<Sun className="h-[16px] w-[16px] mt-[2px]" />}
             unCheckedChildren={<Moon className="h-[16px] w-[16px] mt-[1px]" />}
             defaultChecked

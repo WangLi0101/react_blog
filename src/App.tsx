@@ -1,4 +1,4 @@
-import { HashRouter } from "react-router";
+import { BrowserRouter } from "react-router";
 import { Router } from "./router";
 import { ConfigProvider, message, theme } from "antd";
 import { useThemeStore } from "./store/theme";
@@ -17,8 +17,15 @@ function App() {
       setIsDark(themeStore.mode === "dark");
     }
   }, [themeStore.mode]);
+  useEffect(() => {
+    // 深色模式
+    document.documentElement.setAttribute(
+      "data-theme",
+      isDark ? "dark" : "light"
+    );
+  }, [isDark]);
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ConfigProvider
         theme={{
           algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
@@ -35,7 +42,7 @@ function App() {
         {contextHolder}
         <Router />
       </ConfigProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 

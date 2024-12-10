@@ -6,7 +6,7 @@ const BlogIndex: React.FC = () => {
   return (
     <div className="w-[85%] mx-auto">
       <Header />
-      <div className="content">
+      <div className="content mt-[50px]">
         <Outlet />
       </div>
     </div>

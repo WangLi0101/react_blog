@@ -1,0 +1,13 @@
+.blog_detail {
+  .right {
+    .title-anchor {
+      color: var(--text-primary);
+      &.active {
+        background-color: var(--bg-secondary);
+      }
+      &:hover {
+        background-color: var(--bg-secondary);
+      }
+    }
+  }
+}
