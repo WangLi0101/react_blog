@@ -12,6 +12,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import MarkdownNavbar from "markdown-navbar";
 import { Anchor } from "antd";
+import { motion } from "framer-motion";
 import "markdown-navbar/dist/navbar.css";
 import "./detail.scss";
 export const Detail: React.FC = () => {
@@ -30,8 +31,8 @@ export const Detail: React.FC = () => {
   }, []);
   return (
     blog && (
-      <div className="mx-auto flex blog_detail">
-        <div className="left w-[80%]">
+      <div className="mx-auto flex blog_detail overflow-x-hidden">
+        <div className="left w-[70%]">
           <div className="tags flex items-center gap-3 mb-7">
             {blog.tags.map((tag) => (
               <Tag key={tag.id}>{tag.name}</Tag>
@@ -91,14 +92,20 @@ export const Detail: React.FC = () => {
             </ReactMarkdown>
           </div>
         </div>
-        <div className="right ml-9">
-          <Anchor>
-            <MarkdownNavbar
-              className="text-xl"
-              source={blog.content}
-              headingTopOffset={100}
-            />
-          </Anchor>
+        <div className="right ml-9 flex-1">
+          <motion.div
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Anchor>
+              <MarkdownNavbar
+                className="text-xl"
+                source={blog.content}
+                headingTopOffset={50}
+              />
+            </Anchor>
+          </motion.div>
         </div>
       </div>
     )

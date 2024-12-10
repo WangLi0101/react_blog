@@ -17,12 +17,23 @@ function App() {
       setIsDark(themeStore.mode === "dark");
     }
   }, [themeStore.mode]);
+
   useEffect(() => {
-    // 深色模式
-    document.documentElement.setAttribute(
-      "data-theme",
-      isDark ? "dark" : "light"
-    );
+    // @ts-expect-error startViewTransition is not yet in all TS definitions
+    if (!document.startViewTransition) {
+      document.documentElement.setAttribute(
+        "data-theme",
+        isDark ? "dark" : "light"
+      );
+      return;
+    }
+    // @ts-expect-error startViewTransition is not yet in all TS definitions
+    document.startViewTransition(() => {
+      document.documentElement.setAttribute(
+        "data-theme",
+        isDark ? "dark" : "light"
+      );
+    });
   }, [isDark]);
   return (
     <BrowserRouter>

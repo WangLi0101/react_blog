@@ -4,6 +4,27 @@
 @tailwind components;
 @tailwind utilities;
 
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: clip-in 500ms ease-in;
+}
+
+@keyframes clip-in {
+  from {
+    clip-path: circle(0% at 100% 0);
+    opacity: 0.2;
+  }
+  to {
+    clip-path: circle(150% at 100% 0);
+    opacity: 1;
+  }
+}
+
 [data-theme="light"] {
   --bg: #ffffff;
   --bg-primary: #4b6bfb;
