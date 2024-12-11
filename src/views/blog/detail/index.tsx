@@ -67,11 +67,8 @@ export const Detail: React.FC = () => {
   };
   return (
     blog && (
-      <div
-        className="mx-auto flex blog_detail h-full overflow-x-hidden"
-        data-aos="fade-up"
-      >
-        <div className="left w-[75%] h-full overflow-auto">
+      <div className="mx-auto blog_detail">
+        <div className="left w-[75%] h-full overflow-auto" data-aos="fade-up">
           <div className="tags flex items-center gap-3 mb-7">
             {blog.tags.map((tag) => (
               <Tag key={tag.id}>{tag.name}</Tag>
@@ -135,12 +132,9 @@ export const Detail: React.FC = () => {
             </ReactMarkdown>
           </div>
         </div>
-        <div
-          className="right ml-9 flex-1 h-full overflow-auto border-l border-gray-200 pl-5"
-          data-aos="fade-left"
-        >
+        <div className="right border-l border-gray-200 pl-5">
           <h2 className="text-2xl font-bold mb-4">Anchor</h2>
-          <ul className="space-y-2">
+          <ul className="space-y-2" data-aos="fade-up">
             {titles.map((title, index) => (
               <li
                 key={index}

@@ -1,4 +1,18 @@
 .blog_detail {
+  .right {
+    position: fixed;
+    right: 0;
+    top: 100px; // 根据顶部导航高度调整
+    width: 25%;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+  }
+
+  // 为左侧内容添加右边距,防止被固定定位的右侧遮挡
+  .left {
+    margin-right: 25%;
+  }
+
   // 滚动条
   ::-webkit-scrollbar {
     width: 5px;

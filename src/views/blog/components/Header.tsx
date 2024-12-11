@@ -1,24 +1,45 @@
-import React from "react";
-import { NavLink, useLocation } from "react-router";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import logo from "@/assets/images/logo.png";
 import clsx from "clsx";
 import { Switch } from "antd";
 import { Moon, Sun } from "lucide-react";
 import { useThemeStore } from "@/store/theme";
+
 export const Header: React.FC = () => {
   const location = useLocation();
   const themeStore = useThemeStore();
+  const navigate = useNavigate();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const change = (flag: boolean) => {
     themeStore.setMode(flag ? "dark" : "light");
   };
+
   return (
-    <div>
-      <div className="logo h-[36px] py-[35px] flex items-center justify-between">
-        <h1>
-          <NavLink to="/home">
-            <img src={logo} alt="logo" className="w-[158px] h-[36px]" />
-          </NavLink>
-        </h1>
+    <header
+      className={clsx(
+        "sticky top-0 z-50 transition-all duration-300",
+        "bg-theme-bg dark:bg-black",
+        {
+          "shadow-md": isScrolled,
+        }
+      )}
+    >
+      <div className="w-[85%] mx-auto flex justify-between items-center h-20">
+        <div className="logo cursor-pointer" onClick={() => navigate("/")}>
+          <img src={logo} alt="logo" className="w-[158px] h-[36px]" />
+        </div>
         <div className="flex items-center">
           <div className="nav-item space-x-[40px]">
             <NavLink
@@ -28,7 +49,7 @@ export const Header: React.FC = () => {
                 "font-weight-bold": location.pathname === "/home",
               })}
             >
-              首页
+              Home
             </NavLink>
             <NavLink
               to="/blog"
@@ -60,6 +81,6 @@ export const Header: React.FC = () => {
           />
         </div>
       </div>
-    </div>
+    </header>
   );
 };

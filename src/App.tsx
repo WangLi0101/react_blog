@@ -22,7 +22,7 @@ function App() {
   useEffect(() => {
     AOS.init({
       duration: 1000, // 动画持续时间（毫秒）
-      offset: 120, // 偏移量，控制动画开始的位置
+      offset: 100, // 偏移量，控制动画开始的位置
       delay: 0, // 动画延迟时间
       easing: "ease-in-out", // 动画缓动函数
     });

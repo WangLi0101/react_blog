@@ -4,10 +4,12 @@ import { Header } from "./components/Header";
 
 const BlogIndex: React.FC = () => {
   return (
-    <div className="w-[85%] mx-auto flex flex-col h-screen ">
+    <div>
       <Header />
-      <div className="content flex-1 overflow-hidden py-[50px]">
-        <Outlet />
+      <div className="w-[85%] mx-auto">
+        <div className="content py-[50px]">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
