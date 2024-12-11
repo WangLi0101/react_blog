@@ -36,7 +36,8 @@ module.exports = {
         }
       },
       boxShadow: {
-        "outline-emerald": "0 0 0 2px rgba(16, 185, 129, 0.2)",
+        "custom-shadow": "0 .25rem .75rem 0 rgba(32, 37, 66, .06)",
+        "case-shadow": "0px 0px 8px 0px rgba(194, 202, 213, 0.59)",
       },
       keyframes: {
         'fade-in-up': {
@@ -100,6 +101,9 @@ module.exports = {
             },
             pre: {
               backgroundColor: 'var(--bg-secondary)',
+              color: 'var(--text-primary)',
+            },
+            strong: {
               color: 'var(--text-primary)',
             },
           },

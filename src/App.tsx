@@ -3,7 +3,8 @@ import { Router } from "./router";
 import { ConfigProvider, message, theme } from "antd";
 import { useThemeStore } from "./store/theme";
 import { useEffect, useState } from "react";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 function App() {
   const [_messageApi, contextHolder] = message.useMessage();
   const themeStore = useThemeStore();
@@ -17,6 +18,15 @@ function App() {
       setIsDark(themeStore.mode === "dark");
     }
   }, [themeStore.mode]);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // 动画持续时间（毫秒）
+      offset: 120, // 偏移量，控制动画开始的位置
+      delay: 0, // 动画延迟时间
+      easing: "ease-in-out", // 动画缓动函数
+    });
+  }, []);
 
   useEffect(() => {
     // @ts-expect-error startViewTransition is not yet in all TS definitions

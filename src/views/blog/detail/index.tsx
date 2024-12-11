@@ -1,6 +1,11 @@
 import { getBlogDetailApi } from "@/api/blog";
 import { BlogResponse } from "@/api/blog/blog";
-import React, { useEffect, useState, ComponentPropsWithoutRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  ComponentPropsWithoutRef,
+  useRef,
+} from "react";
 import { useSearchParams } from "react-router";
 import { Tag } from "../components/Tag";
 import { formatDate } from "@/utils";
@@ -10,14 +15,21 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import MarkdownNavbar from "markdown-navbar";
-import { Anchor } from "antd";
-import { motion } from "framer-motion";
+
 import "markdown-navbar/dist/navbar.css";
 import "./detail.scss";
+interface Title {
+  title: string;
+  node: Element;
+  level: number;
+}
+
 export const Detail: React.FC = () => {
   const [blog, setBlog] = useState<BlogResponse | null>(null);
   const [searchParams] = useSearchParams();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [titles, setTitles] = useState<Title[]>([]);
+  const [levelList, setLevelList] = useState<number[]>([]);
   const id = searchParams.get("id");
   const getBlogDetail = async () => {
     if (!id) return;
@@ -29,10 +41,38 @@ export const Detail: React.FC = () => {
   useEffect(() => {
     getBlogDetail();
   }, []);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      const titles = contentRef.current.querySelectorAll(
+        "h1, h2, h3, h4, h5, h6"
+      );
+      const set = new Set<number>();
+      const titlesArray = Array.from(titles).map((node) => {
+        const level = parseInt(node.tagName.slice(1), 10);
+        set.add(level);
+        return {
+          title: node.textContent || "",
+          node,
+          level,
+        };
+      });
+      setTitles(titlesArray);
+      setLevelList(Array.from(set).sort((a, b) => a - b));
+    }
+  }, [blog]);
+
+  const getPaddingLeft = (level: number) => {
+    const index = levelList.indexOf(level);
+    return index * 5;
+  };
   return (
     blog && (
-      <div className="mx-auto flex blog_detail">
-        <div className="left w-[70%]">
+      <div
+        className="mx-auto flex blog_detail h-full overflow-x-hidden"
+        data-aos="fade-up"
+      >
+        <div className="left w-[75%] h-full overflow-auto">
           <div className="tags flex items-center gap-3 mb-7">
             {blog.tags.map((tag) => (
               <Tag key={tag.id}>{tag.name}</Tag>
@@ -53,12 +93,16 @@ export const Detail: React.FC = () => {
           </div>
           <div className="thumbnail mb-5">
             <img
+              data-aos="fade-up"
               src={blog.thumbnail}
               alt=""
               className="w-full h-auto rounded-xl"
             />
           </div>
-          <div className="content prose prose-lg max-w-none dark:prose-invert prose-pre:p-0">
+          <div
+            className="content prose prose-lg max-w-none dark:prose-invert prose-pre:p-0"
+            ref={contentRef}
+          >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
@@ -92,27 +136,30 @@ export const Detail: React.FC = () => {
             </ReactMarkdown>
           </div>
         </div>
-        <div className="right ml-9 flex-1">
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            transition={{
-              type: "spring",
-              stiffness: 100,
-              damping: 25,
-              mass: 0.8,
-              duration: 0.3,
-            }}
-          >
-            <Anchor>
-              <MarkdownNavbar
-                className="text-xl"
-                source={blog.content}
-                headingTopOffset={50}
-              />
-            </Anchor>
-          </motion.div>
+        <div
+          className="right ml-9 flex-1 h-full overflow-auto border-l border-gray-200 pl-5"
+          data-aos="fade-left"
+        >
+          <h2 className="text-2xl font-bold mb-4">Anchor</h2>
+          <ul className="space-y-2">
+            {titles.map((title, index) => (
+              <li
+                key={index}
+                className="list-none leading-7 text-base cursor-pointer hover:bg-theme-secondary px-2 py-1 rounded-md"
+                style={{
+                  marginLeft: getPaddingLeft(title.level),
+                }}
+                onClick={() => {
+                  title.node.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }}
+              >
+                {title.title}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     )

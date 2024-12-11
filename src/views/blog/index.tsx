@@ -4,9 +4,9 @@ import { Header } from "./components/Header";
 
 const BlogIndex: React.FC = () => {
   return (
-    <div className="w-[85%] mx-auto">
+    <div className="w-[85%] mx-auto flex flex-col h-screen ">
       <Header />
-      <div className="content mt-[50px]">
+      <div className="content flex-1 overflow-hidden py-[50px]">
         <Outlet />
       </div>
     </div>
