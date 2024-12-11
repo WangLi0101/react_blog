@@ -16,7 +16,6 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 
-import "markdown-navbar/dist/navbar.css";
 import "./detail.scss";
 interface Title {
   title: string;
