@@ -60,7 +60,7 @@ export const Header: React.FC = () => {
             >
               Blog
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/tga"
               className={clsx({
                 "text-theme-primary": location.pathname === "/tga",
@@ -68,7 +68,7 @@ export const Header: React.FC = () => {
               })}
             >
               TAG
-            </NavLink>
+            </NavLink> */}
             <NavLink
               to="/about"
               className={clsx({

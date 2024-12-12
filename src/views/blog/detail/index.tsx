@@ -67,7 +67,7 @@ export const Detail: React.FC = () => {
   };
   return (
     blog && (
-      <div className="mx-auto blog_detail">
+      <div className="mx-auto blog_detail py-[50px]">
         <div className="left w-[75%] h-full overflow-auto" data-aos="fade-up">
           <div className="tags flex items-center gap-3 mb-7">
             {blog.tags.map((tag) => (

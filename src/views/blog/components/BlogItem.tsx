@@ -21,11 +21,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
       data-aos="zoom-in"
     >
       <div className="thumbnail">
-        <object
-          data="/src/assets/images/blogging.svg"
-          type="image/svg+xml"
-          style={{ width: "100%", height: "auto" }}
-        ></object>
+        <img src={blog.thumbnail} alt="" />
       </div>
       <div className="flex">
         <Tag>{blog.tags[0].name}</Tag>

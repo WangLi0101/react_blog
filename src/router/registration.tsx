@@ -6,6 +6,7 @@ import Home from "@/views/blog/home";
 import BlogIndex from "@/views/blog";
 import Detail from "@/views/blog/detail";
 import Blog from "@/views/blog/blog";
+import About from "@/views/blog/about";
 export default [
   {
     path: "/",
@@ -25,6 +26,10 @@ export default [
       {
         path: "/blog/detail",
         element: <Detail />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
     ],
   },
