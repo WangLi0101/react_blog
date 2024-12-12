@@ -44,28 +44,37 @@ export const Header: React.FC = () => {
           <div className="nav-item space-x-[40px]">
             <NavLink
               to="/home"
-              className={clsx("font-bold", {
+              className={clsx({
                 "text-theme-primary": location.pathname === "/home",
-                "font-weight-bold": location.pathname === "/home",
+                "font-bold": location.pathname === "/home",
               })}
             >
               Home
             </NavLink>
             <NavLink
               to="/blog"
-              className="text-theme-secondary hover:text-theme-primary"
+              className={clsx({
+                "text-theme-primary": location.pathname === "/blog",
+                "font-bold": location.pathname === "/blog",
+              })}
             >
               Blog
             </NavLink>
             <NavLink
               to="/tga"
-              className="text-theme-secondary hover:text-theme-primary"
+              className={clsx({
+                "text-theme-primary": location.pathname === "/tga",
+                "font-bold": location.pathname === "/tga",
+              })}
             >
               TAG
             </NavLink>
             <NavLink
               to="/about"
-              className="text-theme-secondary hover:text-theme-primary"
+              className={clsx({
+                "text-theme-primary": location.pathname === "/about",
+                "font-bold": location.pathname === "/about",
+              })}
             >
               ABOUT
             </NavLink>

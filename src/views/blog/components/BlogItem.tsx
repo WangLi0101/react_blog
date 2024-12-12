@@ -16,18 +16,22 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
   };
   return (
     <div
-      className="border border-theme-secondary rounded-xl space-y-5 p-4 cursor-pointer"
+      className="border border-theme-secondary rounded-xl space-y-4 p-4 cursor-pointer"
       onClick={goDetail}
-      data-aos="fade-up"
+      data-aos="zoom-in"
     >
       <div className="thumbnail">
-        <img src={blog.thumbnail} alt="" className="w-full h-auto" />
+        <object
+          data="/src/assets/images/blogging.svg"
+          type="image/svg+xml"
+          style={{ width: "100%", height: "auto" }}
+        ></object>
       </div>
       <div className="flex">
         <Tag>{blog.tags[0].name}</Tag>
       </div>
-      <h2 className="titel font-bold text-2xl">{blog.title}</h2>
-      <p className="text-base line-clamp-3">{blog.description}</p>
+      <h2 className="titel font-bold text-xl line-clamp-2">{blog.title}</h2>
+      <p className="text-base line-clamp-2">{blog.description}</p>
       <div className="time flex items-center gap-3 mb-7">
         <Icon
           icon="material-symbols:alarm-outline"

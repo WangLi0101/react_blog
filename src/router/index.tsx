@@ -71,7 +71,14 @@ const addRoutes = (callBackRoutes: MenuItem[]) => {
   });
 };
 
-const whiteList = ["/", "/login", "/register", "/home", "/blog/detail"];
+const whiteList = [
+  "/",
+  "/login",
+  "/register",
+  "/home",
+  "/blog",
+  "/blog/detail",
+];
 export function Router() {
   const userStore = useUserStore();
   const navigate = useNavigate();

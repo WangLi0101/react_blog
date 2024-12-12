@@ -5,6 +5,7 @@ import { useThemeStore } from "./store/theme";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
+
 function App() {
   const [_messageApi, contextHolder] = message.useMessage();
   const themeStore = useThemeStore();
@@ -21,11 +22,28 @@ function App() {
 
   useEffect(() => {
     AOS.init({
-      duration: 1000, // 动画持续时间（毫秒）
-      offset: 100, // 偏移量，控制动画开始的位置
-      delay: 0, // 动画延迟时间
-      easing: "ease-in-out", // 动画缓动函数
+      duration: 600, // 适中的动画时长
+      offset: 80, // 减小偏移量
+      delay: 0,
+      easing: "ease-out", // 使用更流畅的缓动函数
+      throttleDelay: 99, // 节流延迟
+      disableMutationObserver: false, // 禁用突变观察器以提高性能
     });
+
+    // 使用 requestAnimationFrame 优化滚动性能
+    let rafId: number;
+    const handleScroll = () => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        AOS.refresh();
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   useEffect(() => {

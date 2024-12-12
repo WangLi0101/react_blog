@@ -5,6 +5,7 @@ import { Login } from "@/views/login";
 import Home from "@/views/blog/home";
 import BlogIndex from "@/views/blog";
 import Detail from "@/views/blog/detail";
+import Blog from "@/views/blog/blog";
 export default [
   {
     path: "/",
@@ -16,6 +17,10 @@ export default [
       {
         path: "/home",
         element: <Home />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
       },
       {
         path: "/blog/detail",
