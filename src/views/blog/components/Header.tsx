@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { Switch } from "antd";
 import { Moon, Sun } from "lucide-react";
 import { useThemeStore } from "@/store/theme";
-
 export const Header: React.FC = () => {
   const location = useLocation();
   const themeStore = useThemeStore();

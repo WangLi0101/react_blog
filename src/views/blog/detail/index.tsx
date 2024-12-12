@@ -92,7 +92,7 @@ export const Detail: React.FC = () => {
               data-aos="fade-up"
               src={blog.thumbnail}
               alt=""
-              className="w-full h-auto rounded-xl"
+              className="w-full h-auto rounded-xl aspect-[5/2] object-cover"
             />
           </div>
           <div
@@ -113,7 +113,7 @@ export const Detail: React.FC = () => {
                   return !inline && match ? (
                     <SyntaxHighlighter
                       // @ts-expect-error style type mismatch
-                      style={vscDarkPlus}
+                      style={{ ...vscDarkPlus, fontSize: "30px" }}
                       language={match[1]}
                       PreTag="div"
                       {...props}

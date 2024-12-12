@@ -21,7 +21,11 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
       data-aos="zoom-in"
     >
       <div className="thumbnail">
-        <img src={blog.thumbnail} alt="" />
+        <img
+          src={blog.thumbnail}
+          alt=""
+          className="w-full aspect-[5/2] object-cover rounded-xl"
+        />
       </div>
       <div className="flex">
         <Tag>{blog.tags[0].name}</Tag>

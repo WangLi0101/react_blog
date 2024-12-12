@@ -91,6 +91,7 @@ module.exports = {
             },
             code: {
               color: 'var(--text-primary)',
+              fontSize: '18px',
             },
             'code::before': {
               content: '""',
