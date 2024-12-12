@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
-import logo from "@/assets/images/logo.png";
+import Logo from "@/assets/images/logo.svg?react";
 import clsx from "clsx";
 import { Switch } from "antd";
 import { Moon, Sun } from "lucide-react";
 import { useThemeStore } from "@/store/theme";
+import "./header.scss";
 export const Header: React.FC = () => {
   const location = useLocation();
   const themeStore = useThemeStore();
@@ -37,7 +38,7 @@ export const Header: React.FC = () => {
     >
       <div className="w-[85%] mx-auto flex justify-between items-center h-20">
         <div className="logo cursor-pointer" onClick={() => navigate("/")}>
-          <img src={logo} alt="logo" className="w-[158px] h-[36px]" />
+          <Logo className="w-[150px] h-auto logoSvg" />
         </div>
         <div className="flex items-center">
           <div className="nav-item space-x-[40px]">

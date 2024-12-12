@@ -95,7 +95,7 @@ export function Router() {
 
   useEffect(() => {
     // 设置title
-    const title = meta?.title || "Auth";
+    const title = meta?.title || "Blog";
     document.title = title;
 
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
