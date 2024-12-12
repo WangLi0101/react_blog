@@ -18,7 +18,7 @@ const Home: React.FC = () => {
             <br /> and keep progressing endlessly
           </h2>
           <div className="operator mt-5" data-aos="fade-up">
-            <Button onClick={() => navigate("/blog")}>go blog</Button>
+            <Button onClick={() => navigate("/blog")}>Go Blog</Button>
           </div>
         </div>
       </div>
