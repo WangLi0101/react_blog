@@ -19,6 +19,7 @@ export const Blog: React.FC = () => {
     const res = await getBlogsApi(queryRef.current);
     if (res.code === 0) {
       setBlogList(res.data.list);
+      setIsStop(res.data.list.length < queryRef.current.pageSize);
     }
   };
   const pushBlogList = async () => {
