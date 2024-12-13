@@ -18,6 +18,12 @@ export const Blog: React.FC = () => {
   const getBlogList = async () => {
     const res = await getBlogsApi(queryRef.current);
     if (res.code === 0) {
+      setBlogList(res.data.list);
+    }
+  };
+  const pushBlogList = async () => {
+    const res = await getBlogsApi(queryRef.current);
+    if (res.code === 0) {
       setIsStop(res.data.list.length < queryRef.current.pageSize);
       setBlogList((prev) => [...prev, ...res.data.list]);
     }
@@ -33,7 +39,7 @@ export const Blog: React.FC = () => {
   }, []);
   const getList = () => {
     queryRef.current.page++;
-    getBlogList();
+    pushBlogList();
   };
   return (
     <div>
