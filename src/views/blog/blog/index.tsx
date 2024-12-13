@@ -1,25 +1,24 @@
 import { getBlogsApi, getTagsApi } from "@/api/blog";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BlogItem } from "../components/BlogItem";
 import { BlogResponse, Tag } from "@/api/blog/blog";
 import { Select } from "antd";
-import { useImmer } from "use-immer";
 import { LazyLoad } from "@/components/LazyLoad";
 
 export const Blog: React.FC = () => {
   const [blogList, setBlogList] = useState<BlogResponse[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [isStop, setIsStop] = useState(false);
-  const [query, setQuery] = useImmer({
-    page: 1,
+  const queryRef = useRef({
+    page: 0,
     pageSize: 8,
     title: "",
     tagId: null,
   });
   const getBlogList = async () => {
-    const res = await getBlogsApi(query);
+    const res = await getBlogsApi(queryRef.current);
     if (res.code === 0) {
-      setIsStop(res.data.list.length < query.pageSize);
+      setIsStop(res.data.list.length < queryRef.current.pageSize);
       setBlogList(res.data.list);
     }
   };
@@ -32,11 +31,8 @@ export const Blog: React.FC = () => {
   useEffect(() => {
     getTags();
   }, []);
-
   const getList = () => {
-    setQuery((draft) => {
-      draft.page++;
-    });
+    queryRef.current.page++;
     getBlogList();
   };
   return (
@@ -50,9 +46,8 @@ export const Blog: React.FC = () => {
               placeholder="Please select type"
               allowClear={true}
               onChange={(value) => {
-                setQuery((draft) => {
-                  draft.tagId = value;
-                });
+                queryRef.current.tagId = value;
+                queryRef.current.page = 1;
                 getBlogList();
               }}
             >

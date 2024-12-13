@@ -24,7 +24,11 @@ export const LazyLoad: React.FC<LazyLoadProps> = ({ isStop, getList }) => {
   }, []);
   return (
     <div className="mt-5 flex justify-center items-center py-3" ref={moreRef}>
-      {isStop ? <div>没有更多了....</div> : <Loading className="w-full" />}
+      {isStop ? (
+        <div>There's nothing more....</div>
+      ) : (
+        <Loading className="w-full" />
+      )}
     </div>
   );
 };
