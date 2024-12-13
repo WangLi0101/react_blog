@@ -11,7 +11,7 @@ export const Blog: React.FC = () => {
   const [isStop, setIsStop] = useState(false);
   const queryRef = useRef({
     page: 0,
-    pageSize: 8,
+    pageSize: 2,
     title: "",
     tagId: null,
   });
@@ -19,7 +19,7 @@ export const Blog: React.FC = () => {
     const res = await getBlogsApi(queryRef.current);
     if (res.code === 0) {
       setIsStop(res.data.list.length < queryRef.current.pageSize);
-      setBlogList(res.data.list);
+      setBlogList((prev) => [...prev, ...res.data.list]);
     }
   };
   const getTags = async () => {

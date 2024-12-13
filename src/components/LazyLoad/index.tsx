@@ -13,6 +13,8 @@ export const LazyLoad: React.FC<LazyLoadProps> = ({ isStop, getList }) => {
   const observer = useRef<IntersectionObserver | null>(null);
   observer.current = new IntersectionObserver((entries) => {
     if (entries[0].intersectionRatio > 0 && !isStop) {
+      console.log("load more");
+
       getList();
     }
   }, options);
