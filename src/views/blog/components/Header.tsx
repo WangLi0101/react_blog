@@ -6,12 +6,25 @@ import { Switch } from "antd";
 import { Moon, Sun } from "lucide-react";
 import { useThemeStore } from "@/store/theme";
 import "./header.scss";
+const menuList = [
+  {
+    path: "/front/home",
+    name: "Home",
+  },
+  {
+    path: "/front/blog",
+    name: "Blog",
+  },
+  {
+    path: "/front/about",
+    name: "About",
+  },
+];
 export const Header: React.FC = () => {
   const location = useLocation();
   const themeStore = useThemeStore();
   const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -23,14 +36,14 @@ export const Header: React.FC = () => {
   }, []);
 
   const change = (flag: boolean) => {
-    themeStore.setMode(flag ? "dark" : "light");
+    themeStore.setIsDark(flag);
   };
 
   return (
     <header
       className={clsx(
         "sticky top-0 z-50 transition-all duration-300",
-        "bg-theme-bg dark:bg-black",
+        "bg-theme-bg",
         {
           "shadow-md": isScrolled,
         }
@@ -42,47 +55,23 @@ export const Header: React.FC = () => {
         </div>
         <div className="flex items-center">
           <div className="nav-item space-x-[40px]">
-            <NavLink
-              to="/home"
-              className={clsx({
-                "text-theme-primary": location.pathname === "/home",
-                "font-bold": location.pathname === "/home",
-              })}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/blog"
-              className={clsx({
-                "text-theme-primary": location.pathname === "/blog",
-                "font-bold": location.pathname === "/blog",
-              })}
-            >
-              Blog
-            </NavLink>
-            {/* <NavLink
-              to="/tga"
-              className={clsx({
-                "text-theme-primary": location.pathname === "/tga",
-                "font-bold": location.pathname === "/tga",
-              })}
-            >
-              TAG
-            </NavLink> */}
-            <NavLink
-              to="/about"
-              className={clsx({
-                "text-theme-primary": location.pathname === "/about",
-                "font-bold": location.pathname === "/about",
-              })}
-            >
-              ABOUT
-            </NavLink>
+            {menuList.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                className={clsx({
+                  "text-theme-primary": location.pathname === item.path,
+                  "font-bold": location.pathname === item.path,
+                })}
+              >
+                {item.name}
+              </NavLink>
+            ))}
           </div>
         </div>
         <div className="right">
           <Switch
-            value={themeStore.mode === "dark"}
+            value={themeStore.isDark}
             onChange={change}
             checkedChildren={<Sun className="h-[16px] w-[16px] mt-[2px]" />}
             unCheckedChildren={<Moon className="h-[16px] w-[16px] mt-[1px]" />}

@@ -12,7 +12,7 @@ interface Props {
 export const BlogItem: React.FC<Props> = ({ blog }) => {
   const navigate = useNavigate();
   const goDetail = () => {
-    navigate(`/blog/detail?id=${blog.id}`);
+    navigate(`/front/blog/detail?id=${blog.id}`);
   };
   return (
     <div

@@ -9,26 +9,26 @@ import Blog from "@/views/blog/blog";
 import About from "@/views/blog/about";
 export default [
   {
-    path: "/",
+    path: "/front",
     handle: {
       title: "home",
     },
     element: <BlogIndex />,
     children: [
       {
-        path: "/home",
+        path: "/front/home",
         element: <Home />,
       },
       {
-        path: "/blog",
+        path: "/front/blog",
         element: <Blog />,
       },
       {
-        path: "/blog/detail",
+        path: "/front/blog/detail",
         element: <Detail />,
       },
       {
-        path: "/about",
+        path: "/front/about",
         element: <About />,
       },
     ],

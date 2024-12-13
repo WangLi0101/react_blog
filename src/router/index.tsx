@@ -75,10 +75,10 @@ const whiteList = [
   "/",
   "/login",
   "/register",
-  "/home",
-  "/blog",
-  "/blog/detail",
-  "/about",
+  "/front/home",
+  "/front/blog",
+  "/front/blog/detail",
+  "/front/about",
 ];
 export function Router() {
   const userStore = useUserStore();
@@ -100,7 +100,7 @@ export function Router() {
 
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
     if (pathname === "/") {
-      navigate("/home");
+      navigate("/front/home");
     }
 
     if (token && !userInfo) {

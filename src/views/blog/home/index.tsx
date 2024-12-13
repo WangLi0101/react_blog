@@ -18,12 +18,12 @@ const Home: React.FC = () => {
             <br /> and keep progressing endlessly
           </h2>
           <div className="operator mt-5" data-aos="fade-up">
-            <Button onClick={() => navigate("/blog")}>Go Blog</Button>
+            <Button onClick={() => navigate("/front/blog")}>Go Blog</Button>
           </div>
         </div>
       </div>
       <div className="right w-1/2">
-        {themeStore.mode === "dark" ? (
+        {themeStore.isDark ? (
           <Dark className="w-full h-auto" data-aos="zoom-in" />
         ) : (
           <Light className="w-full h-auto" data-aos="zoom-in" />
