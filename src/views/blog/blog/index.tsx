@@ -11,7 +11,7 @@ export const Blog: React.FC = () => {
   const [isStop, setIsStop] = useState(false);
   const queryRef = useRef({
     page: 0,
-    pageSize: 2,
+    pageSize: 24,
     title: "",
     tagId: null,
   });
