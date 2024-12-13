@@ -33,7 +33,7 @@ export const useThemeStore = create<State & Actions>()(
     })),
     {
       name: "theme",
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => sessionStorage),
     }
   )
 );

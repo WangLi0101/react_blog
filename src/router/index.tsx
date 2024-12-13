@@ -112,7 +112,8 @@ export function Router() {
       !whiteList.includes(pathname) &&
       !menuStore.myMenuFlattenList.find((el) => el.path === pathname)
     ) {
-      navigate("/403");
+      // navigate("/403");
+      navigate("/front/home");
     }
   }, [pathname]);
 
