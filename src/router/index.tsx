@@ -118,13 +118,13 @@ export function Router() {
 
   useEffect(() => {
     emitter.on("goLogin", () => {
-      navigate("/login");
+      navigate("/front/home");
     });
   }, [navigate]);
 
   // 没有token且不在白名单中，重定向到登录页
   if (!token && !whiteList.includes(pathname)) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/front/home" replace />;
   }
 
   return element;
