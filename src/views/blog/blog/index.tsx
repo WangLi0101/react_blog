@@ -9,6 +9,7 @@ export const Blog: React.FC = () => {
   const [blogList, setBlogList] = useState<BlogResponse[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [isStop, setIsStop] = useState(false);
+  const [loading, setLoading] = useState(false);
   const queryRef = useRef({
     page: 0,
     pageSize: 24,
@@ -16,14 +17,18 @@ export const Blog: React.FC = () => {
     tagId: null,
   });
   const getBlogList = async () => {
+    setLoading(true);
     const res = await getBlogsApi(queryRef.current);
+    setLoading(false);
     if (res.code === 0) {
       setBlogList(res.data.list);
       setIsStop(res.data.list.length < queryRef.current.pageSize);
     }
   };
   const pushBlogList = async () => {
+    setLoading(true);
     const res = await getBlogsApi(queryRef.current);
+    setLoading(false);
     if (res.code === 0) {
       setIsStop(res.data.list.length < queryRef.current.pageSize);
       setBlogList((prev) => [...prev, ...res.data.list]);
@@ -71,7 +76,7 @@ export const Blog: React.FC = () => {
             <BlogItem blog={blog} key={blog.id} />
           ))}
         </div>
-        <LazyLoad isStop={isStop} getList={getList} />
+        <LazyLoad isStop={isStop} getList={getList} loading={loading} />
       </div>
     </div>
   );
