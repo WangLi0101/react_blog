@@ -87,7 +87,7 @@ const AddBlog: React.FC = () => {
   };
 
   const uploadFile = async () => {
-    const uploadUrl = await upload(fileRef.current!, "blog/thumbnail");
+    const uploadUrl = await upload(fileRef.current!, "blog/thumbnail", false);
     return uploadUrl;
   };
 

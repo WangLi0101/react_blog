@@ -24,7 +24,10 @@ const Home: React.FC = () => {
             className="operator mt-5 max-md:mt-10 max-md:flex max-md:justify-center"
             data-aos="fade-up"
           >
-            <Button onClick={() => navigate("/front/blog")}>Go Blog</Button>
+            <Button onClick={() => navigate("/front/blog")} className="mr-5">
+              Go Blog
+            </Button>
+            <Button onClick={() => navigate("/front/about")}>Contact Me</Button>
           </div>
         </div>
       </div>
