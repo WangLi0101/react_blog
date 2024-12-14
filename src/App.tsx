@@ -2,25 +2,25 @@ import { BrowserRouter } from "react-router";
 import { Router } from "./router";
 import { ConfigProvider, message, theme } from "antd";
 import { useThemeStore } from "./store/theme";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
 function App() {
   const [_messageApi, contextHolder] = message.useMessage();
   const themeStore = useThemeStore();
-  const [isDark, setIsDark] = useState(false);
 
-  useEffect(() => {
+  const getIsDark = () => {
     if (themeStore.mode === "auto") {
       const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setIsDark(isDark);
+      themeStore.setIsDark(isDark);
     } else {
-      setIsDark(themeStore.mode === "dark");
+      themeStore.setIsDark(themeStore.mode === "dark");
     }
-  }, [themeStore.mode]);
+  };
 
   useEffect(() => {
+    getIsDark();
     AOS.init({
       duration: 600, // 适中的动画时长
       offset: 80, // 减小偏移量
@@ -29,21 +29,6 @@ function App() {
       throttleDelay: 99, // 节流延迟
       disableMutationObserver: false, // 禁用突变观察器以提高性能
     });
-
-    // 使用 requestAnimationFrame 优化滚动性能
-    let rafId: number;
-    const handleScroll = () => {
-      cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        AOS.refresh();
-      });
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(rafId);
-    };
   }, []);
 
   useEffect(() => {
@@ -51,7 +36,7 @@ function App() {
     if (!document.startViewTransition) {
       document.documentElement.setAttribute(
         "data-theme",
-        isDark ? "dark" : "light"
+        themeStore.isDark ? "dark" : "light"
       );
       return;
     }
@@ -59,15 +44,17 @@ function App() {
     document.startViewTransition(() => {
       document.documentElement.setAttribute(
         "data-theme",
-        isDark ? "dark" : "light"
+        themeStore.isDark ? "dark" : "light"
       );
     });
-  }, [isDark]);
+  }, [themeStore.isDark]);
   return (
     <BrowserRouter>
       <ConfigProvider
         theme={{
-          algorithm: isDark ? theme.darkAlgorithm : theme.defaultAlgorithm,
+          algorithm: themeStore.isDark
+            ? theme.darkAlgorithm
+            : theme.defaultAlgorithm,
           token: {
             colorPrimary: themeStore.colorTheme.colorPrimary,
           },

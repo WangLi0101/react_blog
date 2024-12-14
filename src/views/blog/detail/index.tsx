@@ -63,21 +63,24 @@ export const Detail: React.FC = () => {
 
   const getPaddingLeft = (level: number) => {
     const index = levelList.indexOf(level);
-    return index * 5;
+    return index * 15;
   };
   return (
     blog && (
       <div className="mx-auto blog_detail py-[50px]">
-        <div className="left w-[75%] h-full overflow-auto" data-aos="fade-up">
+        <div
+          className="left w-[75%] h-full overflow-auto max-md:w-full"
+          data-aos="fade-up"
+        >
           <div className="tags flex items-center gap-3 mb-7">
             {blog.tags.map((tag) => (
               <Tag key={tag.id}>{tag.name}</Tag>
             ))}
           </div>
-          <p className="title font-bold text-4xl leading-10 mb-7">
+          <p className="title font-bold text-4xl leading-10 mb-7 max-md:text-2xl">
             {blog.title}
           </p>
-          <p className="description font-bold text-xl leading-7 mb-7">
+          <p className="description font-bold text-xl leading-7 mb-7 max-md:text-[18px]">
             {blog.description}
           </p>
           <div className="time flex items-center gap-3 mb-7">
@@ -132,7 +135,7 @@ export const Detail: React.FC = () => {
             </ReactMarkdown>
           </div>
         </div>
-        <div className="right border-l border-gray-200 pl-5">
+        <div className="right border-l border-gray-200 pl-5 max-md:hidden">
           <h2 className="text-2xl font-bold mb-4">Anchor</h2>
           <ul className="space-y-2" data-aos="fade-up">
             {titles.map((title, index) => (

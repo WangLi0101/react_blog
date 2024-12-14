@@ -12,11 +12,11 @@ interface Props {
 export const BlogItem: React.FC<Props> = ({ blog }) => {
   const navigate = useNavigate();
   const goDetail = () => {
-    navigate(`/blog/detail?id=${blog.id}`);
+    navigate(`/front/blog/detail?id=${blog.id}`);
   };
   return (
     <div
-      className="border border-theme-secondary rounded-xl space-y-4 p-4 cursor-pointer"
+      className="border border-gray-300 rounded-xl space-y-4 p-4 cursor-pointer max-md:space-y-2"
       onClick={goDetail}
       data-aos="zoom-in"
     >
@@ -30,7 +30,9 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
       <div className="flex">
         <Tag>{blog.tags[0].name}</Tag>
       </div>
-      <h2 className="titel font-bold text-xl line-clamp-2">{blog.title}</h2>
+      <h2 className="titel font-bold text-xl line-clamp-2 max-md:text-[18px]">
+        {blog.title}
+      </h2>
       <p className="text-base line-clamp-2">{blog.description}</p>
       <div className="time flex items-center gap-3 mb-7">
         <Icon

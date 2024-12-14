@@ -1,0 +1,26 @@
+<svg width="120" height="30" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="15" cy="15" r="6" fill="#2563eb">
+    <animate attributeName="cy" values="15;5;15" dur="1s" repeatCount="indefinite" begin="0s" />
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0s" />
+  </circle>
+  <circle cx="35" cy="15" r="6" fill="#4338ca">
+    <animate attributeName="cy" values="15;5;15" dur="1s" repeatCount="indefinite" begin="0.1s" />
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0.1s" />
+  </circle>
+  <circle cx="55" cy="15" r="6" fill="#6d28d9">
+    <animate attributeName="cy" values="15;5;15" dur="1s" repeatCount="indefinite" begin="0.2s" />
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0.2s" />
+  </circle>
+  <circle cx="75" cy="15" r="6" fill="#9333ea">
+    <animate attributeName="cy" values="15;5;15" dur="1s" repeatCount="indefinite" begin="0.3s" />
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0.3s" />
+  </circle>
+  <circle cx="95" cy="15" r="6" fill="#db2777">
+    <animate attributeName="cy" values="15;5;15" dur="1s" repeatCount="indefinite" begin="0.4s" />
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0.4s" />
+  </circle>
+  <circle cx="115" cy="15" r="6" fill="#dc2626">
+    <animate attributeName="cy" values="15;5;15" dur="1s" repeatCount="indefinite" begin="0.5s" />
+    <animate attributeName="opacity" values="0.5;1;0.5" dur="1s" repeatCount="indefinite" begin="0.5s" />
+  </circle>
+</svg>
