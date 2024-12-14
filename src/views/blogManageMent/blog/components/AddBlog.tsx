@@ -21,6 +21,7 @@ import { upload } from "@/utils/oss";
 import { useNavigate, useSearchParams } from "react-router";
 import { Blog } from "@/api/blog/blog";
 import { getPath } from "@/utils";
+import { oss_url } from "@/api/config";
 
 interface FieldType {
   title: string;
@@ -130,7 +131,19 @@ const AddBlog: React.FC = () => {
       addSubmit(values);
     }
   };
-
+  const addImage = async (file: File) => {
+    if (file.size > 1024 * 1024 * 1) {
+      message.error("文件大小不能超过1M");
+      return;
+    }
+    const res = await upload(file, "common");
+    // 内容中添加图片 push
+    const content = form.getFieldValue("content");
+    const newContent = content + `<img src="${oss_url}/${res}" alt="image" />`;
+    form.setFieldsValue({
+      content: newContent,
+    });
+  };
   return (
     <div className="h-full overflow-auto">
       <Form
@@ -169,6 +182,7 @@ const AddBlog: React.FC = () => {
             showUploadList={false}
             action="#"
             customRequest={customRequest}
+            accept="image/*"
           >
             {imageUrl ? (
               <img src={imageUrl} alt="avatar" style={{ width: "100%" }} />
@@ -189,7 +203,7 @@ const AddBlog: React.FC = () => {
           name="content"
           rules={[{ required: true, message: "Please input your content!" }]}
         >
-          <Editor subfield={true} preview={true} />
+          <Editor subfield={true} preview={true} addImg={addImage} />
         </Form.Item>
         <Form.Item>
           <div className="flex justify-center">

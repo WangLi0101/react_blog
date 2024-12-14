@@ -3,8 +3,9 @@ export type service = {
   MANGMENT: string;
 };
 // dev环境
-const dev_url = "http://localhost:3000";
-// const dev_url = "http://47.120.58.223:3000";
+// const dev_url = "http://localhost:3000";
+const dev_url = "http://47.120.58.223:3000";
+const oss_url = "https://betterme-blog.oss-cn-beijing.aliyuncs.com";
 const dev_service: service = {
   MOCK: ``,
   MANGMENT: `${dev_url}/api/v1`,
@@ -29,4 +30,4 @@ switch (import.meta.env.MODE) {
   default:
     break;
 }
-export { config };
+export { config, oss_url };
