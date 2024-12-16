@@ -85,10 +85,9 @@ const BlogPage: React.FC = () => {
           columns={columns}
           dataSource={blogs}
           pagination={false}
-          className="h-[calc(100vh-320px)]"
         />
       </div>
-      <div className="pagination flex flex-row-reverse">
+      <div className="pagination flex flex-row-reverse pb-5">
         <Pagination
           total={total}
           current={query.page}

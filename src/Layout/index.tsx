@@ -57,7 +57,7 @@ const LayoutPage: React.FC = () => {
               height: contentHeight,
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
-              overflow: "hidden", // 改为 hidden 防止动画时出现滚动条
+              overflow: "auto", // 改为 hidden 防止动画时出现滚动条
             }}
           >
             <AnimatePresence initial={false}>

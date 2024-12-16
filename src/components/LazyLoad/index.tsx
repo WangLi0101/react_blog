@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Loading from "@/assets/images/loading.svg?react";
 
 interface LazyLoadProps {
@@ -19,20 +19,15 @@ export const LazyLoad: React.FC<LazyLoadProps> = ({
 }) => {
   const moreRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver | null>(null);
-
+  const [isActive, setIsActive] = useState(false);
   useEffect(() => {
-    // 每当 isStop 或 loading 改变时，需要重新设置 observer
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-
     observer.current = new IntersectionObserver((entries) => {
       // 确保元素进入视口
       if (entries[0].isIntersecting) {
         // 只有当不是停止状态且不在加载中时才调用
-        if (!isStop && !loading) {
-          getList();
-        }
+        setIsActive(true);
+      } else {
+        setIsActive(false);
       }
     }, options);
 
@@ -46,8 +41,13 @@ export const LazyLoad: React.FC<LazyLoadProps> = ({
         observer.current.disconnect();
       }
     };
-  }, [isStop, loading, getList]); // 添加所有相关的依赖项
+  }, []); // 添加所有相关的依赖项
 
+  useEffect(() => {
+    if (isActive && !isStop && !loading) {
+      getList();
+    }
+  }, [isActive, getList, isStop, loading]);
   return (
     <div className="mt-5 flex justify-center items-center py-3" ref={moreRef}>
       {isStop ? (
