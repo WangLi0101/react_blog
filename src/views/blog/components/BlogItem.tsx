@@ -3,16 +3,14 @@ import { formatDate } from "@/utils";
 import { Tag } from "../components/Tag";
 import { Icon } from "@iconify/react";
 import React from "react";
-import { useNavigate } from "react-router";
 
 interface Props {
   blog: BlogResponse;
 }
 
 export const BlogItem: React.FC<Props> = ({ blog }) => {
-  const navigate = useNavigate();
   const goDetail = () => {
-    navigate(`/front/blog/detail?id=${blog.id}`);
+    window.open(`/front/blog/detail?id=${blog.id}`, "_blank");
   };
   return (
     <div
