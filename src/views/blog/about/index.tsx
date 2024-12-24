@@ -5,14 +5,7 @@ import { useThemeStore } from "@/store/theme";
 import avatar from "@/assets/images/avatar.jpg";
 import { Icon } from "@iconify/react";
 import { Tag } from "../components/Tag";
-const skills = [
-  "Vue",
-  "React",
-  "Nest.js",
-  "TypeScript",
-  "Tailwind CSS",
-  "Node.js",
-];
+const skills = ["Vue", "React", "NestJS", "TypeScript", "Node.js", "Electron"];
 const githubUsername = "WangLi0101";
 const email = "uer1366197226@gmail.com";
 
