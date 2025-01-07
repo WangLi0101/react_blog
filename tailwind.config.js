@@ -85,6 +85,15 @@ module.exports = {
             'h1,h2,h3,h4,h5,h6': {
               color: 'var(--text-primary)',
             },
+            'h1': {
+              fontSize: '24px !important',
+              fontWeight: 'bold',
+            },
+            'h2': {
+              fontSize: '24px !important',
+              fontWeight: 'bold',
+            },
+          
             blockquote: {
               color: 'var(--text-secondary)',
               borderLeftColor: '#4B6BFB',
