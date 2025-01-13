@@ -5,8 +5,7 @@ export type service = {
 const protocol = window.location.protocol;
 
 // dev环境
-// const dev_url = "http://localhost:3000";
-const dev_url = "http://47.120.58.223:3000";
+const dev_url = "http://localhost:3000";
 const oss_url = "https://betterme-blog.oss-cn-beijing.aliyuncs.com";
 const dev_service: service = {
   MOCK: ``,
