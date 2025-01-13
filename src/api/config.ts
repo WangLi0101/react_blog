@@ -2,6 +2,8 @@ export type service = {
   MOCK: string;
   MANGMENT: string;
 };
+const protocol = window.location.protocol;
+
 // dev环境
 // const dev_url = "http://localhost:3000";
 const dev_url = "http://47.120.58.223:3000";
@@ -12,7 +14,7 @@ const dev_service: service = {
 };
 
 // 生产环境
-const prod_url = "http://sys-api.betterme.cyou";
+const prod_url = `${protocol}//sys-api.betterme.cyou`;
 const prod_server: service = {
   MOCK: `/mock`,
   MANGMENT: `${prod_url}/api/v1`,
