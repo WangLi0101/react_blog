@@ -88,7 +88,7 @@ export const MarkDown: React.FC<Props> = ({
                   </SyntaxHighlighter>
                   {isAsk && (
                     <div
-                      className="askai absolute right-2 top-2 text-sm flex items-center gap-1 cursor-pointer text-primary"
+                      className="askai absolute right-2 top-2 text-sm flex items-center gap-1 cursor-pointer text-primary max-md:hidden"
                       onClick={() =>
                         handlerAsk(String(children).replace(/\n$/, ""))
                       }

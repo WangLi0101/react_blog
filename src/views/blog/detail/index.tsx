@@ -136,7 +136,7 @@ export const Detail: React.FC = () => {
         </div>
       )}
       <Chat open={open} setOpen={setOpen} ref={chatRef} />
-      <div className="fixed bottom-5 right-5 z-50">
+      <div className="fixed bottom-5 right-5 z-50 max-md:hidden">
         <Icon
           icon="ri:message-3-fill"
           className="text-primary text-3xl cursor-pointer"
