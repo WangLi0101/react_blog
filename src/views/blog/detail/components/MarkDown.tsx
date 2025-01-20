@@ -43,18 +43,10 @@ export const MarkDown: React.FC<Props> = ({
             </p>
           ),
           ul: ({ children }) => (
-            <ul className="list-disc list-inside my-4 space-y-2">{children}</ul>
+            <ul className="list-disc my-4 space-y-2">{children}</ul>
           ),
           li: ({ children }) => <li className="ml-4">{children}</li>,
-          h1: ({ children }) => (
-            <h1 className="text-2xl font-bold my-4">{children}</h1>
-          ),
-          h2: ({ children }) => (
-            <h2 className="text-xl font-bold my-3">{children}</h2>
-          ),
-          h3: ({ children }) => (
-            <h3 className="text-lg font-bold my-2">{children}</h3>
-          ),
+
           blockquote: ({ children }) => (
             <blockquote className="border-l-4 border-gray-300 pl-4 my-4 italic bg-gray-50 py-2">
               {children}

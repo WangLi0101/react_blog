@@ -41,7 +41,7 @@ export const Chat = React.forwardRef<Ref, Props>(({ open, setOpen }, ref) => {
     setMessages((prev) => [...prev, newUserMessage]);
     setIsAskLoading(true);
     const res = await chat.current?.sendMessage(content || prompt);
-    console.log(res?.response.text());
+    console.log(res);
     setIsAskLoading(false);
     const newAssistantMessage: Message = {
       role: "assistant",
