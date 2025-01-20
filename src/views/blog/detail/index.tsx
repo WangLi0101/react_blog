@@ -8,19 +8,14 @@ import { Icon } from "@iconify/react";
 
 import Loading from "@/assets/images/loading.svg?react";
 import "./detail.scss";
-import { Button, Drawer, Input, Skeleton } from "antd";
-import { getChat } from "@/api/gemini";
-import { ChatSession } from "@google/generative-ai";
 import { MarkDown } from "./components/MarkDown";
+import { Chat } from "./components/Chat";
 interface Title {
   title: string;
   node: Element;
   level: number;
 }
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-}
+
 export const Detail: React.FC = () => {
   const [blog, setBlog] = useState<BlogResponse | null>(null);
   const [searchParams] = useSearchParams();
@@ -28,11 +23,6 @@ export const Detail: React.FC = () => {
   const [titles, setTitles] = useState<Title[]>([]);
   const [levelList, setLevelList] = useState<number[]>([]);
   const [open, setOpen] = useState(false);
-  const [prompt, setPrompt] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [isAskLoading, setIsAskLoading] = useState(false);
-  const chat = useRef<ChatSession | null>(null);
-  const genAIRef = useRef<HTMLDivElement>(null);
   const id = searchParams.get("id");
   const getBlogDetail = async () => {
     if (!id) return;
@@ -41,11 +31,8 @@ export const Detail: React.FC = () => {
       setBlog(res.data);
     }
   };
-  const initChat = async () => {
-    chat.current = await getChat(messages);
-  };
+
   useEffect(() => {
-    initChat();
     getBlogDetail();
   }, []);
 
@@ -73,26 +60,6 @@ export const Detail: React.FC = () => {
     const index = levelList.indexOf(level);
     return index * 15;
   };
-  const submit = async () => {
-    if (!prompt) return;
-    const newUserMessage: Message = { role: "user", content: prompt };
-    setMessages((prev) => [...prev, newUserMessage]);
-    setIsAskLoading(true);
-    const res = await chat.current?.sendMessage(prompt);
-    setIsAskLoading(false);
-    const newAssistantMessage: Message = {
-      role: "assistant",
-      content: res?.response.text() || "",
-    };
-    setMessages((prev) => [...prev, newAssistantMessage]);
-    setPrompt("");
-  };
-
-  useEffect(() => {
-    if (genAIRef.current) {
-      genAIRef.current.scrollTop = genAIRef.current.scrollHeight;
-    }
-  }, [messages, isAskLoading]);
   return (
     <>
       {blog ? (
@@ -162,41 +129,7 @@ export const Detail: React.FC = () => {
           <Loading />
         </div>
       )}
-      <Drawer
-        title="Gemini"
-        placement="right"
-        open={open}
-        onClose={() => setOpen(false)}
-        width="35%"
-      >
-        <div className="h-full flex flex-col">
-          <div className="top flex-1 overflow-y-auto" ref={genAIRef}>
-            <div className="messages space-y-4">
-              {messages.map((message, index) => (
-                <div key={index}>
-                  <div className="user text-theme-primary font-bold">
-                    {message.role === "user" ? "You" : "Gemini"}
-                  </div>
-                  <MarkDown content={message.content} />
-                </div>
-              ))}
-              {isAskLoading && <Skeleton active />}
-            </div>
-          </div>
-          <div className="bottom flex-none mt-4">
-            <Input.TextArea
-              rows={3}
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-            />
-            <div className="flex justify-end mt-4">
-              <Button type="primary" onClick={submit}>
-                Ask
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Drawer>
+      <Chat open={open} setOpen={setOpen} />
       <div className="fixed bottom-5 right-5 z-50">
         <Icon
           icon="ri:message-3-fill"
