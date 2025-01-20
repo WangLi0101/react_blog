@@ -23,6 +23,7 @@ export const Detail: React.FC = () => {
   const [titles, setTitles] = useState<Title[]>([]);
   const [levelList, setLevelList] = useState<number[]>([]);
   const [open, setOpen] = useState(false);
+  const chatRef = useRef<{ submit: (content: string) => Promise<void> }>(null);
   const id = searchParams.get("id");
   const getBlogDetail = async () => {
     if (!id) return;
@@ -59,6 +60,11 @@ export const Detail: React.FC = () => {
   const getPaddingLeft = (level: number) => {
     const index = levelList.indexOf(level);
     return index * 15;
+  };
+
+  const askAi = async (content: string) => {
+    setOpen(true);
+    await chatRef.current?.submit(content);
   };
   return (
     <>
@@ -98,7 +104,7 @@ export const Detail: React.FC = () => {
               className="content prose prose-lg max-w-none dark:prose-invert prose-pre:p-0"
               ref={contentRef}
             >
-              <MarkDown content={blog.content} />
+              <MarkDown content={blog.content} askAi={askAi} isAsk={true} />
             </div>
           </div>
           <div className="right border-l border-gray-200 pl-5 max-md:hidden">
@@ -129,7 +135,7 @@ export const Detail: React.FC = () => {
           <Loading />
         </div>
       )}
-      <Chat open={open} setOpen={setOpen} />
+      <Chat open={open} setOpen={setOpen} ref={chatRef} />
       <div className="fixed bottom-5 right-5 z-50">
         <Icon
           icon="ri:message-3-fill"
