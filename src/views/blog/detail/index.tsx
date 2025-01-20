@@ -1,25 +1,17 @@
 import { getBlogDetailApi } from "@/api/blog";
 import { BlogResponse } from "@/api/blog/blog";
-import React, {
-  useEffect,
-  useState,
-  ComponentPropsWithoutRef,
-  useRef,
-} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router";
 import { Tag } from "../components/Tag";
 import { formatDate } from "@/utils";
 import { Icon } from "@iconify/react";
-import ReactMarkdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
-import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
+
 import Loading from "@/assets/images/loading.svg?react";
 import "./detail.scss";
-import { Button, Drawer, Input } from "antd";
+import { Button, Drawer, Input, Skeleton } from "antd";
 import { getChat } from "@/api/gemini";
 import { ChatSession } from "@google/generative-ai";
+import { MarkDown } from "./components/MarkDown";
 interface Title {
   title: string;
   node: Element;
@@ -38,6 +30,7 @@ export const Detail: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const [isAskLoading, setIsAskLoading] = useState(false);
   const chat = useRef<ChatSession | null>(null);
   const genAIRef = useRef<HTMLDivElement>(null);
   const id = searchParams.get("id");
@@ -81,17 +74,17 @@ export const Detail: React.FC = () => {
     return index * 15;
   };
   const submit = async () => {
+    if (!prompt) return;
     const newUserMessage: Message = { role: "user", content: prompt };
-    const updatedMessages = [...messages, newUserMessage];
-    setMessages(updatedMessages);
-
+    setMessages((prev) => [...prev, newUserMessage]);
+    setIsAskLoading(true);
     const res = await chat.current?.sendMessage(prompt);
+    setIsAskLoading(false);
     const newAssistantMessage: Message = {
       role: "assistant",
       content: res?.response.text() || "",
     };
-
-    setMessages([...updatedMessages, newAssistantMessage]);
+    setMessages((prev) => [...prev, newAssistantMessage]);
     setPrompt("");
   };
 
@@ -99,7 +92,7 @@ export const Detail: React.FC = () => {
     if (genAIRef.current) {
       genAIRef.current.scrollTop = genAIRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isAskLoading]);
   return (
     <>
       {blog ? (
@@ -138,37 +131,7 @@ export const Detail: React.FC = () => {
               className="content prose prose-lg max-w-none dark:prose-invert prose-pre:p-0"
               ref={contentRef}
             >
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
-                components={{
-                  code({
-                    inline,
-                    className,
-                    children,
-                    ...props
-                  }: ComponentPropsWithoutRef<"code"> & { inline?: boolean }) {
-                    const match = /language-(\w+)/.exec(className || "");
-                    return !inline && match ? (
-                      <SyntaxHighlighter
-                        // @ts-expect-error style type mismatch
-                        style={{ ...vscDarkPlus, fontSize: "30px" }}
-                        language={match[1]}
-                        PreTag="div"
-                        {...props}
-                      >
-                        {String(children).replace(/\n$/, "")}
-                      </SyntaxHighlighter>
-                    ) : (
-                      <code className={className} {...props}>
-                        {children}
-                      </code>
-                    );
-                  },
-                }}
-              >
-                {blog.content}
-              </ReactMarkdown>
+              <MarkDown content={blog.content} />
             </div>
           </div>
           <div className="right border-l border-gray-200 pl-5 max-md:hidden">
@@ -204,47 +167,20 @@ export const Detail: React.FC = () => {
         placement="right"
         open={open}
         onClose={() => setOpen(false)}
-        width={500}
+        width="35%"
       >
         <div className="h-full flex flex-col">
           <div className="top flex-1 overflow-y-auto" ref={genAIRef}>
             <div className="messages space-y-4">
               {messages.map((message, index) => (
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                  key={index}
-                  components={{
-                    code({
-                      inline,
-                      className,
-                      children,
-                      ...props
-                    }: ComponentPropsWithoutRef<"code"> & {
-                      inline?: boolean;
-                    }) {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          // @ts-expect-error style type mismatch
-                          style={{ ...vscDarkPlus, fontSize: "30px" }}
-                          language={match[1]}
-                          PreTag="div"
-                          {...props}
-                        >
-                          {String(children).replace(/\n$/, "")}
-                        </SyntaxHighlighter>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                >
-                  {message.content}
-                </ReactMarkdown>
+                <div key={index}>
+                  <div className="user text-theme-primary font-bold">
+                    {message.role === "user" ? "You" : "Gemini"}
+                  </div>
+                  <MarkDown content={message.content} />
+                </div>
               ))}
+              {isAskLoading && <Skeleton active />}
             </div>
           </div>
           <div className="bottom flex-none mt-4">
