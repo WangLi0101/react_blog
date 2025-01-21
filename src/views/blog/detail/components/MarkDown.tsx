@@ -72,7 +72,7 @@ export const MarkDown: React.FC<Props> = ({
                 <div className="relative">
                   <SyntaxHighlighter
                     style={vscDarkPlus}
-                    className="!m-0 !text-base rounded-md"
+                    className="!m-0 !text-base rounded-md !pt-[35px]"
                     language={languageMap[match[1]] || match[1]}
                     PreTag="div"
                   >
@@ -80,7 +80,7 @@ export const MarkDown: React.FC<Props> = ({
                   </SyntaxHighlighter>
                   {isAsk && (
                     <div
-                      className="askai absolute right-2 top-2 text-sm flex items-center gap-1 cursor-pointer text-primary max-md:hidden"
+                      className="askai absolute right-[10px] top-[8px] text-sm flex items-center gap-1 cursor-pointer text-primary max-md:hidden"
                       onClick={() =>
                         handlerAsk(String(children).replace(/\n$/, ""))
                       }
@@ -89,6 +89,11 @@ export const MarkDown: React.FC<Props> = ({
                       <span>Ask AI</span>
                     </div>
                   )}
+                  <div className="operator absolute left-[10px] top-[10px] flex items-center gap-2">
+                    <div className="bg-red-500 rounded-full w-3 h-3 "></div>
+                    <div className="bg-yellow-500 rounded-full w-3 h-3 "></div>
+                    <div className="bg-green-500 rounded-full w-3 h-3 "></div>
+                  </div>
                 </div>
               ) : (
                 <code className="bg-gray-100 px-2 py-1 rounded text-sm">
