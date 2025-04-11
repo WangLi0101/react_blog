@@ -187,3 +187,15 @@ export function getOssSignApi() {
     method: "get",
   });
 }
+
+// 订阅
+export function subscribeApi(data: PushSubscription) {
+  return fetch<PushSubscription>(
+    "/system/serviceWorder/subscribe",
+    "MANGMENT",
+    {
+      method: "post",
+      body: JSON.stringify(data),
+    }
+  );
+}
