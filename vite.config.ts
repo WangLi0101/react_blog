@@ -7,21 +7,7 @@ import autoprefixer from "autoprefixer";
 import svgr from "vite-plugin-svgr";
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react({
-      babel: {
-        plugins: [
-          [
-            "babel-plugin-react-compiler",
-            {
-              target: "18",
-            },
-          ],
-        ],
-      },
-    }),
-    svgr(),
-  ],
+  plugins: [react(), svgr()],
   server: {
     port: 7748,
     host: "0.0.0.0",
