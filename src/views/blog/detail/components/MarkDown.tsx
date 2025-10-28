@@ -48,7 +48,7 @@ export const MarkDown: React.FC<Props> = ({
           li: ({ children }) => <li className="ml-4">{children}</li>,
 
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-gray-300 pl-4 my-4 italic bg-gray-50 py-2">
+            <blockquote className="border-l-4 border-theme-border pl-4 my-4 italic bg-theme-secondary py-2">
               {children}
             </blockquote>
           ),
@@ -96,28 +96,28 @@ export const MarkDown: React.FC<Props> = ({
                   </div>
                 </div>
               ) : (
-                <code className="bg-gray-100 px-2 py-1 rounded text-sm">
+                <code className="bg-theme-secondary px-2 py-1 rounded text-sm">
                   {children}
                 </code>
               )
             ) : (
-              <code className="bg-gray-100 px-1 rounded text-sm">
+              <code className="bg-theme-secondary px-1 rounded text-sm">
                 {children}
               </code>
             );
           },
           table: ({ children }) => (
-            <table className="border-collapse border border-gray-300 my-4 w-full">
+            <table className="border-collapse border border-theme-border my-4 w-full">
               {children}
             </table>
           ),
           th: ({ children }) => (
-            <th className="border border-gray-300 px-4 py-2 bg-gray-100">
+            <th className="border border-theme-border px-4 py-2 bg-theme-secondary">
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="border border-gray-300 px-4 py-2">{children}</td>
+            <td className="border border-theme-border px-4 py-2">{children}</td>
           ),
         }}
       >

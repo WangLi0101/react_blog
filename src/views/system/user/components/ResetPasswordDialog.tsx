@@ -38,14 +38,17 @@ const ResetPasswordDialog: React.FC<Props> = ({
         onCancel={() => setVisible(false)}
         confirmLoading={confirmLoading}
         afterClose={() => formRef.resetFields()}
+        className="modern-modal"
+        width={480}
+        centered
       >
         <div className="dialog-content">
           <Form
             form={formRef}
             name="resetPassword"
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600, width: "100%" }}
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            layout="horizontal"
             autoComplete="off"
           >
             <Form.Item<FormType>
@@ -56,7 +59,7 @@ const ResetPasswordDialog: React.FC<Props> = ({
                 { min: 6, message: "密码长度不能小于6位" },
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="请输入新密码" />
             </Form.Item>
             <Form.Item
               label="确认密码"
@@ -73,7 +76,7 @@ const ResetPasswordDialog: React.FC<Props> = ({
                 }),
               ]}
             >
-              <Input.Password />
+              <Input.Password placeholder="请再次输入密码" />
             </Form.Item>
           </Form>
         </div>

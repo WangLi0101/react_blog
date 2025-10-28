@@ -23,7 +23,7 @@ const CustomBreadcrumb: React.FC = () => {
   }, [getAllParentMenu, location]);
 
   return (
-    <Breadcrumb style={{ margin: "16px 0" }} items={parentMenu}></Breadcrumb>
+    <Breadcrumb style={{ margin: "0" }} items={parentMenu}></Breadcrumb>
   );
 };
 

@@ -60,30 +60,33 @@ export const RolesDialog: React.FC<Props> = React.memo(
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={loading}
+        className="modern-modal"
+        width={520}
+        centered
       >
         <div className="content">
           <Form
             name="basic"
-            labelCol={{ span: 5 }}
-            wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
+            layout="horizontal"
             initialValues={{ remember: true }}
             autoComplete="off"
             ref={formRef}
           >
             <Form.Item<FieldType>
-              label="key"
+              label="角色标识"
               name="key"
-              rules={[{ required: true, message: "Please input your key!" }]}
+              rules={[{ required: true, message: "请输入角色标识!" }]}
             >
-              <Input />
+              <Input placeholder="请输入角色标识，如：admin" />
             </Form.Item>
             <Form.Item<FieldType>
-              label="name"
+              label="角色名称"
               name="name"
-              rules={[{ required: true, message: "Please input your name!" }]}
+              rules={[{ required: true, message: "请输入角色名称!" }]}
             >
-              <Input />
+              <Input placeholder="请输入角色名称，如：管理员" />
             </Form.Item>
           </Form>
         </div>

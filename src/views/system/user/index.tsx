@@ -17,6 +17,9 @@ import {
   Form,
   message,
   Dropdown,
+  Space,
+  Tag,
+  Avatar,
 } from "antd";
 import { ColumnsType } from "antd/es/table";
 import React, { useCallback, useEffect, useState } from "react";
@@ -26,7 +29,17 @@ import {
   AssignRoleForm,
   AssingRoleFormType,
 } from "./components/AssignRoleForm";
-import { DownOutlined } from "@ant-design/icons";
+import { 
+  DownOutlined, 
+  SearchOutlined, 
+  UserAddOutlined, 
+  EditOutlined, 
+  DeleteOutlined,
+  UserOutlined,
+  MailOutlined,
+  TeamOutlined,
+  KeyOutlined
+} from "@ant-design/icons";
 import ResetPasswordDialog from "./components/ResetPasswordDialog";
 interface ModelConfig {
   visible: boolean;
@@ -89,51 +102,85 @@ const User: React.FC = () => {
     {
       title: "#",
       dataIndex: "username",
-      width: 30,
+      width: 60,
       align: "center",
       render: (_, _record: UserInfo, index: number) => {
-        return index + 1;
+        return (search.page - 1) * search.pageSize + index + 1;
       },
     },
     {
-      title: "用户名",
+      title: "用户信息",
       dataIndex: "username",
-      width: 150,
-    },
-    {
-      title: "姓名",
-      dataIndex: "name",
-      width: 150,
+      width: 200,
       render: (_, record: UserInfo) => {
-        return record.profile?.name;
+        return (
+          <div className="flex items-center gap-3">
+            <Avatar 
+              size={32} 
+              icon={<UserOutlined />} 
+              style={{ backgroundColor: 'var(--primary-color)' }}
+            />
+            <div>
+              <div className="font-medium">{record.username}</div>
+              <div className="text-sm text-gray-500">{record.profile?.name || '未设置'}</div>
+            </div>
+          </div>
+        );
       },
     },
     {
       title: "性别",
       dataIndex: "gender",
-      width: 100,
+      width: 80,
+      align: "center",
       render: (_, record: UserInfo) => {
-        return Gender[record.profile.gender];
+        const genderText = Gender[record.profile.gender];
+        const color = record.profile.gender === 1 ? 'blue' : record.profile.gender === 2 ? 'pink' : 'default';
+        return <Tag color={color}>{genderText}</Tag>;
       },
     },
     {
       title: "邮箱",
       dataIndex: "email",
+      width: 200,
+      render: (_, record: UserInfo) => {
+        return (
+          <div className="flex items-center gap-2 text-gray-600">
+            <MailOutlined />
+            <span>{record.profile?.email || '未设置'}</span>
+          </div>
+        );
+      },
+    },
+    {
+      title: "角色",
+      dataIndex: "roles",
       width: 150,
       render: (_, record: UserInfo) => {
-        return record.profile?.email;
+        return (
+          <div className="flex flex-wrap gap-1">
+            {record.roles?.length > 0 ? (
+              record.roles.map(role => (
+                <Tag key={role.id} color="processing">
+                  {role.name}
+                </Tag>
+              ))
+            ) : (
+              <Tag color="default">未分配角色</Tag>
+            )}
+          </div>
+        );
       },
     },
     {
       title: "操作",
-      width: 180,
-
+      width: 200,
       align: "center",
       render: (_, record: UserInfo) => {
         const items = [
           {
             label: "分配角色",
-            key: "edit",
+            key: "assign",
             onClick: () => assignRoleHandler(record),
           },
           {
@@ -143,20 +190,30 @@ const User: React.FC = () => {
           },
         ];
         return (
-          <>
-            <Button type="link" onClick={() => editUserHandler(record)}>
+          <Space size="small">
+            <Button 
+              type="link" 
+              size="small" 
+              icon={<EditOutlined />}
+              onClick={() => editUserHandler(record)}
+            >
               编辑
             </Button>
-            <Button type="link" onClick={() => delUser(record)}>
+            <Button 
+              type="link" 
+              danger 
+              size="small" 
+              icon={<DeleteOutlined />}
+              onClick={() => delUser(record)}
+            >
               删除
             </Button>
-            <Dropdown menu={{ items }}>
-              <Button type="link">
-                更多
-                <DownOutlined />
+            <Dropdown menu={{ items }} placement="bottomRight">
+              <Button type="link" size="small">
+                更多 <DownOutlined />
               </Button>
             </Dropdown>
-          </>
+          </Space>
         );
       },
     },
@@ -311,60 +368,76 @@ const User: React.FC = () => {
   };
 
   return (
-    <div className="user">
-      <div className="operator flex justify-between mb-5">
-        <Input.Search
-          placeholder="input username"
-          allowClear
-          className="w-[200px]"
-          onSearch={onSearch}
-        />
-        <div className="operator">
-          <Button type="primary" onClick={addUserHandler}>
+    <div className="p-6 bg-theme-bg min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        {/* 搜索和操作区域 */}
+        <div className="flex justify-between items-center mb-6 p-4 bg-theme-bg border border-theme-border rounded-xl">
+          <Input.Search
+            placeholder="搜索用户名..."
+            allowClear
+            className="w-80"
+            onSearch={onSearch}
+          />
+          <Button 
+            type="primary" 
+            icon={<UserAddOutlined />}
+            onClick={addUserHandler}
+          >
             新增用户
           </Button>
         </div>
-      </div>
 
-      <Table<UserInfo>
-        columns={columns}
-        dataSource={userList}
-        loading={loading}
-        pagination={false}
-        tableLayout="auto"
-        rowKey="id"
-        className="h-[calc(100vh-320px)]"
-      />
+        {/* 表格区域 */}
+        <div className="bg-theme-bg border border-theme-border rounded-xl overflow-hidden">
+          <Table<UserInfo>
+            columns={columns}
+            dataSource={userList}
+            loading={loading}
+            pagination={false}
+            tableLayout="auto"
+            rowKey="id"
+            scroll={{ y: 'calc(100vh - 300px)' }}
+          />
+        </div>
 
-      <div className="pagination flex flex-row-reverse mt-5">
-        <Pagination
-          total={total}
-          pageSize={search.pageSize}
-          current={search.page}
-          onChange={pageChange}
-          showSizeChanger
-          pageSizeOptions={[50, 100, 300, 500]}
+        {/* 分页区域 */}
+        <div className="flex justify-end mt-6">
+          <Pagination
+            total={total}
+            pageSize={search.pageSize}
+            current={search.page}
+            onChange={pageChange}
+            showSizeChanger
+            showQuickJumper
+            showTotal={(total, range) => 
+              `第 ${range[0]}-${range[1]} 条，共 ${total} 条数据`
+            }
+            pageSizeOptions={[10, 20, 50, 100]}
+          />
+        </div>
+
+        <Modal
+          confirmLoading={confirmLoading}
+          title={modelConfig.title}
+          open={modelConfig.visible}
+          onOk={submit}
+          onCancel={() => {
+            setModelConfig((draft) => {
+              draft.visible = false;
+            });
+          }}
+          afterOpenChange={afterOpenChange}
+          width={600}
+        >
+          <div className="dialog-content">{getForm()}</div>
+        </Modal>
+
+        <ResetPasswordDialog
+          visible={resetPasswordVisible}
+          setVisible={setResetPasswordVisible}
+          onSubmit={resetPassword}
         />
       </div>
-      <Modal
-        confirmLoading={confirmLoading}
-        title={modelConfig.title}
-        open={modelConfig.visible}
-        onOk={submit}
-        onCancel={() => {
-          setModelConfig((draft) => {
-            draft.visible = false;
-          });
-        }}
-        afterOpenChange={afterOpenChange}
-      >
-        <div className="dialog-content">{getForm()}</div>
-      </Modal>
-      <ResetPasswordDialog
-        visible={resetPasswordVisible}
-        setVisible={setResetPasswordVisible}
-        onSubmit={resetPassword}
-      />
     </div>
   );
 };

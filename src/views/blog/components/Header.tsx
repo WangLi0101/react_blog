@@ -39,6 +39,8 @@ export const Header: React.FC = () => {
 
   const change = (flag: boolean) => {
     themeStore.setIsDark(flag);
+    // 同时更新mode状态，确保用户手动切换时不会被auto模式覆盖
+    themeStore.setMode(flag ? "dark" : "light");
   };
 
   return (
@@ -93,7 +95,7 @@ export const Header: React.FC = () => {
       </div>
       {isMenuOpen && (
         <div
-          className="md:hidden absolute top-20 left-0 w-full bg-theme-bg h-[calc(100dvh-80px)] border-t border-gray-200"
+          className="md:hidden absolute top-20 left-0 w-full bg-theme-bg h-[calc(100dvh-80px)] border-t border-theme-border"
           data-aos="fade-up"
         >
           <div className="flex flex-col items-start">
@@ -102,7 +104,7 @@ export const Header: React.FC = () => {
                 key={item.path}
                 to={item.path}
                 className={clsx(
-                  "w-full  lflex text-center text-[18px] py-5 border-b border-gray-200",
+                  "w-full  lflex text-center text-[18px] py-5 border-b border-theme-border",
                   {
                     "text-theme-primary": location.pathname === item.path,
                     "font-bold": location.pathname === item.path,

@@ -76,51 +76,63 @@ export const AddMenuDialog: React.FC<Props> = ({
   return (
     <div className="add-menu-dialog">
       <Modal
+        title={menuItem ? "编辑菜单" : "添加菜单"}
         open={visible}
         onCancel={() => setVisible(false)}
         afterClose={closed}
         confirmLoading={confirmLoading}
         onOk={onOk}
+        className="modern-modal"
+        width={600}
+        centered
       >
         <div className="dialog-content">
           <Form
             form={formRef}
-            labelCol={{ span: 4 }}
-            wrapperCol={{ span: 20 }}
+            labelCol={{ span: 6 }}
+            wrapperCol={{ span: 18 }}
             onValuesChange={onValuesChange}
             initialValues={initialValues}
+            layout="horizontal"
           >
             <Form.Item
-              label="名称"
+              label="菜单名称"
               name="title"
-              rules={[{ required: true, message: "请输入名称" }]}
+              rules={[{ required: true, message: "请输入菜单名称" }]}
             >
-              <Input />
+              <Input placeholder="请输入菜单名称" />
             </Form.Item>
             <Form.Item
-              label="组件"
+              label="组件路径"
               name="component"
-              rules={[{ required: !!parentId, message: "请输入组件" }]}
+              rules={[{ required: !!parentId, message: "请输入组件路径" }]}
             >
-              <Input />
+              <Input placeholder="请输入组件路径，如：/views/Home" />
             </Form.Item>
             <Form.Item
-              label="路径"
+              label="路由路径"
               name="path"
-              rules={[{ required: true, message: "请输入路径" }]}
+              rules={[{ required: true, message: "请输入路由路径" }]}
             >
-              <Input />
+              <Input placeholder="请输入路由路径，如：/home" />
             </Form.Item>
             {!parentId && (
-              <Form.Item label="图标" name="icon">
-                <Input prefix={<Icon icon={icon} />} />
+              <Form.Item label="菜单图标" name="icon">
+                <Input 
+                  prefix={icon && <Icon icon={icon} />} 
+                  placeholder="请输入图标名称，如：mdi:home"
+                />
               </Form.Item>
             )}
-            <Form.Item label="是否隐藏" name="isHidden">
+            <Form.Item label="是否隐藏" name="isHidden" valuePropName="checked">
               <Switch />
             </Form.Item>
-            <Form.Item label="排序" name="sort">
-              <InputNumber min={1} />
+            <Form.Item label="排序权重" name="sort">
+              <InputNumber 
+                min={1} 
+                placeholder="数字越小排序越靠前"
+                style={{ width: '100%' }}
+              />
             </Form.Item>
           </Form>
         </div>

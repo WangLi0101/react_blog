@@ -7,6 +7,7 @@ import ResetPasswordDialog from "@/views/system/user/components/ResetPasswordDia
 import { resetPasswordPersonalApi } from "@/api/system";
 import { Icon } from "@iconify/react";
 import { emitter } from "@/utils/mitt";
+import CustomBreadcrumb from "./CustomBreadcrumb";
 const { Header } = Layout;
 
 const CustomHeader: React.FC = () => {
@@ -60,23 +61,26 @@ const CustomHeader: React.FC = () => {
   return (
     <>
       <Header
-        className="flex justify-end items-center px-6"
+        className="flex justify-between items-center px-6"
         style={{ background: colorBgContainer }}
       >
-        <Dropdown menu={{ items: dropdownItems }} placement="bottomRight">
-          <Space className="cursor-pointer">
-            <Avatar icon={<UserOutlined />} className="bg-blue-400" />
-            <span className="text-gray-700">{userInfo?.profile?.name}</span>
-          </Space>
-        </Dropdown>
-        <Icon
-          className="ml-2 cursor-pointer"
-          icon="hugeicons:settings-01"
-          style={{ fontSize: "16px" }}
-          onClick={() => {
-            emitter.emit("setOpen", true);
-          }}
-        />
+        <CustomBreadcrumb />
+        <div className="flex items-center">
+          <Dropdown menu={{ items: dropdownItems }} placement="bottomRight">
+            <Space className="cursor-pointer">
+              <Avatar icon={<UserOutlined />} className="bg-blue-400" />
+              <span className="text-gray-700">{userInfo?.profile?.name}</span>
+            </Space>
+          </Dropdown>
+          <Icon
+            className="ml-2 cursor-pointer"
+            icon="hugeicons:settings-01"
+            style={{ fontSize: "16px" }}
+            onClick={() => {
+              emitter.emit("setOpen", true);
+            }}
+          />
+        </div>
       </Header>
 
       <ResetPasswordDialog

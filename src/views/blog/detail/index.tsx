@@ -107,7 +107,7 @@ export const Detail: React.FC = () => {
               <MarkDown content={blog.content} askAi={askAi} isAsk={true} />
             </div>
           </div>
-          <div className="right border-l border-gray-200 pl-5 max-md:hidden">
+          <div className="right border-l border-theme-border pl-5 max-md:hidden">
             <h2 className="text-2xl font-bold mb-4">Anchor</h2>
             <ul className="space-y-2" data-aos="fade-up">
               {titles.map((title, index) => (
@@ -136,13 +136,13 @@ export const Detail: React.FC = () => {
         </div>
       )}
       <Chat open={open} setOpen={setOpen} ref={chatRef} />
-      <div className="fixed bottom-5 right-5 z-50 max-md:hidden">
+      {/* <div className="fixed bottom-5 right-5 z-50 max-md:hidden">
         <Icon
           icon="ri:message-3-fill"
           className="text-primary text-3xl cursor-pointer"
           onClick={() => setOpen(true)}
         />
-      </div>
+      </div> */}
     </>
   );
 };

@@ -25,36 +25,490 @@
   }
 }
 
+// 现代化渐变动画
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+// 悬浮动画
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+// 脉冲动画
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(75, 107, 251, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(75, 107, 251, 0.6);
+  }
+}
+
 [data-theme="light"] {
-  --bg: #ffffff;
-  --bg-primary: #4b6bfb;
-  --bg-secondary: #f5f5f5;
-  --text-primary: #000000;
-  --text-secondary: #666666;
+  --bg: #fafbfc;
+  --bg-primary: #6b7280; // 改为简洁的灰蓝色
+  --bg-secondary: #f3f4f6;
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  --border-light: #f3f4f6;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --gradient-primary: linear-gradient(
+    135deg,
+    #6b7280 0%,
+    #9ca3af 100%
+  ); // 简洁的灰色渐变
+  --gradient-secondary: linear-gradient(135deg, #9ca3af 0%, #d1d5db 100%);
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-primary: #6b7280; // 保持一致的简洁灰蓝色
+  --bg-secondary: #1e293b;
+  --text-primary: #f9fafb;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --border-light: #1e293b;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  --gradient-primary: linear-gradient(
+    135deg,
+    #6b7280 0%,
+    #9ca3af 100%
+  ); // 简洁的灰色渐变
+  --gradient-secondary: linear-gradient(135deg, #9ca3af 0%, #d1d5db 100%);
 }
 
 // 暗色主题变量
 [data-theme="dark"] {
-  --bg: #181a2a;
-  --bg-primary: #4b6bfb;
-  --bg-secondary: #242535;
-  --text-primary: #ffffff;
-  --text-secondary: #a0a0a0;
+  --bg: #0f172a;
+  --bg-primary: #6b7280; // 简洁的灰蓝色
+  --bg-secondary: #1e293b;
+  --bg-card: #1e2532;
+  --text-primary: #f9fafb;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --border-light: #475569;
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.4),
+    0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  --gradient-primary: linear-gradient(
+    135deg,
+    #6b7280 0%,
+    #9ca3af 100%
+  ); // 简洁的灰色渐变
+  --gradient-secondary: linear-gradient(135deg, #9ca3af 0%, #d1d5db 100%);
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --error-color: #dc2626;
+  --info-color: #2563eb;
 }
 
-// 其他 SCSS 样式...
-.ant-modal-body {
-  margin-top: 20px !important;
+// 滚动条样式优化
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    45deg,
+    var(--bg-primary),
+    #9ca3af
+  ); // 简洁的灰色渐变
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    45deg,
+    #9ca3af,
+    var(--bg-primary)
+  ); // 简洁的灰色渐变
+  transform: scale(1.1);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-secondary);
+}
+
+// Firefox 滚动条样式
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--bg-primary) var(--bg-secondary);
+}
+
+// 全局样式优化
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 // 使用字体
 body {
-  font-family: "WorkSans", sans-serif;
-  background-color: var(--bg);
+  font-family: "WorkSans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
   color: var(--text-primary);
+  line-height: 1.6;
+  transition: all 0.3s ease;
+}
+
+// Ant Design 组件样式覆盖
+.ant-layout {
+  background: var(--bg) !important;
+}
+
+.ant-layout-content {
+  background: var(--bg) !important;
+}
+
+.ant-layout-header {
+  background: var(--bg-card) !important;
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: var(--shadow);
+}
+
+.ant-layout-sider {
+  background: linear-gradient(180deg, #001529 0%, #002140 100%) !important;
+}
+
+.ant-menu-dark {
+  background: transparent !important;
+}
+
+.ant-menu-dark .ant-menu-item {
+  border-radius: 8px;
+  margin: 4px 8px;
+  transition: all 0.3s ease;
+}
+
+.ant-menu-dark .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateX(4px);
+}
+
+.ant-menu-dark .ant-menu-item-selected {
+  background: var(--gradient-primary) !important;
+  box-shadow: 0 4px 12px rgba(75, 107, 251, 0.3);
+}
+
+.ant-table {
+  background: var(--bg-card) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.ant-table-thead > tr > th {
+  background: var(--bg-secondary) !important;
+  border-bottom: 2px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
+  font-weight: 600;
+  padding: 16px !important;
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid var(--border-light) !important;
+  padding: 16px !important;
+  transition: all 0.3s ease;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: var(--bg-secondary) !important;
+  transform: scale(1.01);
+}
+
+.ant-btn {
+  border-radius: 8px !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.ant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.ant-btn-primary {
+  background: var(--gradient-primary) !important;
+  border: none !important;
+}
+
+.ant-btn-primary:hover {
+  background: var(--gradient-secondary) !important;
+  animation: pulse-glow 2s infinite;
+}
+
+.ant-pagination {
+  .ant-pagination-item {
+    border-radius: 8px !important;
+    border: 1px solid var(--border-color) !important;
+    transition: all 0.3s ease;
+  }
+
+  .ant-pagination-item:hover {
+    border-color: var(--bg-primary) !important;
+    transform: scale(1.1);
+  }
+
+  .ant-pagination-item-active {
+    background: var(--gradient-primary) !important;
+    border-color: var(--bg-primary) !important;
+  }
+}
+
+// 简洁弹窗样式
+.ant-modal {
+  .ant-modal-content {
+    border-radius: 12px !important;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+    border: 1px solid var(--border-color);
+    background: var(--bg) !important;
+  }
+
+  .ant-modal-header {
+    background: var(--bg) !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    padding: 20px 24px 16px !important;
+
+    .ant-modal-title {
+      color: var(--text-primary) !important;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+
+  .ant-modal-close {
+    top: 16px !important;
+    right: 16px !important;
+    
+    .ant-modal-close-x {
+      width: 28px !important;
+      height: 28px !important;
+      line-height: 28px !important;
+      border-radius: 6px !important;
+      color: var(--text-secondary) !important;
+      font-size: 14px !important;
+      transition: all 0.2s ease !important;
+      
+      &:hover {
+        background: var(--bg-secondary) !important;
+        color: var(--text-primary) !important;
+      }
+    }
+  }
+
+  .ant-modal-body {
+    padding: 0 24px 20px !important;
+    background: var(--bg) !important;
+    
+    .dialog-content, .content {
+      .ant-form {
+        .ant-form-item {
+          margin-bottom: 16px;
+          
+          .ant-form-item-label {
+            > label {
+              color: var(--text-primary) !important;
+              font-weight: 500;
+              font-size: 14px;
+            }
+          }
+          
+          .ant-input, .ant-input-number, .ant-select-selector {
+            border-radius: 8px !important;
+            border: 1px solid var(--border-color) !important;
+            padding: 10px 12px !important;
+            font-size: 14px;
+            transition: all 0.2s ease !important;
+            background: var(--bg) !important;
+            
+            &:hover {
+              border-color: var(--bg-primary) !important;
+            }
+            
+            &:focus, &.ant-input-focused, &.ant-select-focused .ant-select-selector {
+              border-color: var(--bg-primary) !important;
+              box-shadow: 0 0 0 2px rgba(107, 114, 128, 0.1) !important;
+            }
+          }
+          
+          .ant-switch {
+            background: var(--border-color) !important;
+            
+            &.ant-switch-checked {
+              background: var(--bg-primary) !important;
+            }
+          }
+        }
+      }
+      
+      .ant-tree {
+        background: var(--bg-secondary) !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        border: 1px solid var(--border-color) !important;
+        
+        .ant-tree-treenode {
+          .ant-tree-node-content-wrapper {
+            border-radius: 6px !important;
+            padding: 6px 8px !important;
+            transition: all 0.2s ease !important;
+            
+            &:hover {
+              background: var(--bg) !important;
+            }
+          }
+          
+          .ant-tree-checkbox {
+            .ant-tree-checkbox-inner {
+              border-radius: 4px !important;
+              border: 1px solid var(--border-color) !important;
+            }
+            
+            &.ant-tree-checkbox-checked .ant-tree-checkbox-inner {
+              background: var(--bg-primary) !important;
+              border-color: var(--bg-primary) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .ant-modal-footer {
+    padding: 16px 24px 20px !important;
+    border-top: 1px solid var(--border-light) !important;
+    background: var(--bg) !important;
+    
+    .ant-btn {
+      border-radius: 8px !important;
+      padding: 8px 16px !important;
+      height: auto !important;
+      font-weight: 500 !important;
+      font-size: 14px !important;
+      transition: all 0.2s ease !important;
+      
+      &.ant-btn-default {
+        background: var(--bg) !important;
+        border: 1px solid var(--border-color) !important;
+        color: var(--text-secondary) !important;
+        
+        &:hover {
+          border-color: var(--bg-primary) !important;
+          color: var(--bg-primary) !important;
+        }
+      }
+      
+      &.ant-btn-primary {
+        background: var(--bg-primary) !important;
+        border: 1px solid var(--bg-primary) !important;
+        color: white !important;
+        
+        &:hover {
+          background: var(--text-secondary) !important;
+          border-color: var(--text-secondary) !important;
+        }
+      }
+    }
+  }
+}
+
+// 简化遮罩层
+.ant-modal-mask {
+  background: rgba(0, 0, 0, 0.45) !important;
+}
+
+// 自定义卡片样式
+.modern-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+// 渐变按钮样式
+.gradient-btn {
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  padding: 12px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: var(--gradient-secondary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+// 浮动动画类
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .ant-layout-sider {
+    position: fixed !important;
+    z-index: 999;
+    height: 100vh;
+  }
+
+  .ant-table {
+    font-size: 12px;
+  }
+
+  .ant-btn {
+    padding: 8px 16px !important;
+    font-size: 12px;
+  }
 }

@@ -79,13 +79,24 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
 
     return (
       <Modal
-        title="分配菜单"
+        title="分配菜单权限"
         open={dialogVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         confirmLoading={loading}
+        className="modern-modal"
+        width={600}
+        centered
       >
         <div className="content">
+          <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <p className="text-sm text-blue-600 dark:text-blue-400 mb-1">
+              💡 操作提示
+            </p>
+            <p className="text-xs text-blue-500 dark:text-blue-300">
+              选择菜单项将自动包含其父级菜单，确保权限结构的完整性
+            </p>
+          </div>
           <Tree<TreeNode<MenuItem>>
             fieldNames={{ title: "title", key: "id", children: "children" }}
             checkable
@@ -93,6 +104,7 @@ export const AssignMenuDialog: React.FC<Props> = React.memo(
             defaultExpandAll={true}
             checkedKeys={checkedKeys}
             onCheck={onCheck}
+            className="custom-tree"
           />
         </div>
       </Modal>

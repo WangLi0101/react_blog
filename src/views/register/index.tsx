@@ -16,7 +16,7 @@ export const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#00A9FF] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-gray-900">Auth</h1>
@@ -39,7 +39,7 @@ export const Register = () => {
             <Input
               prefix={<UserOutlined className="text-gray-400" />}
               placeholder="用户名"
-              className="h-12 rounded-lg border border-gray-200"
+              className="h-12 rounded-lg border border-theme-border"
             />
           </Form.Item>
 
@@ -53,7 +53,7 @@ export const Register = () => {
             <Input
               prefix={<UserOutlined className="text-gray-400" />}
               placeholder="姓名"
-              className="h-12 rounded-lg border border-gray-200"
+              className="h-12 rounded-lg border border-theme-border"
             />
           </Form.Item>
 
@@ -67,7 +67,7 @@ export const Register = () => {
             <Input
               prefix={<MailOutlined className="text-gray-400" />}
               placeholder="邮箱"
-              className="h-12 rounded-lg border border-gray-200"
+              className="h-12 rounded-lg border border-theme-border"
             />
           </Form.Item>
 
@@ -91,7 +91,7 @@ export const Register = () => {
             <Input.Password
               prefix={<LockOutlined className="text-gray-400" />}
               placeholder="密码"
-              className="h-12 rounded-lg border border-gray-200"
+              className="h-12 rounded-lg border border-theme-border"
             />
           </Form.Item>
 
@@ -113,7 +113,7 @@ export const Register = () => {
             <Input.Password
               prefix={<LockOutlined className="text-gray-400" />}
               placeholder="确认密码"
-              className="h-12 rounded-lg border border-gray-200"
+              className="h-12 rounded-lg border border-theme-border"
             />
           </Form.Item>
           <Form.Item>
@@ -129,7 +129,7 @@ export const Register = () => {
           </Form.Item>
 
           <div className="text-center mt-6">
-            <Link to="/login" className="text-gray-500 hover:text-[#000]">
+            <Link to="/login" className="text-gray-500 hover:text-gray-700">
               Already have an account?
             </Link>
           </div>

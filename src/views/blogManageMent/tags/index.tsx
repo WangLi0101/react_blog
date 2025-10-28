@@ -43,7 +43,7 @@ const Tags: React.FC = () => {
           <Button type="link" onClick={() => edit(record)}>
             编辑
           </Button>
-          <Button type="link" onClick={() => del(record)}>
+          <Button type="link" danger onClick={() => del(record)}>
             删除
           </Button>
         </>
@@ -121,15 +121,22 @@ const Tags: React.FC = () => {
         pagination={false}
       />
       <Modal
-        title={currentTag ? "编辑" : "新增"}
+        title={currentTag ? "编辑标签" : "新增标签"}
         open={addDialogVisible}
         onCancel={() => setAddDialogVisible(false)}
         onOk={onOk}
         afterClose={closed}
+        className="modern-modal"
+        width={480}
+        centered
       >
-        <Form form={formRef} labelCol={{ span: 4 }}>
-          <Form.Item label="名称" name="name" rules={[{ required: true }]}>
-            <Input />
+        <Form form={formRef} labelCol={{ span: 5 }} wrapperCol={{ span: 19 }} layout="horizontal">
+          <Form.Item 
+            label="标签名称" 
+            name="name" 
+            rules={[{ required: true, message: "请输入标签名称" }]}
+          >
+            <Input placeholder="请输入标签名称" />
           </Form.Item>
         </Form>
       </Modal>

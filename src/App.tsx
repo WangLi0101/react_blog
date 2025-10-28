@@ -29,10 +29,9 @@ function App() {
       throttleDelay: 99, // 节流延迟
       disableMutationObserver: false, // 禁用突变观察器以提高性能
     });
-  }, []);
+  }, [themeStore.mode]);
 
   useEffect(() => {
-    // @ts-expect-error startViewTransition is not yet in all TS definitions
     if (!document.startViewTransition) {
       document.documentElement.setAttribute(
         "data-theme",
@@ -40,7 +39,6 @@ function App() {
       );
       return;
     }
-    // @ts-expect-error startViewTransition is not yet in all TS definitions
     document.startViewTransition(() => {
       document.documentElement.setAttribute(
         "data-theme",

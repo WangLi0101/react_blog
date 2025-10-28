@@ -14,7 +14,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
   };
   return (
     <div
-      className="border border-gray-300 rounded-xl space-y-4 p-4 cursor-pointer max-md:space-y-2"
+      className="border border-theme-border rounded-xl space-y-4 p-4 cursor-pointer max-md:space-y-2"
       onClick={goDetail}
       data-aos="zoom-in"
     >

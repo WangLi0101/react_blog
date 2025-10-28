@@ -34,7 +34,7 @@ export const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#00A9FF] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       {contextHolder}
       <div className="max-w-md w-full bg-white rounded-2xl shadow-lg p-8">
         <div className="text-center mb-8">
@@ -55,7 +55,7 @@ export const Login = () => {
             <Input
               prefix={<UserOutlined className="text-gray-400" />}
               placeholder="用户名"
-              className="h-10 rounded-lg border border-gray-200 "
+              className="h-10 rounded-lg border border-theme-border "
             />
           </Form.Item>
 
@@ -66,7 +66,7 @@ export const Login = () => {
             <Input.Password
               prefix={<LockOutlined className="text-gray-400" />}
               placeholder="密码"
-              className="h-10 rounded-lg border border-gray-200"
+              className="h-10 rounded-lg border border-theme-border"
             />
           </Form.Item>
 
@@ -78,7 +78,7 @@ export const Login = () => {
               <Input
                 prefix={<UnlockOutlined className="text-gray-400" />}
                 placeholder="验证码"
-                className="h-10 rounded-lg border border-gray-200 "
+                className="h-10 rounded-lg border border-theme-border "
               />
               <div
                 dangerouslySetInnerHTML={{ __html: codeRes?.code || "" }}
@@ -100,7 +100,7 @@ export const Login = () => {
             </Button>
           </Form.Item>
           <div className="text-center mt-6">
-            <Link to="/register" className="text-gray-500 hover:text-[#000]">
+            <Link to="/register" className="text-gray-500 hover:text-gray-700">
               Don't have an account?
             </Link>
           </div>

@@ -6,7 +6,7 @@ import "antd/dist/reset.css";
 import "./style/index.scss";
 import { init } from "./utils/serviceWorker";
 
-init();
+// init();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

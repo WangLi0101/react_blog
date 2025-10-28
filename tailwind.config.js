@@ -17,6 +17,7 @@ module.exports = {
             primary: "var(--text-primary)",
             secondary: "var(--text-secondary)",
           },
+          border: "var(--border-color)",
         },
       },
       backgroundColor: {
@@ -32,9 +33,16 @@ module.exports = {
           secondary: "var(--text-secondary)",
         },
       },
+      borderColor: {
+        theme: {
+          border: "var(--border-color)",
+        },
+      },
       boxShadow: {
         "custom-shadow": "0 .25rem .75rem 0 rgba(32, 37, 66, .06)",
         "case-shadow": "0px 0px 8px 0px rgba(194, 202, 213, 0.59)",
+        "dark-shadow": "0 .25rem .75rem 0 rgba(0, 0, 0, .15)",
+        "dark-case-shadow": "0px 0px 8px 0px rgba(0, 0, 0, 0.3)",
       },
       keyframes: {
         "fade-in-up": {
