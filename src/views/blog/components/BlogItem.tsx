@@ -10,7 +10,7 @@ interface Props {
 
 export const BlogItem: React.FC<Props> = ({ blog }) => {
   const goDetail = () => {
-    window.open(`/front/blog/detail?id=${blog.id}`, "_blank");
+    window.open(`/blog/detail?id=${blog.id}`, "_blank");
   };
   return (
     <div

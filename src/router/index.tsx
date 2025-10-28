@@ -4,17 +4,17 @@ import { useMenuStore } from "@/store/menu";
 import registerRoutes from "./registration";
 import NotFound from "@/views/error/404";
 import { Navigate } from "react-router";
-import { ComponentType, lazy, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useUserStore } from "@/store/user";
 import { getToken } from "@/utils/auth";
 import { emitter } from "@/utils/mitt";
 import { useMeta } from "@/hooks/useMeta";
 import Forbidden from "@/views/error/403";
-import { MenuItem } from "@/api/system/system";
+import { generateDynamicRoutes } from "./utils/dynamicRoutes";
 
 const routes: RouteObject[] = [
   {
-    path: "/",
+    path: "/back",
     Component: Layout,
     children: [],
   },
@@ -41,44 +41,15 @@ const routes: RouteObject[] = [
 /**
  * 动态路由
  */
-const routerModules = import.meta.glob("@/views/**/*.tsx");
-
-const addRoutes = (callBackRoutes: MenuItem[]) => {
-  const rootRoute = routes.find((el) => el.path === "/");
-  if (!rootRoute) return;
-
-  const hasComponent = callBackRoutes.filter((el) => el.component);
-
-  hasComponent.forEach((el) => {
-    const isNotAdd = !rootRoute.children?.find(
-      (route) => route.path === el.path
-    );
-    if (isNotAdd) {
-      const Component = lazy(
-        routerModules[`/src/views${el.component}.tsx`] as () => Promise<{
-          default: ComponentType;
-        }>
-      );
-      rootRoute.children?.push({
-        path: el.path,
-        handle: {
-          title: el.title,
-          icon: el.icon,
-        },
-        Component,
-      });
-    }
-  });
-};
 
 const whiteList = [
   "/",
   "/login",
   "/register",
-  "/front/home",
-  "/front/blog",
-  "/front/blog/detail",
-  "/front/about",
+  "/home",
+  "/blog",
+  "/blog/detail",
+  "/about",
 ];
 export function Router() {
   const userStore = useUserStore();
@@ -89,9 +60,30 @@ export function Router() {
   const meta = useMeta();
   const menuStore = useMenuStore();
 
-  addRoutes(menuStore.myMenuFlattenList);
+  // 生成动态路由
+  const dynamicRoutes = useMemo(() => {
+    return generateDynamicRoutes(menuStore.myMenuFlattenList);
+  }, [menuStore.myMenuFlattenList]);
 
-  const element = useRoutes(routes);
+  // 合并静态路由和动态路由
+  const allRoutes = useMemo(() => {
+    // 将动态路由添加到 /back 路由的 children 中
+    const updatedRoutes = [...routes];
+    const backRouteIndex = updatedRoutes.findIndex(
+      (route) => route.path === "/back"
+    );
+
+    if (backRouteIndex !== -1 && updatedRoutes[backRouteIndex]) {
+      const backRoute = updatedRoutes[backRouteIndex];
+      updatedRoutes[backRouteIndex] = {
+        ...backRoute,
+        children: [...(backRoute.children || []), ...dynamicRoutes],
+      } as RouteObject;
+    }
+    return updatedRoutes;
+  }, [dynamicRoutes]);
+
+  const element = useRoutes(allRoutes);
 
   useEffect(() => {
     // 设置title
@@ -100,32 +92,26 @@ export function Router() {
 
     // 如果当前路径是根路径，且有topMenuPath，则导航到topMenuPath
     if (pathname === "/") {
-      navigate("/front/home");
+      navigate("/home");
+    }
+    if (!token && !whiteList.includes(pathname)) {
+      navigate("/home");
     }
 
     if (token && !userInfo) {
       userStore.getUserInfo();
     }
-
-    // 无权限去403
-    if (
-      !whiteList.includes(pathname) &&
-      !menuStore.myMenuFlattenList.find((el) => el.path === pathname)
-    ) {
-      // navigate("/403");
-      navigate("/front/home");
-    }
   }, [pathname]);
 
   useEffect(() => {
     emitter.on("goLogin", () => {
-      navigate("/front/home");
+      navigate("/home");
     });
   }, [navigate]);
 
   // 没有token且不在白名单中，重定向到登录页
   if (!token && !whiteList.includes(pathname)) {
-    return <Navigate to="/front/home" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return element;

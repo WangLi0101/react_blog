@@ -10,7 +10,10 @@ const CustomBreadcrumb: React.FC = () => {
   const location = useLocation();
 
   const getAllParentMenu = useCallback(() => {
-    const res = findParentAndSelf(location.pathname, menuList);
+    const res = findParentAndSelf(
+      location.pathname.replace("/back/", ""),
+      menuList
+    );
     return [...(res?.parents || []), res?.self];
   }, [location.pathname, menuList]);
 
@@ -22,9 +25,7 @@ const CustomBreadcrumb: React.FC = () => {
     setParentMenu(items);
   }, [getAllParentMenu, location]);
 
-  return (
-    <Breadcrumb style={{ margin: "0" }} items={parentMenu}></Breadcrumb>
-  );
+  return <Breadcrumb style={{ margin: "0" }} items={parentMenu}></Breadcrumb>;
 };
 
 export default CustomBreadcrumb;

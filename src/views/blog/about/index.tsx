@@ -12,7 +12,7 @@ const email = "uer1366197226@gmail.com";
 const About: React.FC = () => {
   const themeStore = useThemeStore();
   return (
-    <div className="flex items-center w-[80%] mx-auto h-[calc(100dvh-80px)] max-md:flex-col max-md:w-full max-md:justify-center">
+    <div className="flex items-center w-[1200px] mx-auto h-[calc(100dvh-80px)] max-md:flex-col max-md:w-full max-md:justify-center">
       <div className="left w-1/2 max-md:w-full max-md:mt-10 max-md:hidden">
         {themeStore.isDark ? (
           <Dark className="w-full h-auto" data-aos="zoom-in" />

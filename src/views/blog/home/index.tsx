@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex items-center w-[80%] mx-auto h-[calc(100dvh-80px)] max-md:flex-col max-md:w-full max-md:justify-center">
+      <div className="flex items-center w-[1200px] mx-auto h-[calc(100dvh-80px)] max-md:flex-col max-md:w-full max-md:justify-center">
         <div className="left w-1/2 max-md:w-full">
           <div className="title">
             <h2
@@ -26,12 +26,10 @@ const Home: React.FC = () => {
               className="operator mt-5 max-md:mt-10 max-md:flex max-md:justify-center"
               data-aos="fade-up"
             >
-              <Button onClick={() => navigate("/front/blog")} className="mr-5">
+              <Button onClick={() => navigate("/blog")} className="mr-5">
                 Go Blog
               </Button>
-              <Button onClick={() => navigate("/front/about")}>
-                Contact Me
-              </Button>
+              <Button onClick={() => navigate("/about")}>Contact Me</Button>
             </div>
           </div>
         </div>

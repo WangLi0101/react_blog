@@ -43,7 +43,7 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
         if (isHidden) return null;
         return getItem(
           title,
-          item.path!,
+          `/back/${item.path}`,
           <Icon icon={icon} style={{ fontSize: "24px" }} />,
           item.children
             ? convertToMenuItems(item.children).filter(Boolean).length
@@ -62,10 +62,10 @@ const CustomSider: React.FC<CustomSiderProps> = ({ collapsed, onCollapse }) => {
   }, [convertToMenuItems, menuList]);
 
   useEffect(() => {
-    const path = location.pathname;
+    const path = location.pathname.replace("/back/", "");
     const parentMenu = findParentAndSelf(path, menuList)?.parents;
     if (parentMenu) {
-      const openPaths = parentMenu.map((item) => item.path!);
+      const openPaths = parentMenu.map((item) => `/back/${item.path}`);
       setOpenKeys(openPaths);
     }
 

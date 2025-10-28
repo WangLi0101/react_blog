@@ -66,7 +66,7 @@ const BlogPage: React.FC = () => {
   };
 
   const edit = (blog: Blog) => {
-    navigate(`/back/blog/blog/edit?id=${blog.id}`);
+    navigate(`/back/blog/edit?id=${blog.id}`);
   };
 
   const columns: ColumnsType<Blog> = [
@@ -184,7 +184,7 @@ const BlogPage: React.FC = () => {
           <Button
             type="primary"
             icon={<PlusOutlined />}
-            onClick={() => navigate("/back/blog/blog/add")}
+            onClick={() => navigate("/back/blog/add")}
           >
             新增博客
           </Button>

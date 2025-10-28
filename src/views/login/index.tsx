@@ -29,7 +29,7 @@ export const Login = () => {
     await menuStore.getMyMenu();
     if (res) {
       messageApi.success("登录成功");
-      navigate("/system/role");
+      navigate("/back/system/role");
     }
   };
 

@@ -9,15 +9,15 @@ import "./header.scss";
 import { MenuIcon } from "./MenuIcon";
 const menuList = [
   {
-    path: "/front/home",
+    path: "/home",
     name: "Home",
   },
   {
-    path: "/front/blog",
+    path: "/blog",
     name: "Blog",
   },
   {
-    path: "/front/about",
+    path: "/about",
     name: "About",
   },
 ];
