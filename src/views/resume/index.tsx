@@ -66,8 +66,31 @@ const Resume: React.FC = () => {
 
       {/* 主内容区：两列栅格 */}
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-        {/* 左侧：工作经历 + 项目经验 */}
+        {/* 左侧：教育背景（移动端）+ 工作经历 + 项目经验 */}
         <article className="lg:col-span-2 space-y-6">
+          {/* 教育背景（仅移动端显示，置于工作经历上方） */}
+          <section
+            aria-label={t.sections.education}
+            className="modern-card block lg:hidden"
+          >
+            <h2 className="text-xl font-semibold mb-4">
+              {t.sections.education}
+            </h2>
+            <ul className="space-y-4">
+              {educations.map((e, idx) => (
+                <li
+                  key={idx}
+                  className="rounded-xl border border-theme-border p-4"
+                >
+                  <div className="font-medium">{e.school}</div>
+                  <div className="text-sm text-theme-secondary">{e.degree}</div>
+                  <div className="text-xs text-theme-secondary mt-1">
+                    {e.period}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
           {/* 工作经历时间轴 */}
           <section aria-label={t.sections.experience} className="modern-card">
             <h2 className="text-xl font-semibold mb-4">
@@ -231,7 +254,10 @@ const Resume: React.FC = () => {
         {/* 右侧：教育背景 + 专业技能 */}
         <aside className="space-y-6">
           {/* 教育背景 */}
-          <section aria-label={t.sections.education} className="modern-card">
+          <section
+            aria-label={t.sections.education}
+            className="modern-card hidden lg:block"
+          >
             <h2 className="text-xl font-semibold mb-4">
               {t.sections.education}
             </h2>
