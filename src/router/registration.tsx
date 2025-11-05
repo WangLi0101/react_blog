@@ -7,6 +7,7 @@ import BlogIndex from "@/views/blog";
 import Detail from "@/views/blog/detail";
 import Blog from "@/views/blog/blog";
 import About from "@/views/blog/about";
+import Resume from "@/views/resume/index.tsx";
 export default [
   {
     path: "/",
@@ -46,5 +47,9 @@ export default [
       title: "注册",
     },
     element: <Register />,
+  },
+  {
+    path: "/resume",
+    element: <Resume />,
   },
 ] as RouteObject[];

@@ -50,6 +50,7 @@ const whiteList = [
   "/blog",
   "/blog/detail",
   "/about",
+  "/resume",
 ];
 export function Router() {
   const userStore = useUserStore();
