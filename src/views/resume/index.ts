@@ -119,6 +119,7 @@ export const myProjectList = [
     ],
     techStack: ["Electron", "Vue3", "TypeScript", "FFmpeg"],
     github: ["https://github.com/WangLi0101/electron_ffmpeg"],
+    url: "https://github.com/WangLi0101/electron_ffmpeg",
     highlight: [
       {
         desc: "FFmpeg 跨平台集成：macOS 使用系统 ffmpeg；Windows 区分开发与生产路径，并在打包时放入 app.asar.unpacked。",
@@ -142,6 +143,7 @@ export const myProjectList = [
     desc: "个人博客，记录学习过程中的技术点，分享个人经验与思考",
     role: "独立开发者",
     github: ["https://github.com/WangLi0101/nest_template"],
+    url: "https://sys.betterme.cyou",
     techStack: ["React", "Nest.js", "TypeORM", "Docker", "Nginx"],
   },
   {
@@ -149,6 +151,7 @@ export const myProjectList = [
     desc: "小拉油耗是一个基于 Next.js 开发的H5应用，用于记录和管理个人油耗数据，提供实时统计与分析功能。",
     role: "独立开发者",
     github: ["https://github.com/WangLi0101/oil_record"],
+    url: "https://gas.betterme.cyou",
     techStack: ["React", "Next.js", "Prisma", "Auth.js", "Docker", "Nginx"],
   },
   {
@@ -156,6 +159,7 @@ export const myProjectList = [
     desc: "P2P视频通话是一个基于 SocketIo+RTC 开发的应用，用于实现点对点视频通话功能。",
     role: "独立开发者",
     github: ["https://github.com/WangLi0101/socket"],
-    techStack: ["Node.js", "Socket.io", "RTC", "TURN", "Docker", "Nginx"],
+    url: "https://chat.guxiaotong.cn",
+    techStack: ["Node.js", "Socket.io", "RTC", "TURN/STURN", "Docker", "Nginx"],
   },
 ];

@@ -27,9 +27,8 @@ const Resume: React.FC = () => {
       education: "教育背景",
       skills: "专业技能",
       projects: "企业项目",
-      myProjects: "我的项目",
+      myProjects: "个人项目",
     },
-    actions: { download: "下载PDF", theme: "主题" },
   } as const;
 
   useEffect(() => {
