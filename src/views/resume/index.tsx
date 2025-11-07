@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import type { LucideIcon } from "lucide-react";
 import {
   Briefcase,
@@ -37,6 +38,8 @@ const Resume: React.FC = () => {
   // 背景方案：提供三种可选风格，默认“纹理渐变”
   type BgVariant = "texture" | "geometric" | "grid";
   const [bgStyle, setBgStyle] = useState<BgVariant>("texture");
+  const [searchParams] = useSearchParams();
+  const isPdf = searchParams.has("isPdf");
 
   const t = {
     ...basicInfo,
@@ -67,22 +70,24 @@ const Resume: React.FC = () => {
       <BackgroundDecor variant={bgStyle} />
 
       {/* 右上角背景风格切换控件（不影响现有功能组件） */}
-      <div className="fixed right-4 top-4 z-20 print:hidden">
-        <label className="sr-only" htmlFor="bg-switch">
-          背景风格
-        </label>
-        <select
-          id="bg-switch"
-          value={bgStyle}
-          onChange={(e) => setBgStyle(e.target.value as BgVariant)}
-          className="appearance-none rounded-full border border-black/5 bg-white/70 backdrop-blur px-3 py-1.5 text-xs shadow-sm hover:shadow transition focus:outline-none focus:ring-2 focus:ring-sky-400/50"
-          aria-label="选择背景风格"
-        >
-          <option value="texture">纹理渐变（专业柔和）</option>
-          <option value="geometric">几何图形（现代科技）</option>
-          <option value="grid">网格线稿（极简清爽）</option>
-        </select>
-      </div>
+      {!isPdf && (
+        <div className="fixed right-4 top-4 z-20 print:hidden">
+          <label className="sr-only" htmlFor="bg-switch">
+            背景风格
+          </label>
+          <select
+            id="bg-switch"
+            value={bgStyle}
+            onChange={(e) => setBgStyle(e.target.value as BgVariant)}
+            className="appearance-none rounded-full border border-black/5 bg-white/70 backdrop-blur px-3 py-1.5 text-xs shadow-sm hover:shadow transition focus:outline-none focus:ring-2 focus:ring-sky-400/50"
+            aria-label="选择背景风格"
+          >
+            <option value="texture">纹理渐变（专业柔和）</option>
+            <option value="geometric">几何图形（现代科技）</option>
+            <option value="grid">网格线稿（极简清爽）</option>
+          </select>
+        </div>
+      )}
 
       <main
         className="relative z-10 mx-auto max-w-5xl px-4 py-6 text-theme-primary"
@@ -144,7 +149,10 @@ const Resume: React.FC = () => {
               <h2 className="text-xl font-semibold mb-4">
                 <SectionTitle icon={Rocket} title={t.sections.myProjects} />
               </h2>
-              <MyProjectsGrid items={myProjectList as any} />
+              <MyProjectsGrid
+                items={myProjectList as any}
+                showLinkDetails={isPdf}
+              />
             </section>
           </article>
 
@@ -179,11 +187,13 @@ const Resume: React.FC = () => {
         </section>
 
         {/* 页脚：可读性与版权 */}
-        <footer className="mt-8 text-center text-xs text-theme-secondary">
-          <p>
-            © {new Date().getFullYear()} {t.title}. All rights reserved.
-          </p>
-        </footer>
+        {!isPdf && (
+          <footer className="mt-8 text-center text-xs text-theme-secondary">
+            <p>
+              © {new Date().getFullYear()} {t.title}. All rights reserved.
+            </p>
+          </footer>
+        )}
       </main>
     </div>
   );
