@@ -23,4 +23,26 @@ export default defineConfig({
       plugins: [tailwindcss, autoprefixer],
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router"],
+          antd: ["antd", "@ant-design/icons"],
+          markdown: [
+            "react-markdown",
+            "remark",
+            "remark-gfm",
+            "remark-math",
+            "rehype-raw",
+            "rehype-katex",
+            "katex",
+          ],
+          editor: ["for-editor", "react-syntax-highlighter"],
+          ai: ["@google/generative-ai"],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 1200,
+  },
 });
