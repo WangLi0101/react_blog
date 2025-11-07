@@ -28,14 +28,14 @@ export const educations = [
 ];
 
 export const skills = [
-  { name: "Vue" },
-  { name: "React" },
-  { name: "Electron" },
-  { name: "小程序" },
-  { name: "TypeScript" },
-  { name: "Next.js" },
-  { name: "Node.js" },
-  { name: "Nest.js" },
+  { name: "Vue", icon: "logos:vue" },
+  { name: "React", icon: "logos:react" },
+  { name: "Electron", icon: "logos:electron" },
+  { name: "小程序", icon: "logos:wechat" },
+  { name: "TypeScript", icon: "logos:typescript-icon" },
+  { name: "Next.js", icon: "logos:nextjs" },
+  { name: "Node.js", icon: "logos:nodejs-icon" },
+  { name: "Nest.js", icon: "logos:nestjs" },
 ];
 export const projectList = [
   {
@@ -99,6 +99,18 @@ export const projectList = [
       { desc: "轮询策略（每4分钟）平衡实时性与性能，避免过度请求。" },
       { desc: "集成 Lottie 动画与响应式适配，提升交互与视觉体验。" },
       { desc: "实现网页端，小程序端视频流推送" },
+    ],
+  },
+  {
+    name: "国考云机考客户端",
+    desc: "面向国家级考试场景的桌面端机考客户端，覆盖考试全流程，为考生提供稳定、高效的考试体验。",
+    role: "前端开发",
+    responsibility: ["离线录题", "离线组卷", "试卷加密"],
+    techStack: ["Vue3", "Electron", "Socket.io", "IndexedDB"],
+    highlight: [
+      { desc: "IndexedDB 实现试题的离线存储" },
+      { desc: "基于Socket.io实现管理端与客户端的通信" },
+      { desc: "试卷加密，密钥生成与导出" },
     ],
   },
 ];

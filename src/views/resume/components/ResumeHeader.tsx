@@ -1,4 +1,5 @@
 import React from "react";
+import { Globe, Mail, MapPin, Phone } from "lucide-react";
 import avatarImg from "@/assets/images/avatar.jpg";
 
 type Contact = {
@@ -31,10 +32,38 @@ const ResumeHeader: React.FC<HeaderProps> = ({ title, subtitle, contact }) => {
           )}
           {contact && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-              {contact.phone && <span className="text-theme-secondary">{contact.phone}</span>}
-              {contact.email && <span className="text-theme-secondary">{contact.email}</span>}
-              {contact.location && <span className="text-theme-secondary">{contact.location}</span>}
-              {contact.website && <span className="text-theme-secondary">{contact.website}</span>}
+              {contact.phone && (
+                <span className="flex items-center gap-2 text-theme-secondary">
+                  <Phone className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  {contact.phone}
+                </span>
+              )}
+              {contact.email && (
+                <a
+                  className="flex items-center gap-2 text-theme-secondary hover:text-theme-primary transition-colors"
+                  href={`mailto:${contact.email}`}
+                >
+                  <Mail className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  {contact.email}
+                </a>
+              )}
+              {contact.location && (
+                <span className="flex items-center gap-2 text-theme-secondary">
+                  <MapPin className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  {contact.location}
+                </span>
+              )}
+              {contact.website && (
+                <a
+                  className="flex items-center gap-2 text-theme-secondary hover:text-theme-primary transition-colors"
+                  href={contact.website}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Globe className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  {contact.website}
+                </a>
+              )}
             </div>
           )}
         </div>

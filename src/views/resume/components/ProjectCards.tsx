@@ -1,4 +1,5 @@
 import React from "react";
+import { Layers, ListChecks, Sparkles } from "lucide-react";
 
 export type Project = {
   name: string;
@@ -28,7 +29,10 @@ const ProjectCards: React.FC<Props> = ({ items }) => {
           {p.desc && <p className="text-sm text-theme-secondary mt-2">{p.desc}</p>}
 
           <div className="mt-3">
-            <div className="text-sm font-medium mb-1">技术栈</div>
+            <div className="mb-1 flex items-center gap-2 text-sm font-medium">
+              <Layers className="h-4 w-4 text-primary" aria-hidden="true" />
+              <span>技术栈</span>
+            </div>
             <div className="flex flex-wrap gap-2">
               {p.techStack.map((s, i) => (
                 <span
@@ -42,7 +46,10 @@ const ProjectCards: React.FC<Props> = ({ items }) => {
           </div>
 
           <div className="mt-3">
-            <div className="text-sm font-medium mb-1">职责</div>
+            <div className="mb-1 flex items-center gap-2 text-sm font-medium">
+              <ListChecks className="h-4 w-4 text-primary" aria-hidden="true" />
+              <span>职责</span>
+            </div>
             <ul className="list-disc pl-5 text-sm text-theme-secondary space-y-1">
               {p.responsibility.map((r, i) => (
                 <li key={i}>{r}</li>
@@ -51,7 +58,10 @@ const ProjectCards: React.FC<Props> = ({ items }) => {
           </div>
 
           <div className="mt-3">
-            <div className="text-sm font-medium mb-1">亮点</div>
+            <div className="mb-1 flex items-center gap-2 text-sm font-medium">
+              <Sparkles className="h-4 w-4 text-primary" aria-hidden="true" />
+              <span>亮点</span>
+            </div>
             <ul className="list-disc pl-5 text-sm text-theme-secondary space-y-1">
               {p.highlight.map((h, i) => (
                 <li key={i}>{h.desc}</li>

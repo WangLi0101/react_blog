@@ -1,4 +1,12 @@
 import React, { useEffect, useState } from "react";
+import type { LucideIcon } from "lucide-react";
+import {
+  Briefcase,
+  FolderOpen,
+  GraduationCap,
+  Rocket,
+  Sparkles,
+} from "lucide-react";
 import ResumeHeader from "./components/ResumeHeader";
 import EducationList from "./components/EducationList";
 import ExperienceTimeline from "./components/ExperienceTimeline";
@@ -14,6 +22,16 @@ import {
   myProjectList,
 } from "./index";
 import { BackgroundDecor } from "./components/BackgroundDecor";
+
+const SectionTitle: React.FC<{ icon: LucideIcon; title: string }> = ({
+  icon: Icon,
+  title,
+}) => (
+  <span className="inline-flex items-center gap-2">
+    <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
+    <span>{title}</span>
+  </span>
+);
 
 const Resume: React.FC = () => {
   // 背景方案：提供三种可选风格，默认“纹理渐变”
@@ -87,14 +105,17 @@ const Resume: React.FC = () => {
               className="modern-card block lg:hidden"
             >
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.education}
+                <SectionTitle
+                  icon={GraduationCap}
+                  title={t.sections.education}
+                />
               </h2>
               <EducationList items={educations} />
             </section>
             {/* 工作经历时间轴 */}
             <section aria-label={t.sections.experience} className="modern-card">
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.experience}
+                <SectionTitle icon={Briefcase} title={t.sections.experience} />
               </h2>
               <ExperienceTimeline items={timeline} />
             </section>
@@ -105,7 +126,7 @@ const Resume: React.FC = () => {
               className="modern-card block lg:hidden"
             >
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.skills}
+                <SectionTitle icon={Sparkles} title={t.sections.skills} />
               </h2>
               <SkillsGrid items={skills} />
             </section>
@@ -113,7 +134,7 @@ const Resume: React.FC = () => {
             {/* 项目经验 */}
             <section aria-label={t.sections.projects} className="modern-card">
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.projects}
+                <SectionTitle icon={FolderOpen} title={t.sections.projects} />
               </h2>
               <ProjectCards items={projectList as any} />
             </section>
@@ -121,7 +142,7 @@ const Resume: React.FC = () => {
             {/* 我的项目（精简展示） */}
             <section aria-label={t.sections.myProjects} className="modern-card">
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.myProjects}
+                <SectionTitle icon={Rocket} title={t.sections.myProjects} />
               </h2>
               <MyProjectsGrid items={myProjectList as any} />
             </section>
@@ -135,7 +156,10 @@ const Resume: React.FC = () => {
               className="modern-card hidden lg:block"
             >
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.education}
+                <SectionTitle
+                  icon={GraduationCap}
+                  title={t.sections.education}
+                />
               </h2>
               <EducationList items={educations} />
             </section>
@@ -147,7 +171,7 @@ const Resume: React.FC = () => {
               className="modern-card hidden lg:block"
             >
               <h2 className="text-xl font-semibold mb-4">
-                {t.sections.skills}
+                <SectionTitle icon={Sparkles} title={t.sections.skills} />
               </h2>
               <SkillsGrid items={skills} />
             </section>

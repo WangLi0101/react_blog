@@ -1,4 +1,5 @@
 import React from "react";
+import { ExternalLink, Github } from "lucide-react";
 
 export type MyProject = {
   name: string;
@@ -35,9 +36,10 @@ const MyProjectsGrid: React.FC<Props> = ({ items }) => {
                   href={p.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="shrink-0 text-xs px-2 py-1 rounded-md border border-theme-border text-theme-primary hover:bg-theme-secondary/60"
+                  className="shrink-0 inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md border border-theme-border text-theme-primary hover:bg-theme-secondary/60"
                   aria-label="访问项目"
                 >
+                  <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                   访问
                 </a>
               )}
@@ -46,9 +48,10 @@ const MyProjectsGrid: React.FC<Props> = ({ items }) => {
                   href={p.github[0]}
                   target="_blank"
                   rel="noreferrer"
-                  className="shrink-0 text-xs px-2 py-1 rounded-md border border-theme-border text-theme-primary hover:bg-theme-secondary/60"
+                  className="shrink-0 inline-flex items-center gap-1 text-xs px-2 py-1 rounded-md border border-theme-border text-theme-primary hover:bg-theme-secondary/60"
                   aria-label="查看GitHub"
                 >
+                  <Github className="h-3.5 w-3.5" aria-hidden="true" />
                   GitHub
                 </a>
               )}
