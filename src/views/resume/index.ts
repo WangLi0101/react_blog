@@ -31,7 +31,7 @@ export const skills = [
   { name: "Vue", icon: "logos:vue" },
   { name: "React", icon: "logos:react" },
   { name: "Electron", icon: "logos:electron" },
-  { name: "小程序", icon: "logos:wechat" },
+  { name: "小程序", icon: "streamline-ultimate-color:wechat-logo" },
   { name: "TypeScript", icon: "logos:typescript-icon" },
   { name: "Next.js", icon: "logos:nextjs" },
   { name: "Node.js", icon: "logos:nodejs-icon" },
