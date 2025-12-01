@@ -127,7 +127,7 @@ const About: React.FC = () => {
             <div className="p-4 rounded-2xl bg-theme-card border border-theme-border/60 shadow-sm hover:shadow-md transition-shadow">
               <Briefcase className="w-6 h-6 text-blue-500 dark:text-blue-400 mb-2" />
               <div className="text-2xl font-bold text-theme-text-primary">
-                2+ Years
+                3+ Years
               </div>
               <div className="text-sm text-theme-text-secondary">
                 Experience
