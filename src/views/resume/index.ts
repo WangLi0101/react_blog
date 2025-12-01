@@ -117,7 +117,7 @@ export const projectList = [
 
 export const myProjectList = [
   {
-    name: "Media Converter 桌面媒体转换工具",
+    name: "desktop-tool",
     desc: "基于 Electron 与 FFmpeg 的跨平台媒体处理应用，支持图片/视频/音频格式转换、压缩与批量处理，集成 M3U8 下载与视频合并。",
     role: "独立开发者",
     responsibility: [
@@ -129,9 +129,9 @@ export const myProjectList = [
       "打包与自动更新配置（Windows/macOS/Linux）",
       "完善错误处理与日志记录，提升稳定性",
     ],
-    techStack: ["Electron", "Vue3", "TypeScript", "FFmpeg"],
-    github: ["https://github.com/WangLi0101/electron_ffmpeg"],
-    url: "https://github.com/WangLi0101/electron_ffmpeg",
+    techStack: ["Electron", "React", "TypeScript", "FFmpeg"],
+    github: ["https://github.com/WangLi0101/tools"],
+    url: "https://github.com/WangLi0101/tools",
     highlight: [
       {
         desc: "FFmpeg 跨平台集成：macOS 使用系统 ffmpeg；Windows 区分开发与生产路径，并在打包时放入 app.asar.unpacked。",
