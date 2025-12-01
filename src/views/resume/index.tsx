@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSearchParams } from "react-router";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -23,21 +23,23 @@ import {
   myProjectList,
 } from "./index";
 import { BackgroundDecor } from "./components/BackgroundDecor";
+import { motion } from "framer-motion";
 
 const SectionTitle: React.FC<{ icon: LucideIcon; title: string }> = ({
   icon: Icon,
   title,
 }) => (
-  <span className="inline-flex items-center gap-2">
-    <Icon className="h-5 w-5 text-primary" aria-hidden="true" />
-    <span>{title}</span>
-  </span>
+  <div className="flex items-center gap-3 mb-6 pb-2 border-b border-theme-border/50">
+    <div className="p-2 rounded-lg bg-primary/10 text-primary shadow-sm">
+      <Icon className="h-5 w-5" aria-hidden="true" />
+    </div>
+    <span className="text-lg font-bold text-theme-text-primary tracking-tight">
+      {title}
+    </span>
+  </div>
 );
 
 const Resume: React.FC = () => {
-  // 背景方案：提供三种可选风格，默认“纹理渐变”
-  type BgVariant = "texture" | "geometric" | "grid";
-  const [bgStyle, setBgStyle] = useState<BgVariant>("texture");
   const [searchParams] = useSearchParams();
   const isPdf = searchParams.has("isPdf");
 
@@ -63,136 +65,162 @@ const Resume: React.FC = () => {
     }
   }, []);
 
+  // Animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 50,
+        damping: 20,
+      },
+    },
+  };
+
+  // Glassmorphism style
+  const glassCard =
+    "relative overflow-hidden rounded-2xl border border-white/40 dark:border-white/5 bg-white/60 dark:bg-slate-900/50 backdrop-blur-xl shadow-sm transition-all hover:shadow-md hover:border-primary/20";
+
   return (
     // 外层容器：承载背景装饰并保证内容层级在上
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen overflow-hidden font-sans">
       {/* 背景渲染层（print 隐藏，避免打印干扰） */}
-      <BackgroundDecor variant={bgStyle} />
-
-      {/* 右上角背景风格切换控件（不影响现有功能组件） */}
-      {!isPdf && (
-        <div className="fixed right-4 top-4 z-20 print:hidden">
-          <label className="sr-only" htmlFor="bg-switch">
-            背景风格
-          </label>
-          <select
-            id="bg-switch"
-            value={bgStyle}
-            onChange={(e) => setBgStyle(e.target.value as BgVariant)}
-            className="appearance-none rounded-full border border-black/5 bg-white/70 backdrop-blur px-3 py-1.5 text-xs shadow-sm hover:shadow transition focus:outline-none focus:ring-2 focus:ring-sky-400/50"
-            aria-label="选择背景风格"
-          >
-            <option value="texture">纹理渐变（专业柔和）</option>
-            <option value="geometric">几何图形（现代科技）</option>
-            <option value="grid">网格线稿（极简清爽）</option>
-          </select>
-        </div>
-      )}
+      <BackgroundDecor variant="texture" />
 
       <main
-        className="relative z-10 mx-auto max-w-5xl px-4 py-6 text-theme-primary"
+        className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 text-theme-text-primary"
         aria-label="简历页面"
       >
-        {/* 个人信息区 */}
-        <ResumeHeader
-          title={t.title}
-          subtitle={t.subtitle}
-          contact={t.contact}
-        />
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+          className="space-y-8"
+        >
+          {/* 个人信息区 */}
+          <motion.div variants={itemVariants}>
+            <ResumeHeader
+              title={t.title}
+              subtitle={t.subtitle}
+              contact={t.contact}
+            />
+          </motion.div>
 
-        {/* 主内容区：两列栅格 */}
-        <section className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-          {/* 左侧：教育背景（移动端）+ 工作经历 + 项目经验 */}
-          <article className="lg:col-span-2 space-y-6">
-            {/* 教育背景（仅移动端显示，置于工作经历上方） */}
-            <section
-              aria-label={t.sections.education}
-              className="modern-card block lg:hidden"
-            >
-              <h2 className="text-xl font-semibold mb-4">
+          {/* 主内容区：两列栅格 */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            {/* 左侧主栏：工作经历 + 项目经验 (占 8/12) */}
+            <div className="lg:col-span-8 space-y-8">
+              {/* 教育背景（移动端显示） */}
+              <motion.section
+                variants={itemVariants}
+                aria-label={t.sections.education}
+                className={`${glassCard} block lg:hidden p-6`}
+              >
                 <SectionTitle
                   icon={GraduationCap}
                   title={t.sections.education}
                 />
-              </h2>
-              <EducationList items={educations} />
-            </section>
-            {/* 工作经历时间轴 */}
-            <section aria-label={t.sections.experience} className="modern-card">
-              <h2 className="text-xl font-semibold mb-4">
+                <EducationList items={educations} />
+              </motion.section>
+
+              {/* 工作经历时间轴 */}
+              <motion.section
+                variants={itemVariants}
+                aria-label={t.sections.experience}
+                className={`${glassCard} p-6 md:p-8`}
+              >
                 <SectionTitle icon={Briefcase} title={t.sections.experience} />
-              </h2>
-              <ExperienceTimeline items={timeline} />
-            </section>
+                <ExperienceTimeline items={timeline} />
+              </motion.section>
 
-            {/* 专业技能（移动端放在工作经历下） */}
-            <section
-              aria-label={t.sections.skills}
-              className="modern-card block lg:hidden"
-            >
-              <h2 className="text-xl font-semibold mb-4">
+              {/* 专业技能（移动端显示） */}
+              <motion.section
+                variants={itemVariants}
+                aria-label={t.sections.skills}
+                className={`${glassCard} block lg:hidden p-6`}
+              >
                 <SectionTitle icon={Sparkles} title={t.sections.skills} />
-              </h2>
-              <SkillsGrid items={skills} />
-            </section>
+                <SkillsGrid items={skills} />
+              </motion.section>
 
-            {/* 项目经验 */}
-            <section aria-label={t.sections.projects} className="modern-card">
-              <h2 className="text-xl font-semibold mb-4">
+              {/* 项目经验 */}
+              <motion.section
+                variants={itemVariants}
+                aria-label={t.sections.projects}
+                className={`${glassCard} p-6 md:p-8`}
+              >
                 <SectionTitle icon={FolderOpen} title={t.sections.projects} />
-              </h2>
-              <ProjectCards items={projectList as any} />
-            </section>
+                <ProjectCards items={projectList as any} />
+              </motion.section>
 
-            {/* 我的项目（精简展示） */}
-            <section aria-label={t.sections.myProjects} className="modern-card">
-              <h2 className="text-xl font-semibold mb-4">
+              {/* 我的项目 */}
+              <motion.section
+                variants={itemVariants}
+                aria-label={t.sections.myProjects}
+                className={`${glassCard} p-6 md:p-8`}
+              >
                 <SectionTitle icon={Rocket} title={t.sections.myProjects} />
-              </h2>
-              <MyProjectsGrid
-                items={myProjectList as any}
-                showLinkDetails={isPdf}
-              />
-            </section>
-          </article>
-
-          {/* 右侧：教育背景 + 专业技能 */}
-          <aside className="space-y-6">
-            {/* 教育背景 */}
-            <section
-              aria-label={t.sections.education}
-              className="modern-card hidden lg:block"
-            >
-              <h2 className="text-xl font-semibold mb-4">
-                <SectionTitle
-                  icon={GraduationCap}
-                  title={t.sections.education}
+                <MyProjectsGrid
+                  items={myProjectList as any}
+                  showLinkDetails={isPdf}
                 />
-              </h2>
-              <EducationList items={educations} />
-            </section>
+              </motion.section>
+            </div>
 
-            {/* 专业技能 */}
-            {/* 专业技能（桌面端右侧显示） */}
-            <section
-              aria-label={t.sections.skills}
-              className="modern-card hidden lg:block"
-            >
-              <h2 className="text-xl font-semibold mb-4">
-                <SectionTitle icon={Sparkles} title={t.sections.skills} />
-              </h2>
-              <SkillsGrid items={skills} />
-            </section>
-          </aside>
-        </section>
+            {/* 右侧侧边栏：教育背景 + 专业技能 (占 4/12) */}
+            <aside className="lg:col-span-4 space-y-8">
+              <div className="sticky top-24 space-y-8">
+                {/* 教育背景 */}
+                <motion.section
+                  variants={itemVariants}
+                  aria-label={t.sections.education}
+                  className={`${glassCard} hidden lg:block p-6`}
+                >
+                  <SectionTitle
+                    icon={GraduationCap}
+                    title={t.sections.education}
+                  />
+                  <EducationList items={educations} />
+                </motion.section>
+
+                {/* 专业技能 */}
+                <motion.section
+                  variants={itemVariants}
+                  aria-label={t.sections.skills}
+                  className={`${glassCard} hidden lg:block p-6`}
+                >
+                  <SectionTitle icon={Sparkles} title={t.sections.skills} />
+                  <SkillsGrid items={skills} />
+                </motion.section>
+              </div>
+            </aside>
+          </div>
+        </motion.div>
 
         {/* 页脚：可读性与版权 */}
         {!isPdf && (
-          <footer className="mt-8 text-center text-xs text-theme-secondary">
+          <motion.footer
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            className="mt-12 text-center text-sm text-theme-text-secondary border-t border-theme-border/30 pt-8"
+          >
             <p>
               © {new Date().getFullYear()} {t.title}. All rights reserved.
             </p>
-          </footer>
+          </motion.footer>
         )}
       </main>
     </div>

@@ -7,57 +7,58 @@ export const BackgroundDecor: React.FC<{
   variant: "texture" | "geometric" | "grid";
 }> = ({ variant }) => {
   return (
-    <div className="pointer-events-none absolute inset-0 -z-10 print:hidden">
+    <div className="pointer-events-none absolute inset-0 -z-10 print:hidden overflow-hidden">
       {variant === "texture" && (
         // 方案一：纹理渐变（专业柔和）
-        // 通过两层径向渐变与顶部浅色高光，营造淡雅层次
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(56,189,248,0.14),_transparent_60%),radial-gradient(ellipse_at_bottom_right,_rgba(139,92,246,0.12),_transparent_60%)]" />
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/60 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white/40 to-transparent" />
-          {/* 中心微妙聚光，增强内容聚焦 */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.25),_transparent_60%)]" />
+          {/* 基础背景色 - 适配深色模式 */}
+          <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950" />
+          
+          {/* 顶部左侧光晕：Light(天蓝), Dark(深靛蓝) */}
+          <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-sky-200/30 dark:bg-indigo-900/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob" />
+          
+          {/* 底部右侧光晕：Light(紫), Dark(深紫) */}
+          <div className="absolute -bottom-[20%] -right-[10%] w-[70%] h-[70%] rounded-full bg-purple-200/30 dark:bg-purple-900/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-2000" />
+          
+          {/* 中间补充光晕：Light(粉), Dark(深蓝) */}
+          <div className="absolute top-[30%] left-[20%] w-[50%] h-[50%] rounded-full bg-pink-200/30 dark:bg-blue-900/20 blur-[100px] mix-blend-multiply dark:mix-blend-screen animate-blob animation-delay-4000" />
+
+          {/* 噪点纹理叠加，增加质感 */}
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]" 
+               style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} 
+          />
         </div>
       )}
 
       {variant === "geometric" && (
         // 方案二：几何图形（现代科技）
-        // 大圆+斜切矩形+小圆点，使用低透明渐变与模糊，营造科技感
-        <div className="absolute inset-0">
-          {/* 大圆形光斑（左上） */}
-          <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-gradient-to-br from-sky-400/20 to-indigo-500/10 blur-2xl transition-opacity duration-700 motion-safe:animate-pulse" />
-          {/* 斜切矩形（右下） */}
-          <div className="absolute -bottom-24 -right-16 h-64 w-[28rem] rotate-12 rounded-3xl bg-gradient-to-r from-fuchsia-400/10 to-emerald-400/10 blur-xl shadow-[0_0_60px_rgba(16,185,129,0.12)] transition-transform duration-700 motion-safe:animate-pulse" />
-          {/* 点阵元素（右上） */}
-          <div className="absolute right-8 top-16 grid grid-cols-6 gap-2 opacity-40">
-            {Array.from({ length: 24 }).map((_, i) => (
-              <span
-                key={i}
-                className="h-1.5 w-1.5 rounded-full bg-slate-400/30"
-                style={{
-                  animation: `${
-                    (i % 6) * 120
-                  }ms ease-in-out 0s 1 normal none running`,
-                }}
-              />
-            ))}
-          </div>
-          {/* 顶部柔光 */}
-          <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white/60 to-transparent" />
+        <div className="absolute inset-0 bg-slate-50 dark:bg-slate-950">
+          {/* 大圆形光斑 */}
+          <div className="absolute -top-24 -left-24 h-96 w-96 rounded-full bg-gradient-to-br from-sky-400/20 to-indigo-500/20 dark:from-sky-600/10 dark:to-indigo-700/10 blur-3xl opacity-60" />
+          
+          {/* 斜切矩形 */}
+          <div className="absolute top-1/3 -right-32 h-96 w-[40rem] -rotate-12 rounded-[3rem] bg-gradient-to-l from-fuchsia-400/10 to-emerald-400/10 dark:from-fuchsia-900/10 dark:to-emerald-900/10 blur-2xl" />
+          
+          {/* 装饰性线条 */}
+          <svg className="absolute inset-0 w-full h-full opacity-30 dark:opacity-10" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="grid-pattern" width="40" height="40" patternUnits="userSpaceOnUse">
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.5" className="text-slate-300 dark:text-slate-700" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid-pattern)" />
+          </svg>
         </div>
       )}
 
       {variant === "grid" && (
         // 方案三：网格线稿（极简清爽）
-        // 以细线网格为底，并叠加中心渐隐聚光，突出主体内容
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-white dark:bg-slate-950">
           {/* 细网格背景 */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,116,139,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.08)_1px,transparent_1px)] bg-[size:24px_24px]" />
-          {/* 中心聚光渐变，避免网格干扰阅读 */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.7),_transparent_60%)]" />
-          {/* 顶部与底部过渡 */}
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/70 to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white/60 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:40px_40px]" />
+          
+          {/* 中心聚光渐变，柔化网格 */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#ffffff_100%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,#020617_100%)] opacity-90" />
         </div>
       )}
     </div>
