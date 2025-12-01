@@ -31,11 +31,25 @@ const About: React.FC = () => {
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0, filter: "blur(8px)" },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100 },
+      filter: "blur(0px)",
+      transition: {
+        type: "spring",
+        damping: 25,
+        stiffness: 100,
+      },
+    },
+  };
+
+  const skillVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 300, damping: 20 },
     },
   };
 
@@ -52,14 +66,30 @@ const About: React.FC = () => {
           className="relative hidden lg:flex justify-center items-center"
           variants={itemVariants}
         >
-          <div className="relative w-full max-w-[500px] aspect-square">
-            <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl -z-10 animate-pulse" />
+          <motion.div
+            className="relative w-full max-w-[500px] aspect-square"
+            animate={{ y: [0, -15, 0] }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl -z-10"
+              animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
             {themeStore.isDark ? (
               <Dark className="w-full h-auto drop-shadow-2xl" />
             ) : (
               <Light className="w-full h-auto drop-shadow-2xl" />
             )}
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Right Column - Content */}
@@ -69,13 +99,14 @@ const About: React.FC = () => {
             <div className="flex items-center gap-6">
               <motion.div
                 className="relative group"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <div className="absolute inset-0 bg-primary rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute inset-0 bg-primary rounded-full blur opacity-20 group-hover:opacity-40 transition-opacity animate-pulse" />
                 <img
                   src={avatar}
                   alt="Avatar"
-                  className="relative w-24 h-24 rounded-full object-cover border-4 border-theme-bg shadow-xl"
+                  className="relative w-24 h-24 rounded-full object-cover border-4 border-theme-bg shadow-xl z-10"
                 />
               </motion.div>
               <div>
@@ -124,7 +155,10 @@ const About: React.FC = () => {
             variants={itemVariants}
             className="grid grid-cols-2 gap-4"
           >
-            <div className="p-4 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition-shadow">
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="p-4 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition-all cursor-default"
+            >
               <Briefcase className="w-6 h-6 text-blue-500 dark:text-blue-400 mb-2" />
               <div className="text-2xl font-bold text-theme-text-primary">
                 3+ Years
@@ -132,14 +166,17 @@ const About: React.FC = () => {
               <div className="text-sm text-theme-text-secondary">
                 Experience
               </div>
-            </div>
-            <div className="p-4 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition-shadow">
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -5 }}
+              className="p-4 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition-all cursor-default"
+            >
               <FolderOpen className="w-6 h-6 text-purple-500 dark:text-purple-400 mb-2" />
               <div className="text-2xl font-bold text-theme-text-primary">
                 {projectList.length}+
               </div>
               <div className="text-sm text-theme-text-secondary">Projects</div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Skills Section */}
@@ -148,11 +185,17 @@ const About: React.FC = () => {
               <GraduationCap className="w-6 h-6 text-primary" />
               Tech Stack
             </h2>
-            <div className="flex flex-wrap gap-3">
+            <motion.div
+              className="flex flex-wrap gap-3"
+              variants={{
+                visible: { transition: { staggerChildren: 0.05 } },
+              }}
+            >
               {skills.map((skill) => (
                 <motion.div
                   key={skill.name}
-                  whileHover={{ y: -3 }}
+                  variants={skillVariants}
+                  whileHover={{ scale: 1.05, y: -3 }}
                   className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-default"
                 >
                   <Icon icon={skill.icon} className="w-5 h-5" />
@@ -161,7 +204,7 @@ const About: React.FC = () => {
                   </span>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
