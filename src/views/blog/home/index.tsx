@@ -38,7 +38,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-82px)] flex flex-col py-10 lg:py-0">
+    <div className="min-h-[calc(100vh-82px)] flex flex-col py-10 lg:py-0 overflow-x-hidden">
       <div className="container mx-auto px-6 lg:px-12 flex-1 flex flex-col justify-center relative z-10">
         <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-12 lg:gap-16">
           {/* 左侧内容区域 */}
@@ -127,7 +127,7 @@ const Home: React.FC = () => {
 
           {/* 右侧视觉区域 */}
           <motion.div
-            className="w-full lg:w-1/2 flex justify-center relative"
+            className="w-full lg:w-1/2 flex justify-center relative max-w-[100vw] overflow-hidden lg:overflow-visible"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
