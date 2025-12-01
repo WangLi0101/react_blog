@@ -6,7 +6,12 @@ import React, { useEffect, useState } from "react";
 import { AddMenuDialog } from "./components/AddMenuDialog";
 import { Icon } from "@iconify/react";
 import { buildTree, TreeNode } from "@/utils/tree";
-import { MenuOutlined, PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  MenuOutlined,
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
 
 const MenuPage: React.FC = () => {
   const [menuList, setMenuList] = useState<TreeNode<MenuItem>[]>([]);
@@ -143,25 +148,29 @@ const MenuPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-6 bg-theme-bg min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* 操作区域 */}
-        <div className="flex justify-end mb-6">
-          <Button 
-            type="primary" 
-            icon={<PlusOutlined />}
-            onClick={() => {
-              setParentId(null);
-              setMenuItem(null);
-              setVisible(true);
-            }}
-          >
-            新增
-          </Button>
-        </div>
+    <div className="p-6 bg-theme-bg min-h-full transition-colors duration-300">
+      <div className="max-w-full mx-auto space-y-6">
+        {/* 表格区域 - 包含头部操作栏 */}
+        <div className="bg-theme-card border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-theme-text-primary">
+              菜单管理
+            </h2>
+            <Button
+              type="primary"
+              size="large"
+              icon={<PlusOutlined />}
+              onClick={() => {
+                setParentId(null);
+                setMenuItem(null);
+                setVisible(true);
+              }}
+              className="shadow-lg shadow-primary/30"
+            >
+              新增菜单
+            </Button>
+          </div>
 
-        {/* 表格区域 */}
-        <div className="bg-theme-bg border border-theme-border rounded-xl overflow-hidden">
           <Table
             rowKey={(record) => record.id}
             dataSource={menuList}

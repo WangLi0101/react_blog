@@ -2,11 +2,11 @@ export interface Theme {
   colorPrimary: string;
 }
 export const themeList: Record<string, Theme> = {
-  "#1677ff": {
-    colorPrimary: "#1677ff",
+  "#4B6BFB": {
+    colorPrimary: "#4B6BFB", // 现代化蓝色
   },
   "#6b7280": {
-    colorPrimary: "#6b7280", // 简洁的灰蓝色，替代原来的 #6a32c9
+    colorPrimary: "#6b7280", // 简洁的灰蓝色
   },
   "#e13c39": {
     colorPrimary: "#e13c39",

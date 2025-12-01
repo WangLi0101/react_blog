@@ -119,12 +119,10 @@ const LayoutPage: React.FC = () => {
           <CustomHeader />
           <Content style={{ margin: "16px" }}>
             <div
-              className="content-wrapper modern-card"
+              className="content-wrapper"
               style={{
-                padding: 20,
                 height: contentHeight,
-                background: "var(--bg-card)",
-                borderRadius: 16,
+                background: "transparent",
                 overflow: "hidden",
                 position: "relative",
               }}
@@ -134,7 +132,7 @@ const LayoutPage: React.FC = () => {
                 style={{
                   height: "100%",
                   overflowX: "hidden",
-                  overflowY: "auto",
+                  overflowY: "auto", // 允许内容滚动
                   position: "relative",
                   zIndex: 1,
                 }}

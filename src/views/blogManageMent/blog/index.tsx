@@ -164,10 +164,10 @@ const BlogPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-theme-bg ">
-      <div className="max-w-full mx-auto">
+    <div className="p-6 bg-theme-bg min-h-full transition-colors duration-300">
+      <div className="max-w-full mx-auto space-y-6">
         {/* 搜索和操作区域 */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center p-6 bg-theme-card border border-theme-border rounded-2xl shadow-sm transition-all hover:shadow-md">
           <Input.Search
             className="w-80"
             placeholder="搜索博客标题..."
@@ -183,15 +183,17 @@ const BlogPage: React.FC = () => {
           />
           <Button
             type="primary"
+            size="large"
             icon={<PlusOutlined />}
             onClick={() => navigate("/back/blog/add")}
+            className="shadow-lg shadow-primary/30"
           >
             新增博客
           </Button>
         </div>
 
         {/* 表格区域 */}
-        <div className="bg-theme-bg border border-theme-border rounded-xl overflow-hidden">
+        <div className="bg-theme-card border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all p-6">
           <Table
             rowKey="id"
             columns={columns}
@@ -199,30 +201,30 @@ const BlogPage: React.FC = () => {
             pagination={false}
             loading={loading}
             scroll={{
-              y: "calc(100vh - 350px)", // 增加表格高度
-              x: 1200, // 增加横向滚动宽度
+              y: "calc(100vh - 450px)",
+              x: 1200,
             }}
             size="middle"
             className="blog-table"
           />
-        </div>
 
-        {/* 分页区域 */}
-        <div className="flex justify-end mt-5">
-          <Pagination
-            total={total}
-            current={query.page}
-            pageSize={query.pageSize}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total: number, range: [number, number]) =>
-              `第 ${range[0]}-${range[1]} 条，共 ${total} 条`
-            }
-            onChange={(page: number, pageSize: number) =>
-              setQuery({ ...query, page, pageSize })
-            }
-            pageSizeOptions={["10", "15", "20", "30", "50"]}
-          />
+          {/* 分页区域 */}
+          <div className="flex justify-end mt-6 pt-4 border-t border-theme-border/50">
+            <Pagination
+              total={total}
+              current={query.page}
+              pageSize={query.pageSize}
+              showSizeChanger
+              showQuickJumper
+              showTotal={(total: number, range: [number, number]) =>
+                `第 ${range[0]}-${range[1]} 条，共 ${total} 条`
+              }
+              onChange={(page: number, pageSize: number) =>
+                setQuery({ ...query, page, pageSize })
+              }
+              pageSizeOptions={["10", "15", "20", "30", "50"]}
+            />
+          </div>
         </div>
       </div>
     </div>

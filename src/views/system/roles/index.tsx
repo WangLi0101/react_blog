@@ -5,7 +5,13 @@ import React, { useEffect, useState } from "react";
 import { RolesDialog } from "./components/RolesDialog";
 import { ColumnsType } from "antd/es/table";
 import { AssignMenuDialog } from "./components/AssignMenuDialog";
-import { TeamOutlined, EditOutlined, DeleteOutlined, MenuOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  TeamOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  MenuOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 const Roles: React.FC = () => {
   const [rolesList, setRolesList] = useState<Role[]>([]);
@@ -118,21 +124,25 @@ const Roles: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-6 bg-theme-bg min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* 操作区域 */}
-        <div className="flex justify-end mb-6">
-          <Button 
-            type="primary" 
-            icon={<PlusOutlined />}
-            onClick={createRole}
-          >
-            创建角色
-          </Button>
-        </div>
+    <div className="p-6 bg-theme-bg min-h-full transition-colors duration-300">
+      <div className="max-w-full mx-auto space-y-6">
+        {/* 表格区域 - 包含头部操作栏 */}
+        <div className="bg-theme-card border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-theme-text-primary">
+              角色管理
+            </h2>
+            <Button
+              type="primary"
+              size="large"
+              icon={<PlusOutlined />}
+              onClick={createRole}
+              className="shadow-lg shadow-primary/30"
+            >
+              创建角色
+            </Button>
+          </div>
 
-        {/* 表格区域 */}
-        <div className="bg-theme-bg border border-theme-border rounded-xl overflow-hidden">
           <Table<Role>
             columns={columns}
             dataSource={rolesList}

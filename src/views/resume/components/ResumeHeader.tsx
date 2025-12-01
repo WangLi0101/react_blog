@@ -26,15 +26,22 @@ const ResumeHeader: React.FC<HeaderProps> = ({ title, subtitle, contact }) => {
           className="h-28 w-28 rounded-2xl object-cover shadow-lg ring-1 ring-theme-border mx-auto md:mx-0"
         />
         <div className="flex-1">
-          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight leading-tight mb-2">{title}</h1>
+          <h1 className="text-2xl md:text-3xl font-semibold tracking-tight leading-tight mb-2">
+            {title}
+          </h1>
           {subtitle && (
-            <p className="text-sm md:text-base text-theme-secondary mb-4">{subtitle}</p>
+            <p className="text-sm md:text-base text-theme-secondary mb-4">
+              {subtitle}
+            </p>
           )}
           {contact && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
               {contact.phone && (
                 <span className="flex items-center gap-2 text-theme-secondary">
-                  <Phone className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  <Phone
+                    className="h-4 w-4 text-theme-primary/60"
+                    aria-hidden="true"
+                  />
                   {contact.phone}
                 </span>
               )}
@@ -43,13 +50,19 @@ const ResumeHeader: React.FC<HeaderProps> = ({ title, subtitle, contact }) => {
                   className="flex items-center gap-2 text-theme-secondary hover:text-theme-primary transition-colors"
                   href={`mailto:${contact.email}`}
                 >
-                  <Mail className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  <Mail
+                    className="h-4 w-4 text-theme-primary/60"
+                    aria-hidden="true"
+                  />
                   {contact.email}
                 </a>
               )}
               {contact.location && (
                 <span className="flex items-center gap-2 text-theme-secondary">
-                  <MapPin className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  <MapPin
+                    className="h-4 w-4 text-theme-primary/60"
+                    aria-hidden="true"
+                  />
                   {contact.location}
                 </span>
               )}
@@ -60,7 +73,10 @@ const ResumeHeader: React.FC<HeaderProps> = ({ title, subtitle, contact }) => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Globe className="h-4 w-4 text-theme-primary/60" aria-hidden="true" />
+                  <Globe
+                    className="h-4 w-4 text-theme-primary/60"
+                    aria-hidden="true"
+                  />
                   {contact.website}
                 </a>
               )}

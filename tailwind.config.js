@@ -8,9 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#4B6BFB",
+        primary: "rgb(var(--color-primary) / <alpha-value>)",
         theme: {
           bg: "var(--bg)",
+          card: "var(--bg-card)",
           primary: "var(--bg-primary)",
           secondary: "var(--bg-secondary)",
           text: {
@@ -23,6 +24,7 @@ module.exports = {
       backgroundColor: {
         theme: {
           bg: "var(--bg)",
+          card: "var(--bg-card)",
           primary: "var(--bg-primary)",
           secondary: "var(--bg-secondary)",
         },
@@ -45,6 +47,11 @@ module.exports = {
         "dark-case-shadow": "0px 0px 8px 0px rgba(0, 0, 0, 0.3)",
       },
       keyframes: {
+        "gradient-shift": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
         "fade-in-up": {
           "0%": {
             opacity: "0",
@@ -71,6 +78,7 @@ module.exports = {
         },
       },
       animation: {
+        "gradient-shift": "gradient-shift 3s ease infinite",
         "fade-in-up": "fade-in-up 0.5s ease-out",
         "fade-in": "fade-in 0.5s ease-out",
         "fade-in-delay": "fade-in 0.5s ease-out 0.2s forwards",
@@ -115,8 +123,10 @@ module.exports = {
               content: '""',
             },
             pre: {
-              backgroundColor: "var(--bg-secondary)",
+              backgroundColor: "transparent",
               color: "var(--text-primary)",
+              padding: "0",
+              margin: "0",
             },
             strong: {
               color: "var(--text-primary)",

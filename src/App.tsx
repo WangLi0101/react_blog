@@ -55,10 +55,44 @@ function App() {
             : theme.defaultAlgorithm,
           token: {
             colorPrimary: themeStore.colorTheme.colorPrimary,
+            borderRadius: 6,
+            fontFamily:
+              '"WorkSans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
           },
           components: {
             Button: {
-              colorLink: themeStore.colorTheme.colorPrimary,
+              controlHeight: 36,
+              borderRadius: 6,
+              defaultShadow: "0 2px 0 rgba(0, 0, 0, 0.02)",
+              primaryShadow: "0 2px 0 rgba(0, 0, 0, 0.045)",
+              paddingInline: 18,
+              fontWeight: 500,
+            },
+            Pagination: {
+              itemActiveBg: themeStore.colorTheme.colorPrimary,
+              borderRadius: 6,
+              itemSize: 36,
+            },
+            Input: {
+              controlHeight: 36,
+              borderRadius: 6,
+              activeShadow: "0 0 0 2px rgba(75, 107, 251, 0.1)",
+            },
+            Select: {
+              controlHeight: 36,
+              borderRadius: 6,
+            },
+            Table: {
+              headerBg: "transparent",
+              headerSplitColor: "transparent",
+              rowHoverBg: themeStore.isDark ? "#1e293b" : "#f8fafc",
+              headerColor: themeStore.isDark ? "#94a3b8" : "#64748b",
+            },
+            Card: {
+              borderRadiusLG: 16,
+            },
+            Modal: {
+              borderRadiusLG: 16,
             },
           },
         }}

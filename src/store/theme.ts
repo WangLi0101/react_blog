@@ -18,7 +18,7 @@ export const useThemeStore = create<State & Actions>()(
   persist(
     devtools((set) => ({
       mode: "auto",
-      colorTheme: themeList["#1677ff"],
+      colorTheme: themeList["#4B6BFB"],
       isDark: false,
       // Actions
       setMode: (mode) => {

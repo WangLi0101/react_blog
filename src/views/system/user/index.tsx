@@ -29,16 +29,16 @@ import {
   AssignRoleForm,
   AssingRoleFormType,
 } from "./components/AssignRoleForm";
-import { 
-  DownOutlined, 
-  SearchOutlined, 
-  UserAddOutlined, 
-  EditOutlined, 
+import {
+  DownOutlined,
+  SearchOutlined,
+  UserAddOutlined,
+  EditOutlined,
   DeleteOutlined,
   UserOutlined,
   MailOutlined,
   TeamOutlined,
-  KeyOutlined
+  KeyOutlined,
 } from "@ant-design/icons";
 import ResetPasswordDialog from "./components/ResetPasswordDialog";
 interface ModelConfig {
@@ -115,14 +115,16 @@ const User: React.FC = () => {
       render: (_, record: UserInfo) => {
         return (
           <div className="flex items-center gap-3">
-            <Avatar 
-              size={32} 
-              icon={<UserOutlined />} 
-              style={{ backgroundColor: 'var(--primary-color)' }}
+            <Avatar
+              size={32}
+              icon={<UserOutlined />}
+              style={{ backgroundColor: "var(--primary-color)" }}
             />
             <div>
               <div className="font-medium">{record.username}</div>
-              <div className="text-sm text-gray-500">{record.profile?.name || '未设置'}</div>
+              <div className="text-sm text-gray-500">
+                {record.profile?.name || "未设置"}
+              </div>
             </div>
           </div>
         );
@@ -135,7 +137,12 @@ const User: React.FC = () => {
       align: "center",
       render: (_, record: UserInfo) => {
         const genderText = Gender[record.profile.gender];
-        const color = record.profile.gender === 1 ? 'blue' : record.profile.gender === 2 ? 'pink' : 'default';
+        const color =
+          record.profile.gender === 1
+            ? "blue"
+            : record.profile.gender === 2
+            ? "pink"
+            : "default";
         return <Tag color={color}>{genderText}</Tag>;
       },
     },
@@ -147,7 +154,7 @@ const User: React.FC = () => {
         return (
           <div className="flex items-center gap-2 text-gray-600">
             <MailOutlined />
-            <span>{record.profile?.email || '未设置'}</span>
+            <span>{record.profile?.email || "未设置"}</span>
           </div>
         );
       },
@@ -160,7 +167,7 @@ const User: React.FC = () => {
         return (
           <div className="flex flex-wrap gap-1">
             {record.roles?.length > 0 ? (
-              record.roles.map(role => (
+              record.roles.map((role) => (
                 <Tag key={role.id} color="processing">
                   {role.name}
                 </Tag>
@@ -191,18 +198,18 @@ const User: React.FC = () => {
         ];
         return (
           <Space size="small">
-            <Button 
-              type="link" 
-              size="small" 
+            <Button
+              type="link"
+              size="small"
               icon={<EditOutlined />}
               onClick={() => editUserHandler(record)}
             >
               编辑
             </Button>
-            <Button 
-              type="link" 
-              danger 
-              size="small" 
+            <Button
+              type="link"
+              danger
+              size="small"
               icon={<DeleteOutlined />}
               onClick={() => delUser(record)}
             >
@@ -368,27 +375,30 @@ const User: React.FC = () => {
   };
 
   return (
-    <div className="p-6 bg-theme-bg min-h-screen">
-      <div className="max-w-7xl mx-auto">
+    <div className="p-6 bg-theme-bg min-h-full transition-colors duration-300">
+      <div className="max-w-full mx-auto space-y-6">
         {/* 搜索和操作区域 */}
-        <div className="flex justify-between items-center mb-6 p-4 bg-theme-bg border border-theme-border rounded-xl">
+        <div className="flex justify-between items-center p-6 bg-theme-card border border-theme-border rounded-2xl shadow-sm transition-all hover:shadow-md">
           <Input.Search
             placeholder="搜索用户名..."
             allowClear
             className="w-80"
+            size="large"
             onSearch={onSearch}
           />
-          <Button 
-            type="primary" 
+          <Button
+            type="primary"
+            size="large"
             icon={<UserAddOutlined />}
             onClick={addUserHandler}
+            className="shadow-lg shadow-primary/30"
           >
             新增用户
           </Button>
         </div>
 
         {/* 表格区域 */}
-        <div className="bg-theme-bg border border-theme-border rounded-xl overflow-hidden">
+        <div className="bg-theme-card border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all p-6">
           <Table<UserInfo>
             columns={columns}
             dataSource={userList}
@@ -396,24 +406,24 @@ const User: React.FC = () => {
             pagination={false}
             tableLayout="auto"
             rowKey="id"
-            scroll={{ y: 'calc(100vh - 300px)' }}
+            scroll={{ y: "calc(100vh - 400px)" }}
           />
-        </div>
 
-        {/* 分页区域 */}
-        <div className="flex justify-end mt-6">
-          <Pagination
-            total={total}
-            pageSize={search.pageSize}
-            current={search.page}
-            onChange={pageChange}
-            showSizeChanger
-            showQuickJumper
-            showTotal={(total, range) => 
-              `第 ${range[0]}-${range[1]} 条，共 ${total} 条数据`
-            }
-            pageSizeOptions={[10, 20, 50, 100]}
-          />
+          {/* 分页区域 */}
+          <div className="flex justify-end mt-6 pt-4 border-t border-theme-border/50">
+            <Pagination
+              total={total}
+              pageSize={search.pageSize}
+              current={search.page}
+              onChange={pageChange}
+              showSizeChanger
+              showQuickJumper
+              showTotal={(total, range) =>
+                `第 ${range[0]}-${range[1]} 条，共 ${total} 条数据`
+              }
+              pageSizeOptions={[10, 20, 50, 100]}
+            />
+          </div>
         </div>
 
         <Modal

@@ -107,39 +107,59 @@ const Tags: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <div className="operator mb-5 flex flex-row-reverse">
-        <Button type="primary" onClick={add}>
-          新增
-        </Button>
-      </div>
-      <Table
-        rowKey={(record) => record.id}
-        columns={Columns}
-        dataSource={tags}
-        loading={loading}
-        pagination={false}
-      />
-      <Modal
-        title={currentTag ? "编辑标签" : "新增标签"}
-        open={addDialogVisible}
-        onCancel={() => setAddDialogVisible(false)}
-        onOk={onOk}
-        afterClose={closed}
-        className="modern-modal"
-        width={480}
-        centered
-      >
-        <Form form={formRef} labelCol={{ span: 5 }} wrapperCol={{ span: 19 }} layout="horizontal">
-          <Form.Item 
-            label="标签名称" 
-            name="name" 
-            rules={[{ required: true, message: "请输入标签名称" }]}
+    <div className="p-6 bg-theme-bg min-h-full transition-colors duration-300">
+      <div className="max-w-full mx-auto space-y-6">
+        {/* 表格区域 */}
+        <div className="bg-theme-card border border-theme-border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-theme-text-primary">
+              标签管理
+            </h2>
+            <Button
+              type="primary"
+              size="large"
+              onClick={add}
+              className="shadow-lg shadow-primary/30"
+            >
+              新增标签
+            </Button>
+          </div>
+
+          <Table
+            rowKey={(record) => record.id}
+            columns={Columns}
+            dataSource={tags}
+            loading={loading}
+            pagination={false}
+          />
+        </div>
+
+        <Modal
+          title={currentTag ? "编辑标签" : "新增标签"}
+          open={addDialogVisible}
+          onCancel={() => setAddDialogVisible(false)}
+          onOk={onOk}
+          afterClose={closed}
+          className="modern-modal"
+          width={480}
+          centered
+        >
+          <Form
+            form={formRef}
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 19 }}
+            layout="horizontal"
           >
-            <Input placeholder="请输入标签名称" />
-          </Form.Item>
-        </Form>
-      </Modal>
+            <Form.Item
+              label="标签名称"
+              name="name"
+              rules={[{ required: true, message: "请输入标签名称" }]}
+            >
+              <Input placeholder="请输入标签名称" />
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };
