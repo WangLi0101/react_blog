@@ -30,6 +30,10 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
         stiffness: 100,
         damping: 15,
         mass: 1,
+        filter: {
+          type: "tween",
+          ease: "easeOut",
+        },
       },
     },
   };

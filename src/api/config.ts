@@ -3,7 +3,7 @@ export type service = {
   MANGMENT: string;
 };
 const protocol = window.location.protocol;
-const gemini_key = "sk-000942871be1427da5727ae6188e0e53";
+const gemini_key = "";
 // dev环境
 // const dev_url = "http://localhost:3000";
 const dev_url = `https://sys-api.betterme.cyou`;

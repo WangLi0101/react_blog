@@ -205,14 +205,14 @@ export const Detail: React.FC = () => {
         </div>
       )}
 
-      <Chat
+      {/* <Chat
         open={open}
         setOpen={setOpen}
         ref={chatRef}
         blogContent={blog?.content}
-      />
+      />*/}
 
-      <motion.button
+      {/*  <motion.button
         className="fixed bottom-8 right-8 z-50 p-4 bg-primary text-white rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-110 transition-all duration-300 max-md:bottom-20"
         onClick={() => setOpen(true)}
         whileTap={{ scale: 0.9 }}
@@ -220,7 +220,7 @@ export const Detail: React.FC = () => {
         animate={{ scale: 1 }}
       >
         <MessageSquareText className="w-6 h-6" />
-      </motion.button>
+      </motion.button>*/}
     </>
   );
 };

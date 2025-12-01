@@ -81,7 +81,7 @@ export const MarkDown: React.FC<Props> = ({
                   >
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
-                  {isAsk && (
+                  {/* {isAsk && (
                     <button
                       className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-white bg-primary/80 hover:bg-primary rounded-full shadow-lg backdrop-blur-sm max-md:hidden transform hover:scale-105 active:scale-95"
                       onClick={() =>
@@ -94,7 +94,7 @@ export const MarkDown: React.FC<Props> = ({
                       <Sparkles className="w-3.5 h-3.5" />
                       <span>Ask AI</span>
                     </button>
-                  )}
+                  )}*/}
                   <div className="operator absolute left-[10px] top-[10px] flex items-center gap-2">
                     <div className="bg-red-500 rounded-full w-3 h-3 "></div>
                     <div className="bg-yellow-500 rounded-full w-3 h-3 "></div>
