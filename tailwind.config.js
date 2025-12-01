@@ -2,6 +2,7 @@
 const typography = require("@tailwindcss/typography");
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  darkMode: ["selector", '[data-theme="dark"]'],
   corePlugins: {
     preflight: true, // 禁用 preflight 重置
   },
@@ -125,8 +126,8 @@ module.exports = {
             pre: {
               backgroundColor: "transparent",
               color: "var(--text-primary)",
-              padding: "0",
-              margin: "0",
+              padding: "0 !important",
+              margin: "0 !important",
             },
             strong: {
               color: "var(--text-primary)",

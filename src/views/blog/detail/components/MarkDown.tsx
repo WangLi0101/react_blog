@@ -8,6 +8,8 @@ import { Icon } from "@iconify/react";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
+import { Sparkles } from "lucide-react";
+
 interface Props {
   content: string;
   askAi?: (content: string) => Promise<void>;
@@ -29,8 +31,9 @@ export const MarkDown: React.FC<Props> = ({
   }
 
   try {
-    const handlerAsk = (content: string) => {
-      askAi?.(`中文解释这段代码:<br/> ${content}`);
+    const handlerAsk = (code: string, language: string) => {
+      const wrappedCode = `\`\`\`${language}\n${code}\n\`\`\``;
+      askAi?.(wrappedCode);
     };
     return (
       <ReactMarkdown
@@ -69,7 +72,7 @@ export const MarkDown: React.FC<Props> = ({
 
             return !inline ? (
               match ? (
-                <div className="relative">
+                <div className="relative group">
                   <SyntaxHighlighter
                     style={vscDarkPlus}
                     className="!m-0 !text-base rounded-md !pt-[35px]"
@@ -79,15 +82,18 @@ export const MarkDown: React.FC<Props> = ({
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
                   {isAsk && (
-                    <div
-                      className="askai absolute right-[10px] top-[8px] text-sm flex items-center gap-1 cursor-pointer text-primary max-md:hidden"
+                    <button
+                      className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-white bg-primary/80 hover:bg-primary rounded-full shadow-lg backdrop-blur-sm max-md:hidden transform hover:scale-105 active:scale-95"
                       onClick={() =>
-                        handlerAsk(String(children).replace(/\n$/, ""))
+                        handlerAsk(
+                          String(children).replace(/\n$/, ""),
+                          languageMap[match[1]] || match[1] || ""
+                        )
                       }
                     >
-                      <Icon icon="bi:send-fill" />
+                      <Sparkles className="w-3.5 h-3.5" />
                       <span>Ask AI</span>
-                    </div>
+                    </button>
                   )}
                   <div className="operator absolute left-[10px] top-[10px] flex items-center gap-2">
                     <div className="bg-red-500 rounded-full w-3 h-3 "></div>

@@ -115,7 +115,7 @@ export const Blog: React.FC = () => {
               placeholder="All Topics"
               allowClear={true}
               variant="outlined"
-              popupClassName="!bg-theme-bg !border !border-theme-border !shadow-xl !rounded-xl"
+              popupClassName="!bg-theme-card !border !border-theme-border !shadow-xl !rounded-xl"
               style={{
                 height: "40px",
               }}
@@ -142,7 +142,7 @@ export const Blog: React.FC = () => {
           className="list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           variants={container}
           initial="hidden"
-          animate="show"
+          animate={blogList.length > 0 ? "show" : "hidden"}
         >
           {blogList.map((blog) => (
             <BlogItem blog={blog} key={blog.id} />

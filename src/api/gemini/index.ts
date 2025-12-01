@@ -1,26 +1,37 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
-
+import OpenAI from "openai";
 import { gemini_key } from "../config";
 
-const genAI = new GoogleGenerativeAI(gemini_key);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const openai = new OpenAI({
+  apiKey: gemini_key,
+  baseURL: "https://dashscope.aliyuncs.com/compatible-mode/v1",
+  dangerouslyAllowBrowser: true, // 允许在浏览器端运行
+});
 
-export const getResult = async (prompt: string) => {
-  const result = await model.generateContent(prompt);
-  return result.response.text();
-};
-
-// 添加新的对话函数
-export const getChat = async (
-  messages: Array<{ role: "user" | "assistant"; content: string }>
+export const streamChat = async (
+  messages: Array<{ role: "user" | "model" | "assistant"; content: string }>
 ) => {
-  const chat = model.startChat();
+  const apiMessages = messages.map((msg) => ({
+    role: (msg.role === "model" ? "assistant" : msg.role) as
+      | "user"
+      | "assistant"
+      | "system",
+    content: msg.content,
+  }));
 
-  for (const message of messages) {
-    if (message.role === "user") {
-      await chat.sendMessage(message.content);
-    }
-  }
+  const stream = await openai.chat.completions.create({
+    model: "qwen3-235b-a22b",
+    messages: apiMessages,
+    stream: true,
+  });
 
-  return chat;
+  return {
+    async *[Symbol.asyncIterator]() {
+      for await (const chunk of stream) {
+        const content = chunk.choices[0]?.delta?.content || "";
+        if (content) {
+          yield content;
+        }
+      }
+    },
+  };
 };

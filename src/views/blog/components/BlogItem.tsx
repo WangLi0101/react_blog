@@ -1,6 +1,5 @@
 import { BlogResponse } from "@/api/blog/blog";
 import { formatDate } from "@/utils";
-import { Tag } from "../components/Tag";
 import { Clock, ArrowUpRight } from "lucide-react";
 import React from "react";
 import { motion } from "framer-motion";
@@ -38,7 +37,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
   return (
     <motion.div
       variants={item}
-      className="group relative flex flex-col h-full bg-theme-card border border-theme-border rounded-2xl overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300 cursor-pointer"
+      className="group relative flex flex-col h-full bg-gradient-to-br from-white to-slate-50 dark:from-theme-card dark:to-theme-card border border-theme-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 hover:border-primary/30 transition-all duration-500 cursor-pointer"
       onClick={goDetail}
       whileHover={{ y: -5 }}
     >

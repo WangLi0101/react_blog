@@ -29,7 +29,10 @@ export const Detail: React.FC = () => {
   const [levelList, setLevelList] = useState<number[]>([]);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
-  const chatRef = useRef<{ submit: (content: string) => Promise<void> }>(null);
+  const chatRef = useRef<{
+    submit: (content: string) => Promise<void>;
+    setDraft: (content: string) => void;
+  }>(null);
   const id = searchParams.get("id");
 
   const getBlogDetail = async () => {
@@ -91,7 +94,9 @@ export const Detail: React.FC = () => {
 
   const askAi = async (content: string) => {
     setOpen(true);
-    await chatRef.current?.submit(content);
+    setTimeout(() => {
+      chatRef.current?.setDraft(content);
+    }, 100);
   };
 
   return (
@@ -145,7 +150,7 @@ export const Detail: React.FC = () => {
 
               {/* Markdown Content */}
               <div
-                className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-img:rounded-xl"
+                className="prose prose-lg max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-img:rounded-2xl"
                 ref={contentRef}
               >
                 <MarkDown content={blog.content} askAi={askAi} isAsk={true} />
@@ -200,9 +205,14 @@ export const Detail: React.FC = () => {
         </div>
       )}
 
-      {/* <Chat open={open} setOpen={setOpen} ref={chatRef} /> */}
+      <Chat
+        open={open}
+        setOpen={setOpen}
+        ref={chatRef}
+        blogContent={blog?.content}
+      />
 
-      {/* <motion.button
+      <motion.button
         className="fixed bottom-8 right-8 z-50 p-4 bg-primary text-white rounded-full shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-110 transition-all duration-300 max-md:bottom-20"
         onClick={() => setOpen(true)}
         whileTap={{ scale: 0.9 }}
@@ -210,7 +220,7 @@ export const Detail: React.FC = () => {
         animate={{ scale: 1 }}
       >
         <MessageSquareText className="w-6 h-6" />
-      </motion.button> */}
+      </motion.button>
     </>
   );
 };
