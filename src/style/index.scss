@@ -76,11 +76,7 @@
     0 4px 6px -2px rgba(0, 0, 0, 0.025);
   --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.05),
     0 10px 10px -5px rgba(0, 0, 0, 0.025);
-  --gradient-primary: linear-gradient(
-    135deg,
-    #64748b 0%,
-    #94a3b8 100%
-  );
+  --gradient-primary: linear-gradient(135deg, #64748b 0%, #94a3b8 100%);
   --gradient-secondary: linear-gradient(135deg, #94a3b8 0%, #cbd5e1 100%);
 }
 
@@ -90,19 +86,15 @@
   --bg-primary: #6b7280;
   --bg-secondary: #1e293b; // Slate-800
   --bg-card: #1e293b; // Slate-800 (一致的卡片背景)
-  --text-primary: #f8fafc; // Slate-50
+  --text-primary: #e2e8f0; // Slate-200 (降低亮度，避免刺眼)
   --text-secondary: #94a3b8; // Slate-400
   --text-muted: #64748b; // Slate-500
-  --border-color: #334155; // Slate-700
-  --border-light: #1e293b;
+  --border-color: #1e293b; // Slate-800 (更深，与卡片背景融合或微弱对比)
+  --border-light: #0f172a; // Slate-900
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
   --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-  --gradient-primary: linear-gradient(
-    135deg,
-    #6b7280 0%,
-    #9ca3af 100%
-  );
+  --gradient-primary: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
   --gradient-secondary: linear-gradient(135deg, #9ca3af 0%, #d1d5db 100%);
   --success-color: #059669;
   --warning-color: #d97706;
@@ -168,11 +160,11 @@ body {
 .ant-pagination-item-active {
   background-color: var(--color-primary) !important; // 强制背景色
   border-color: transparent !important;
-  
+
   a {
     color: #ffffff !important; // 强制文字白色
   }
-  
+
   &:hover {
     opacity: 0.9;
   }
@@ -181,7 +173,7 @@ body {
 // 按钮样式微调
 .ant-btn-primary {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045); // 极轻微的阴影
-  
+
   &:hover {
     opacity: 0.9;
     transform: translateY(-1px);
@@ -196,8 +188,9 @@ body {
   background-color: var(--bg-card) !important;
   border-color: var(--border-color) !important;
   color: var(--text-primary) !important;
-  
-  &:hover, &:focus {
+
+  &:hover,
+  &:focus {
     border-color: rgb(var(--color-primary)) !important;
   }
 }
@@ -206,18 +199,18 @@ body {
 .ant-table {
   background: transparent !important;
   color: var(--text-primary) !important;
-  
+
   .ant-table-thead > tr > th {
     background: transparent !important;
     color: var(--text-secondary) !important;
     font-weight: 600;
     border-bottom: 1px solid var(--border-color) !important;
   }
-  
+
   .ant-table-tbody > tr > td {
     border-bottom: 1px solid var(--border-color) !important;
   }
-  
+
   .ant-table-tbody > tr:hover > td {
     background: var(--bg) !important; // 悬浮行背景
   }
@@ -227,16 +220,16 @@ body {
 .ant-modal-content {
   background-color: var(--bg-card) !important;
   box-shadow: var(--shadow-lg) !important;
-  
+
   .ant-modal-header {
     background-color: transparent !important;
     margin-bottom: 16px;
   }
-  
+
   .ant-modal-title {
     color: var(--text-primary) !important;
   }
-  
+
   .ant-modal-close {
     color: var(--text-secondary) !important;
   }
@@ -249,7 +242,7 @@ body {
   border-radius: 16px;
   box-shadow: var(--shadow);
   transition: all 0.3s ease;
-  
+
   &:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(-2px);

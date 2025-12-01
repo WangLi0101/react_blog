@@ -68,7 +68,7 @@ export const Blog: React.FC = () => {
   return (
     <div className="w-[1200px] max-w-full mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
       <div className="content">
-        <div className="top mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-theme-border/40 pb-6 gap-4 md:gap-0">
+        <div className="top mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b border-theme-border pb-6 gap-4 md:gap-0">
           <div className="space-y-2">
             <h2 className="text-3xl md:text-4xl font-extrabold text-theme-text-primary tracking-tight">
               Latest Posts
@@ -79,7 +79,7 @@ export const Blog: React.FC = () => {
           </div>
 
           <div className="right flex items-center gap-3 w-full md:w-auto">
-            <div className="hidden md:flex items-center gap-2 text-theme-text-secondary bg-theme-bg-secondary/50 px-3 py-1.5 rounded-lg border border-theme-border/50">
+            <div className="hidden md:flex items-center gap-2 text-theme-text-secondary bg-theme-bg-secondary/50 px-3 py-1.5 rounded-lg border border-theme-border">
               <Filter className="w-4 h-4" />
               <span className="text-sm font-medium">Filter by</span>
             </div>

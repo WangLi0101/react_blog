@@ -115,7 +115,7 @@ const Home: React.FC = () => {
                 <motion.div
                   key={index}
                   variants={itemVariants}
-                  className="bg-theme-bg-secondary/50 p-2 rounded-lg backdrop-blur-sm border border-theme-border/50 hover:border-primary/50 transition-colors"
+                  className="bg-theme-bg-secondary/50 p-2 rounded-lg backdrop-blur-sm border border-theme-border hover:border-primary/50 transition-colors"
                   title={skill.name}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                 >

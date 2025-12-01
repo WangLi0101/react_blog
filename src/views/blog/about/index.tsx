@@ -112,7 +112,7 @@ const About: React.FC = () => {
                 <Mail className="w-4 h-4" />
                 <span>Email</span>
               </a>
-              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-theme-bg-secondary/50 text-theme-text-secondary border border-theme-border/50">
+              <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-theme-bg-secondary/50 text-theme-text-secondary border border-theme-border">
                 <MapPin className="w-4 h-4" />
                 <span>Beijing, China</span>
               </div>
@@ -124,7 +124,7 @@ const About: React.FC = () => {
             variants={itemVariants}
             className="grid grid-cols-2 gap-4"
           >
-            <div className="p-4 rounded-2xl bg-theme-card border border-theme-border/60 shadow-sm hover:shadow-md transition-shadow">
+            <div className="p-4 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition-shadow">
               <Briefcase className="w-6 h-6 text-blue-500 dark:text-blue-400 mb-2" />
               <div className="text-2xl font-bold text-theme-text-primary">
                 3+ Years
@@ -133,7 +133,7 @@ const About: React.FC = () => {
                 Experience
               </div>
             </div>
-            <div className="p-4 rounded-2xl bg-theme-card border border-theme-border/60 shadow-sm hover:shadow-md transition-shadow">
+            <div className="p-4 rounded-2xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md transition-shadow">
               <FolderOpen className="w-6 h-6 text-purple-500 dark:text-purple-400 mb-2" />
               <div className="text-2xl font-bold text-theme-text-primary">
                 {projectList.length}+
@@ -153,7 +153,7 @@ const About: React.FC = () => {
                 <motion.div
                   key={skill.name}
                   whileHover={{ y: -3 }}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-theme-card border border-theme-border/60 shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-default"
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-theme-card border border-theme-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all cursor-default"
                 >
                   <Icon icon={skill.icon} className="w-5 h-5" />
                   <span className="font-medium text-theme-text-primary">

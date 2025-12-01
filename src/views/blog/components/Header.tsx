@@ -52,7 +52,7 @@ export const Header: React.FC = () => {
   return (
     <header
       className={clsx("sticky top-0 z-50 transition-all duration-300", {
-        "bg-theme-bg/80 backdrop-blur-md shadow-sm border-b border-theme-border/50":
+        "bg-theme-bg/80 backdrop-blur-md shadow-sm border-b border-theme-border":
           isScrolled || isMenuOpen,
         "bg-transparent border-b border-transparent":
           !isScrolled && !isMenuOpen,

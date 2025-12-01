@@ -22,7 +22,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
   return (
     <motion.div
       variants={item}
-      className="group relative flex flex-col h-full bg-theme-card border border-theme-border/60 rounded-2xl overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300 cursor-pointer"
+      className="group relative flex flex-col h-full bg-theme-card border border-theme-border rounded-2xl overflow-hidden hover:shadow-xl hover:border-primary/30 transition-all duration-300 cursor-pointer"
       onClick={goDetail}
       whileHover={{ y: -5 }}
     >
@@ -34,7 +34,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-        <div className="absolute top-4 right-4 bg-white/90 dark:bg-black/80 backdrop-blur-sm p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        <div className="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/80 backdrop-blur-sm p-2 rounded-full opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
           <ArrowUpRight className="w-4 h-4 text-primary" />
         </div>
       </div>
@@ -58,7 +58,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
           {blog.description}
         </p>
 
-        <div className="flex items-center text-primary font-medium text-sm group/link pt-4 border-t border-theme-border/40">
+        <div className="flex items-center text-primary font-medium text-sm group/link pt-4 border-t border-theme-border">
           <span>Read more</span>
           <ArrowUpRight className="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1" />
         </div>

@@ -107,7 +107,7 @@ export const Detail: React.FC = () => {
               transition={{ duration: 0.5 }}
             >
               {/* Header Section */}
-              <header className="mb-10 pb-8 border-b border-theme-border/40">
+              <header className="mb-10 pb-8 border-b border-theme-border">
                 <div className="flex flex-wrap items-center gap-3 mb-6">
                   {blog.tags.map((tag) => (
                     <Tag key={tag.id}>{tag.name}</Tag>
@@ -154,8 +154,8 @@ export const Detail: React.FC = () => {
 
             {/* Right Sidebar - Table of Contents */}
             <aside className="hidden lg:block relative">
-              <div className="sticky top-28 max-h-[calc(100vh-140px)] overflow-y-auto scrollbar-hide p-6 bg-theme-bg-secondary/30 backdrop-blur-sm rounded-2xl border border-theme-border/40">
-                <div className="flex items-center gap-2 mb-4 pb-4 border-b border-theme-border/40">
+              <div className="sticky top-28 max-h-[calc(100vh-140px)] overflow-y-auto scrollbar-hide p-6 bg-theme-bg-secondary/30 backdrop-blur-sm rounded-2xl border border-theme-border">
+                <div className="flex items-center gap-2 mb-4 pb-4 border-b border-theme-border">
                   <div className="p-1.5 bg-primary/10 rounded-md">
                     <ChevronRight className="w-4 h-4 text-primary" />
                   </div>
