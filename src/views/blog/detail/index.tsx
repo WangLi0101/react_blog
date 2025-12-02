@@ -140,7 +140,7 @@ export const Detail: React.FC = () => {
                 <img
                   src={blog.thumbnail}
                   alt={blog.title}
-                  className="w-full aspect-[21/9] object-cover hover:scale-105 transition-transform duration-700"
+                  className="w-full aspect-[16/9] object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
 

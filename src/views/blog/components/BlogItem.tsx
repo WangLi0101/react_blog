@@ -45,7 +45,7 @@ export const BlogItem: React.FC<Props> = ({ blog }) => {
       onClick={goDetail}
       whileHover={{ y: -5 }}
     >
-      <div className="thumbnail relative overflow-hidden aspect-[16/9] md:aspect-[16/9] h-[160px] md:h-[180px]">
+      <div className="thumbnail relative overflow-hidden aspect-[16/9] md:aspect-[16/9]">
         <img
           src={blog.thumbnail}
           alt={blog.title}
