@@ -27,11 +27,21 @@ const BlogPage: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [query, setQuery] = useState({
-    page: 1,
-    pageSize: 15, // 增加每页显示数量
-    title: "",
+  const [query, setQuery] = useState(() => {
+    const saved = sessionStorage.getItem("blog_pagination");
+    return saved
+      ? JSON.parse(saved)
+      : {
+          page: 1,
+          pageSize: 15, // 增加每页显示数量
+          title: "",
+        };
   });
+
+  // 监听 query 变化并保存到 sessionStorage
+  useEffect(() => {
+    sessionStorage.setItem("blog_pagination", JSON.stringify(query));
+  }, [query]);
 
   const getBlogs = async () => {
     setLoading(true);
