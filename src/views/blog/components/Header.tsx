@@ -166,7 +166,7 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Overlay - 当菜单打开时遮罩背景 */}
       {isMenuOpen && (
         <div
-          className="md:hidden fixed inset-0 top-20 bg-black/20 dark:bg-black/40 backdrop-blur-[2px] z-[-1]"
+          className="md:hidden fixed inset-0 top-20 bg-black/40 dark:bg-black/60 backdrop-blur-[4px] z-[-1]"
           onClick={() => setIsMenuOpen(false)}
         />
       )}
@@ -178,17 +178,17 @@ export const Header: React.FC = () => {
           isMenuOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <div className="flex flex-col items-start py-2">
+        <div className="flex flex-col items-start p-4 gap-2">
           {menuList.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
               className={({ isActive }) =>
                 clsx(
-                  "w-full px-6 py-4 text-lg transition-colors border-l-4 font-medium",
+                  "w-full px-4 py-3 text-base rounded-xl transition-all duration-200 font-medium flex items-center",
                   isActive
-                    ? "border-theme-primary text-theme-primary bg-theme-primary/5 font-bold"
-                    : "border-transparent text-theme-text-primary hover:bg-theme-bg-secondary hover:text-theme-text-primary"
+                    ? "bg-primary text-white shadow-md shadow-primary/30"
+                    : "text-theme-text-secondary hover:bg-theme-bg-secondary hover:text-theme-text-primary"
                 )
               }
               onClick={() => setIsMenuOpen(false)}

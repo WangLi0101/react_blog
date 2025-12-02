@@ -40,21 +40,45 @@ export const MarkDown: React.FC<Props> = ({
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeRaw, rehypeKatex]}
         components={{
+          h1: ({ children }) => (
+            <h1 className="text-3xl font-bold mt-8 mb-4 border-b border-theme-border pb-2">
+              {children}
+            </h1>
+          ),
+          h2: ({ children }) => (
+            <h2 className="text-2xl font-bold mt-6 mb-3 border-b border-theme-border/50 pb-1">
+              {children}
+            </h2>
+          ),
+          h3: ({ children }) => (
+            <h3 className="text-xl font-bold mt-5 mb-2">{children}</h3>
+          ),
+          h4: ({ children }) => (
+            <h4 className="text-lg font-bold mt-4 mb-2">{children}</h4>
+          ),
           p: ({ children }) => (
-            <p className="my-4 leading-7 break-words whitespace-pre-wrap">
+            <p className="my-3 leading-7 break-words whitespace-pre-wrap text-theme-text-secondary">
               {children}
             </p>
           ),
           ul: ({ children }) => (
-            <ul className="list-disc my-4 space-y-2">{children}</ul>
+            <ul className="list-disc my-3 space-y-1 pl-5 text-theme-text-secondary marker:text-primary">
+              {children}
+            </ul>
           ),
-          li: ({ children }) => <li className="ml-4">{children}</li>,
+          ol: ({ children }) => (
+            <ol className="list-decimal my-3 space-y-1 pl-5 text-theme-text-secondary marker:text-primary font-medium">
+              {children}
+            </ol>
+          ),
+          li: ({ children }) => <li className="pl-1">{children}</li>,
 
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-theme-border pl-4 my-4 italic bg-theme-secondary py-2">
+            <blockquote className="border-l-4 border-primary/50 pl-4 my-4 italic bg-theme-bg-secondary/50 py-3 rounded-r-lg text-theme-text-secondary">
               {children}
             </blockquote>
           ),
+          hr: () => <hr className="my-6 border-theme-border" />,
           strong: ({ children }) => (
             <strong className="font-bold">{children}</strong>
           ),
@@ -68,6 +92,9 @@ export const MarkDown: React.FC<Props> = ({
               ts: "typescript",
               js: "javascript",
               py: "python",
+              vue: "html", // vue 通常使用 html 或 javascript 模式高亮
+              html: "html",
+              css: "css",
             };
 
             return !inline ? (

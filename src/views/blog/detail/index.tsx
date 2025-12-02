@@ -132,10 +132,6 @@ export const Detail: React.FC = () => {
                     <Clock className="w-4 h-4" />
                     <span>{formatDate(blog.createdAt)}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Hash className="w-4 h-4" />
-                    <span>{0} reads</span>
-                  </div>
                 </div>
               </header>
 

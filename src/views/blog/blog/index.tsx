@@ -90,7 +90,7 @@ export const Blog: React.FC = () => {
           animate="visible"
         >
           <div className="space-y-2">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-theme-text-primary tracking-tight">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-theme-text-primary tracking-tight ">
               Latest Posts
             </h2>
             <p className="text-theme-text-secondary text-base md:text-lg">
@@ -139,7 +139,7 @@ export const Blog: React.FC = () => {
         </motion.div>
 
         <motion.div
-          className="list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="list grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           variants={container}
           initial="hidden"
           animate={blogList.length > 0 ? "show" : "hidden"}
