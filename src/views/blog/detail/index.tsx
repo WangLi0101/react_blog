@@ -1,7 +1,7 @@
 import "./detail.scss";
 import { getBlogDetailApi } from "@/api/blog";
 import { BlogResponse } from "@/api/blog/blog";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useSearchParams } from "react-router";
 import { Tag } from "../components/Tag";
 import { formatDate } from "@/utils";
@@ -92,12 +92,12 @@ export const Detail: React.FC = () => {
     return index * 12 + 10;
   };
 
-  const askAi = async (content: string) => {
+  const askAi = useCallback(async (content: string) => {
     setOpen(true);
     setTimeout(() => {
       chatRef.current?.setDraft(content);
     }, 100);
-  };
+  }, []);
 
   return (
     <>
