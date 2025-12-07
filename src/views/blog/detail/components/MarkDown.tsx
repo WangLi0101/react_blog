@@ -86,7 +86,9 @@ export const MarkDown: React.FC<Props> = React.memo(
               const match = /language-(\w+)/.exec(className || "");
               const languageMap: { [key: string]: string } = {
                 ts: "typescript",
+                tsx: "tsx",
                 js: "javascript",
+                jsx: "jsx",
                 py: "python",
                 vue: "html", // vue 通常使用 html 或 javascript 模式高亮
                 html: "html",
